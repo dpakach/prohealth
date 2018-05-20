@@ -45,7 +45,7 @@ ProHealth : A Project to improve health in rural areas.
         >Warning:  Don't delete `env.example` though.
 
 6. Open the file and change `user` with database owner(usually the `username`) and `pass` with your database password(usually your user password).
-    - <a name="custom-db-name"></a> If you have set the name of db other than `sambad`, you need to uncomment the `#POSTGRES_DBNAME` line and change the value to the db name.
+    - <a name="custom-db-name"></a> If you have set the name of db other than `prohealth`, you need to uncomment the `#POSTGRES_DBNAME` line and change the value to the db name.
 7. `cd backend` if you are not already in.
 8. Make migrations file and then migrate.
     - `python manage.py makemigrations`
