@@ -6,6 +6,8 @@ import configureStore from './store/configureStore';
 
 import AppRouter from './routers/AppRouter';
 
+import './styles/style.css';
+
 const store = configureStore();
 
 const jsx = (
