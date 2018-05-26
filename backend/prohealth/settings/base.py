@@ -58,6 +58,7 @@ THIRD_PARTY_APPS = [
 # Apps specific for this project go here.
 LOCAL_APPS = [
     'core.apps.CoreConfig',
+    'user_profile.apps.UserProfileConfig'
 ]
 
 # MIDDLEWARE CONFIGURATION
@@ -240,3 +241,5 @@ REST_FRAMEWORK = {
 }
 
 APPEND_SLASH = True
+
+AUTH_USER_MODEL = 'user_profile.UserProfile'
