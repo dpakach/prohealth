@@ -1,10 +1,16 @@
 import React from 'react';
 
+import { Alert } from 'antd';
+
 
 const NotFoundPage = () => (
     <div>
-        <h1>404</h1>
-        <p>not found</p>
+        <Alert
+            message="404"
+            type="error"
+            showIcon
+            description="The page you requested doesnot exists."
+        />
     </div>
 )
 
