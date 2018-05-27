@@ -1,8 +1,18 @@
 import React from 'react';
 
+class FeaturePage extends React.Component{
+    constructor(props) {
+        super(props);
+    }
 
-const FeaturePage = () => (
-    <p>Feature page</p>
-);
+    render() {
+        return (
+            <div>
+                <p>feature page</p>
+            </div>
+        )
+
+    }
+}
 
 export default FeaturePage;

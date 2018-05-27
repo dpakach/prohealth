@@ -177,6 +177,7 @@ module.exports = {
                         minimize: true,
                         sourceMap: shouldUseSourceMap,
                       },
+                    'sass-loader',
                     },
                     {
                       loader: require.resolve('postcss-loader'),

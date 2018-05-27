@@ -6,6 +6,8 @@ import Header from '../components/Header';
 import DashboardPage from '../components/DashboardPage';
 import FeaturePage from '../components/FeaturePage';
 import NotFoundPage from '../components/NotFoundPage';
+import LoginComponent from '../components/auth/LoginComponent';
+import SignupComponent from '../components/auth/SignupComponent';
 
 
 
@@ -16,6 +18,8 @@ const AppRouter = () => (
             <Switch>
                 <Route path="/" component={ DashboardPage } exact={true} />
                 <Route path="/feature" component={ FeaturePage } />
+                <Route path="/login" component={ LoginComponent } />
+                <Route path="/signup" component={ SignupComponent } />
 
                 <Route component={ NotFoundPage } />
             </Switch>
