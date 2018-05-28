@@ -1,17 +1,16 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react';
 
-import { Form, Icon, Input, Button, checkbox } from 'antd';
+import {Form, Icon, Input, Button} from 'antd';
 const FormItem = Form.Item;
-
 
 class SignupComponent extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            email: "",
-            password: ""
+            email: '',
+            password: '',
+            password2: '',
         };
     }
 
@@ -19,54 +18,59 @@ class SignupComponent extends Component {
         return this.state.email.length > 0 && this.state.password.length > 0;
     }
 
-    onEmailChange = (e) => {
-        const email = e.target.value;
-        this.setState(() => ({email}))
-    }
-
-    onPasswordChange = (e) => {
-        const password = e.target.value;
-        this.setState(() => ({password}))
-    }
+    handleChange = e => {
+        this.setState({[e.target.name]: e.target.value});
+    };
 
     handleSubmit = event => {
         event.preventDefault();
-        alert(this.state.email)
-    }
+        alert(this.state.email);
+    };
 
-    render(){
+    render() {
         return (
-            <div>
-                <Form 
-                    className="login-form"
-                    onSubmit={this.handleSubmit}
-                >
+            <div className="section section--form">
+                <h1 className="heading-primary u-margin-top-big">Signup</h1>
+                <Form className="login-form" onSubmit={this.handleSubmit}>
                     <FormItem>
-                        <Input 
+                        <label>email</label>
+                        <Input
                             prefix={<Icon type="user" />}
                             placeholder="email"
                             type="email"
-                            onChange={this.onEmailChange}
+                            name="email"
+                            onChange={this.handleChange}
                         />
                     </FormItem>
                     <FormItem>
-                        <Input 
-                            prefix={<Icon type="lock" />}  
+                        <label>password</label>
+                        <Input
+                            prefix={<Icon type="lock" />}
                             placeholder="password"
                             type="password"
-                            onChange={this.onPasswordChange}
+                            name="password"
+                            onChange={this.handleChange}
+                        />
+                    </FormItem>
+                    <FormItem>
+                        <label>Confirm password</label>
+                        <Input
+                            prefix={<Icon type="lock" />}
+                            placeholder="Confirm password"
+                            type="password"
+                            name="password2"
+                            onChange={this.handleChange}
                         />
                     </FormItem>
                     <Button
                         type="primary"
                         htmlType="submit"
-                        className="login-form-button"
-                    >
-                        Log In
-                    </Button> Or <Link to="/">register now!</Link>
+                        className="login-form-button">
+                        Signup
+                    </Button>
                 </Form>
             </div>
-        )
+        );
     }
 }
 
