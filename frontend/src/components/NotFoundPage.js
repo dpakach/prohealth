@@ -1,17 +1,16 @@
 import React from 'react';
 
-import { Alert } from 'antd';
-
+import {Alert} from 'antd';
 
 const NotFoundPage = () => (
-    <div>
-        <Alert
-            message="404"
-            type="error"
-            showIcon
-            description="The page you requested doesnot exists."
-        />
-    </div>
-)
+  <div className="section section--profile">
+    <Alert
+      message="404"
+      type="error"
+      showIcon
+      description="The page you requested does not exists."
+    />
+  </div>
+);
 
 export default NotFoundPage;

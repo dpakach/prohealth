@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 
-import { Form, Icon, Input, Button, checkbox } from 'antd';
+import {Form, Icon, Input, Button} from 'antd';
 const FormItem = Form.Item;
-
 
 class LoginComponent extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            email: "",
-            password: ""
+            email: '',
+            password: '',
         };
     }
 
@@ -19,56 +19,57 @@ class LoginComponent extends Component {
         return this.state.email.length > 0 && this.state.password.length > 0;
     }
 
-    onEmailChange = (e) => {
-        const email = e.target.value;
-        this.setState(() => ({email}))
-    }
+    handleChange = e => {
+        this.setState({[e.target.name]: e.target.value});
+    };
 
-    onPasswordChange = (e) => {
-        const password = e.target.value;
-        this.setState(() => ({password}))
-    }
+    handleSubmit = e => {
+        e.preventDefault();
+        this.props.dispatch();
+    };
 
-    handleSubmit = event => {
-        event.preventDefault();
-        alert(this.state.email)
-    }
-
-    render(){
+    render() {
         return (
-            <div>
-                <Form 
-                    className="login-form"
-                    onSubmit={this.handleSubmit}
-                >
+            <div className="section section--form">
+                <h1 className="heading-primary u-margin-top-big">Login</h1>
+                <Form className="login-form" onSubmit={this.handleSubmit}>
                     <FormItem>
-                        <Input 
+                        <label htmlFor="email">email</label>
+                        <Input
                             prefix={<Icon type="user" />}
                             placeholder="email"
                             type="email"
-                            onChange={this.onEmailChange}
+                            onChange={this.handleChange}
                         />
                     </FormItem>
                     <FormItem>
-                        <Input 
-                            prefix={<Icon type="lock" />}  
+                        <label htmlFor="password">password</label>
+                        <Input
+                            prefix={<Icon type="lock" />}
                             placeholder="password"
                             type="password"
-                            onChange={this.onPasswordChange}
+                            onChange={this.handleChange}
                         />
                     </FormItem>
                     <Button
                         type="primary"
                         htmlType="submit"
-                        className="login-form-button"
-                    >
+                        className="login-form-button u-margin-bottom-small">
                         Log In
                     </Button>
-                    Or <Link to="/">register now!</Link>
+                    <div>
+                        Or <Link to="/"> register now!</Link>
+                    </div>
                 </Form>
             </div>
-        )
+        );
     }
 }
 
-export default LoginComponent;
+const mapStateToProps = state => {
+    return {
+        auth: state.auth,
+    };
+};
+
+export default connect(mapStateToProps)(LoginComponent);
