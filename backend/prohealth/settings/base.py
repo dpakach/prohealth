@@ -53,7 +53,8 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'webpack_loader',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'rest_auth'
 ]
 
 # Apps specific for this project go here.
