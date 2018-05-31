@@ -2,7 +2,7 @@ import React from 'react';
 
 import QueryListItemComponent from './QueryListItemComponent';
 
-import {List, Avatar} from 'antd';
+import {List} from 'antd';
 
 const data = [
     {

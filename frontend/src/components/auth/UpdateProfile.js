@@ -7,10 +7,6 @@ import {Form, Input, Button} from 'antd';
 const FormItem = Form.Item;
 
 class UpdateProfile extends React.Component {
-    constructor() {
-        super();
-    }
-
     handleSubmit = e => {
         e.preventDefault();
     };

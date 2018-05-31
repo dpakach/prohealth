@@ -5,10 +5,6 @@ import {Form, Input, Button} from 'antd';
 const FormItem = Form.Item;
 
 class FormLayoutDemo extends React.Component {
-    constructor() {
-        super();
-    }
-
     render() {
         return (
             <div className="section section--detail u-margin-top-big">

@@ -10,7 +10,7 @@ import AppRouter from './routers/AppRouter';
 import './styles/style.css';
 import './styles/main.scss';
 
-import {login, logout} from './actions/authActions';
+// import {login, logout} from './actions/authActions';
 
 //store.subscribe(() => {
 //    const state = store.getState();
