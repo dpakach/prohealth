@@ -12,10 +12,11 @@ const authReducer = (state=authReducerDefaultState, action) => {
             return {...state, authenticated: true, token: action.token};
 
         case AuthTypes.LOGOUT:
-            return {...state, authenticated: false, token: null};
+            return {...state, authenticated: false, token: null, user: null};
 
         case AuthTypes.USER_PROFILE:
             return {...state, user: action.user};
+
         default:
             return state
     }

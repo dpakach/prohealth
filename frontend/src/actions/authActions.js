@@ -1,15 +1,16 @@
-import AuthTypes from '../constants/actionTypes';
+import {AuthTypes} from '../constants/actionTypes';
 
-export const login = ({token}) => ({
-    type: AuthTypes.LOGIN,
-    token,
-});
+export const login = ({token}) => {
+    localStorage.setItem('token', token);
+    return {
+        type: AuthTypes.LOGIN,
+        token,
+    };
+};
 
-export const logout = ({token}) => {
-    localStorage.removeItem("token");
+export const logout = () => {
+    localStorage.removeItem('token');
     return {
         type: AuthTypes.LOGOUT,
     };
 };
-
-

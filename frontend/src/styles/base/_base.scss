@@ -1,56 +1,53 @@
 *,
 *::after,
-*::before{
-        margin:0;
-        padding:0;
-        box-sizing: inherit;
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
 }
 
 html {
-        font-size: 55%;
-        @include respond(sixteen-h) {
-                font-size: 45%;
-        }
-        @include respond(tab-port){
-                font-size: 40;
+    font-size: 55%;
+    @include respond(sixteen-h) {
+        font-size: 45%;
+    }
+    @include respond(tab-port) {
+        font-size: 40;
+    }
 
-        }
-
-        @include respond(phone){
-                font-size: 35%;
-        }
+    @include respond(phone) {
+        font-size: 35%;
+    }
 }
 
-body{
-        box-sizing: border-box;
-        background-color: #f6f6f6;
+body {
+    box-sizing: border-box;
+    background-color: #f6f6f6;
 }
 
-.container{
-
-        padding: 2rem;
-		margin-top: 8.4rem;
-        position: relative;
-        min-height: 55vh;
-        max-width: 160rem;
-        margin-right: auto;
-        margin-left: auto;
-        @include respond(tab-port){
-                margin-top: 20rem;
-        }
-        @include respond(phone){
-                margin-top: 4rem;
-        }
+.container {
+    padding: 2rem;
+    margin-top: 8.4rem;
+    position: relative;
+    min-height: 55vh;
+    max-width: 160rem;
+    margin-right: auto;
+    margin-left: auto;
+    @include respond(tab-port) {
+        margin-top: 20rem;
+    }
+    @include respond(phone) {
+        margin-top: 4rem;
+    }
 }
 
 a {
-        color: $color-tertiary-light;
-        text-decoration: none;
-        outline: none;
+    color: $color-tertiary-light;
+    text-decoration: none;
+    outline: none;
 }
 
-::selection{
-        background-color: rgba($color-tertiary-light, .6);
-        color: $color-white;
-
+::selection {
+    background-color: rgba($color-tertiary-light, 0.6);
+    color: $color-white;
 }
