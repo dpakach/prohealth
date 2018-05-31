@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Avatar, Button, Spin } from 'antd';
+import { List, Avatar } from 'antd';
 import { Link } from 'react-router-dom';
 
 const QueryListItemComponent = (props) => (
