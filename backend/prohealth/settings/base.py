@@ -53,11 +53,14 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'webpack_loader',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth'
 ]
 
 # Apps specific for this project go here.
 LOCAL_APPS = [
     'core.apps.CoreConfig',
+    'user_profile.apps.UserProfileConfig'
 ]
 
 # MIDDLEWARE CONFIGURATION
@@ -240,3 +243,5 @@ REST_FRAMEWORK = {
 }
 
 APPEND_SLASH = True
+
+AUTH_USER_MODEL = 'user_profile.UserProfile'
