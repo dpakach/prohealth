@@ -1,26 +1,64 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-
-import { Menu } from 'antd';
+import { connect } from 'react-redux';
+import { Menu, Icon } from 'antd';
+import {logout} from '../actions/authActions';
+import { withRouter } from 'react-router';
 
 
 class Header extends React.Component {
+
+    constructor (props) {
+        super(props);
+
+        this.state = {
+            test: 'value'
+        }
+    }
+
+    logout = () => {
+        this.props.dispatch(logout());
+        this.props.history.push('/login');
+    }
+
+    renderLinks = () => {
+        if (this.props.authenticated) {
+            return (
+                [
+                <Menu.Item key="feature">
+                    <NavLink to="/feature"><Icon type="mail"/>Feature</NavLink>
+                </Menu.Item>,
+                <Menu.Item key="logout">
+                    <a onClick={this.logout}><Icon type="logout"/>Logout</a>
+                </Menu.Item>
+                ]
+
+            );
+        } else {
+            return (
+                [
+                <Menu.Item key="login">
+                    <NavLink to="/login"><Icon type="login"/>Login</NavLink>
+                </Menu.Item>,
+                <Menu.Item key="signup">
+                    <NavLink to="/signup"><Icon type="user-add"/>Signup</NavLink>
+                </Menu.Item>
+                ]
+            );
+        }
+    }
+
     render(){
         return (
             <header>
                 <Menu
                     mode="horizontal"
+                    theme="dark"
                 >
                     <Menu.Item>
-                        <p>ProHealth</p>
+                        <NavLink to="/" exact={true}>ProHealth</NavLink>
                     </Menu.Item>
-                    <Menu.Item>
-                        <NavLink to="/" exact={true}>Home</NavLink>
-                    </Menu.Item>
-                
-                    <Menu.Item>
-                        <NavLink to="/feature">Feature</NavLink>
-                    </Menu.Item>
+                    {this.renderLinks()}
                 </Menu>
             </header>
         )
@@ -28,4 +66,10 @@ class Header extends React.Component {
 
 } 
 
-export default Header;
+const mapStateToProps = state => {
+    return {
+        authenticated: state.auth.authenticated,
+    }
+}
+
+export default withRouter(connect(mapStateToProps)(Header));

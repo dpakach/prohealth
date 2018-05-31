@@ -1,97 +1,91 @@
 .form {
-        p{
-                margin-bottom: 2rem;
+    p {
+        margin-bottom: 2rem;
+    }
+
+    margin: 0 auto;
+    padding: 0 3rem;
+
+    &__inputs {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, 1fr);
+    }
+    &__group:not(:last-child) {
+        margin-bottom: 1.5rem;
+    }
+    &__group {
+        display: grid;
+        grid-template-rows: auto auto 1fr;
+        align-items: start;
+    }
+    &--fullscreen {
+        width: 40rem;
+        padding: 0;
+        @include respond(phone) {
+            width: 30rem;
+        }
+    }
+    .errorlist {
+        font-size: 1.4rem;
+        color: $color-secondary-dark;
+    }
+
+    &__input,
+    input,
+    textarea {
+        font-size: 2rem;
+        font-weight: 400;
+        padding: 2rem 3rem;
+        font-family: inherit;
+        border-radius: 2px;
+        background-color: rgba($color-white, 1);
+        border: none;
+        border-bottom: 2px solid transparent;
+        width: 95%;
+        display: block;
+        margin: 1rem 0 0 0;
+        transition: all 0.3s ease;
+        border-bottom: 3px solid transparent;
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 1rem rgba($color-black, 0.2);
+            border-bottom: 3px solid $color-tertiary-light;
         }
 
-        margin: 0 auto;
-        padding: 0 3rem;
-
-        &__inputs{
-                display: grid;
-                grid-template-columns: repeat(auto-fit,  1fr);
-        }
-        &__group:not(:last-child){
-                margin-bottom: 1.5rem;
-        }
-        &__group{
-                display: grid;
-                grid-template-rows: auto auto 1fr;
-                align-items: start;
-        }
-        &--fullscreen{
-                width: 40rem;
-                padding: 0;
-                @include respond(phone){
-                        width: 30rem;
-                }
-        }
-        .errorlist{
-
-                font-size: 1.4rem;
-                color: $color-secondary-dark;
+        &:focus:invalid {
+            border-bottom: 3px solid rgba($color-secondary-dark, 1);
         }
 
-        &__input ,
-        input ,
-        textarea{
-                font-size: 1.8rem;
-                font-weight: 600;
-                padding: 1rem 2rem;
-                font-family: inherit;
-                border-radius: 2px;
-                background-color: rgba($color-white , 1);
-                border: none;
-                border-bottom: 2px solid transparent;
-                width: 95%;
-                display: block;
-                margin: 1rem 0 0 0;
-                transition: all .3s ease;
-                border-bottom: 3px solid transparent;
-
-                &:focus {
-                        outline: none;
-                        box-shadow: 0 0 1rem rgba($color-black, .2);
-                        border-bottom: 3px solid $color-tertiary-light;
-                }
-
-                &:focus:invalid {
-                        border-bottom: 3px solid rgba($color-secondary-dark, 1);
-                }
-                    
-                &::-webkit-input-placeholder {
-                        color: $color-grey-dark-2;
-                }
-
+        &::-webkit-input-placeholder {
+            color: $color-grey-dark-2;
         }
+    }
 
-        &__label ,
-        label {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-top: .3rem;
-            display: block;
-            margin-left: 2rem;
-            transition: all .3s;
-            color: $color-grey-dark;
+    &__label,
+    label {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-top: 0.3rem;
+        display: block;
+        margin-left: 2rem;
+        transition: all 0.3s;
+        color: $color-grey-dark;
+    }
 
-        }
+    input:placeholder-shown + label {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(4rem);
+    }
 
-        input:placeholder-shown + label{
-                opacity: 0;
-                visibility: hidden;
-                transform: translateX(4rem);
-        }
-
-        ul, .helptext {
-                font-size: 1.2rem;
-                color: $color-grey-dark-4;
-                margin: 0 0 0 3.5rem;
-                text-align: left;
-                width: 80%;
-                display: inline-block;
-        }
-
-
+    ul,
+    .helptext {
+        font-size: 1.2rem;
+        color: $color-grey-dark-4;
+        margin: 0 0 0 3.5rem;
+        text-align: left;
+        width: 80%;
+        display: inline-block;
+    }
 }
-
-

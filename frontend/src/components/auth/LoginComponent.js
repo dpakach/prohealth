@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
+import {login} from '../../actions/authActions';
 import {Form, Icon, Input, Button} from 'antd';
 const FormItem = Form.Item;
 
@@ -25,7 +26,8 @@ class LoginComponent extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        this.props.dispatch();
+        this.props.dispatch(login({token: 'token'}));
+        this.props.history.push('/');
     };
 
     render() {
@@ -58,7 +60,7 @@ class LoginComponent extends Component {
                         Log In
                     </Button>
                     <div>
-                        Or <Link to="/"> register now!</Link>
+                        Or <Link to="/signup"> register now!</Link>
                     </div>
                 </Form>
             </div>
@@ -68,7 +70,7 @@ class LoginComponent extends Component {
 
 const mapStateToProps = state => {
     return {
-        auth: state.auth,
+        authenticated: state.auth.authenticated,
     };
 };
 
