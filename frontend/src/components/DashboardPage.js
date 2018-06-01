@@ -1,13 +1,16 @@
 import React from 'react';
 
+import MyQueriesComponent from './query/MyQueriesComponent';
 
 class DashboardPage extends React.Component {
     render() {
         return (
-            <div>
-                <p>Dashboard Page</p>
+            <div className="section section--profile">
+                <h1 className="heading-primary u-margin-top-big">DashBoard</h1>
+
+                <MyQueriesComponent />
             </div>
-        )
+        );
     }
 }
 
