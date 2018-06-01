@@ -21,7 +21,7 @@ from django.templatetags.static import static as static_tag
 
 from django.contrib import admin
 
-from rest_framework import schemas
+from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
     # Include urls here.
@@ -29,7 +29,8 @@ urlpatterns = [
     # url(r'api/core/', include('core.endpoints')),
     # url(r'api/$', schemas.get_schema_view()),
     url(settings.ADMIN_URL, admin.site.urls),
-    url(r'^api/', include('user_profile.urls'))
+    url(r'^api/', include('user_profile.urls')),
+    url(r'^docs/', include_docs_urls(title='API'))
     # url(r'^(?!(api\/)).*', TemplateView.as_view(template_name="index.html")),
 ]
 
