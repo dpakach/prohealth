@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
-
+import {AuthUrls} from '../../constants/urls';
 import {signup} from '../../utils/api';
-import {Form, Icon, Input, Button, DatePicker} from 'antd';
+import {Form, Icon, Input, Button, DatePicker, Select} from 'antd';
 import {FormErrors} from '../FormErrors';
+import {renderError} from '../../utils/renderUtils';
 // import validate from '../../utils/validate';
 
 const FormItem = Form.Item;
+const Option = Select.Option;
+
 class SignupComponent extends Component {
     // constructor and state initialization
 
@@ -22,16 +25,22 @@ class SignupComponent extends Component {
             password2: '',
             date_of_birth: '',
             gender: '',
-            photo_id: '',
+            photo_id: null,
+            profile_photo: null,
+            is_doc: false,
 
             formErrors: {},
             emailValid: false,
             passwordValid: false,
-            formValid: false,
+            formValid: true,
         };
     }
 
     // state change and management
+    //
+    handleSelectChange = value => {
+        this.setState({'gender': value});
+    }
 
     handleChange = e => {
         let name = e.target.name;
@@ -80,6 +89,7 @@ class SignupComponent extends Component {
                 fieldValidationErrors.password = passwordValid
                     ? ''
                     : 'passwords do not match';
+                break;
             default:
                 break;
         }
@@ -110,8 +120,44 @@ class SignupComponent extends Component {
             'password',
             'date_of_birth',
             'gender',
+            'is_doc',
+            'profile_photo',
+            'photo_id',
         ]);
+        console.log(form_data);
         signup(form_data);
+
+        this.props.history.push('/login');
+
+        // fetch(AuthUrls.SIGNUP, {
+        //     method: 'POST', 
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify(form_data)
+        // }).then(response => {
+        //     // console.log(response.getAllResponseHeaders().toLowerCase());
+        //     console.log(response);
+        //     return response.json();
+        // }).then( data => {
+        //     //this.props.history.push('/login')
+        //     console.log(data);
+        // });
+
+        // fetch(AuthUrls.SIGNUP, {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(form_data),
+        // })
+        //     .then(res => {
+        //         console.log(res);
+        //         return res.json();
+        //     })
+        //     .then(data => {
+        //         console.log(data);
+        //     });
     };
 
     render() {
@@ -167,6 +213,20 @@ class SignupComponent extends Component {
                         <label>Date Of Birth</label>
                         <br />
                         <DatePicker onChange={this.onDateChange} />
+                    </FormItem>
+
+                    <FormItem>
+                        <label>Gender</label><br />
+                        <Select
+                            showSearch
+                            style={{width: 200}}
+                            placeholder="Gender"
+                            name="gender"
+                            onChange={this.handleSelectChange}
+                            >
+                            <Option value="M">Male</Option>
+                            <Option value="F">Female</Option>
+                        </Select>
                     </FormItem>
 
                     <FormItem
