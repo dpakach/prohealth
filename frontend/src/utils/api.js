@@ -1,5 +1,6 @@
 import {AuthTypes} from '../constants/actionTypes';
 import {AuthUrls} from '../constants/urls';
+import history from './historyUtils';
 import axios from 'axios';
 
 export const login = ({token}) => {
@@ -13,11 +14,26 @@ export const logout = () => {
     };
 };
 
-
 export const signup = form_data => {
-    axios.post(AuthUrls.SIGNUP, form_data)
-        .then(res => {
-            console.log(res);
-            console.log(res.data);
-        });
-}
+    fetch(AuthUrls.SIGNUP, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form_data),
+    });
+    //  fetch(AuthUrls.SIGNUP, {
+    //      method: 'POST',
+    //      headers: {
+    //          'Content Type': 'application/json',
+    //      },
+    //      body: JSON.stringify(form_data),
+    //  })
+    //      .then(res => {
+    //          console.log(res);
+    //          return res.json();
+    //      })
+    //      .then(data => {
+    //          console.log(data);
+    //      });
+};
