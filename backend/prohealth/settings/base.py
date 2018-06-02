@@ -54,7 +54,8 @@ THIRD_PARTY_APPS = [
     'webpack_loader',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_auth'
+    'rest_auth',
+    'corsheaders'
 ]
 
 # Apps specific for this project go here.
@@ -68,6 +69,7 @@ LOCAL_APPS = [
 # Django middlewares
 DJANGO_MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -244,3 +246,5 @@ REST_FRAMEWORK = {
 APPEND_SLASH = True
 
 AUTH_USER_MODEL = 'user_profile.UserProfile'
+
+CORS_ORIGIN_ALLOW_ALL = True
