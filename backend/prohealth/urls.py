@@ -30,8 +30,9 @@ urlpatterns = [
     # url(r'api/$', schemas.get_schema_view()),
     url(settings.ADMIN_URL, admin.site.urls),
     url(r'^api/', include('user_profile.urls')),
-    url(r'^docs/', include_docs_urls(title='API'))
+    url(r'^docs/', include_docs_urls(title='API')),
     # url(r'^(?!(api\/)).*', TemplateView.as_view(template_name="index.html")),
+    url(r'^api/', include('users_query.urls')),
 ]
 
 if settings.DEBUG:

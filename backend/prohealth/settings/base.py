@@ -60,7 +60,8 @@ THIRD_PARTY_APPS = [
 
 # Apps specific for this project go here.
 LOCAL_APPS = [
-    'user_profile.apps.UserProfileConfig'
+    'user_profile.apps.UserProfileConfig',
+    'users_query.apps.UsersQueryConfig',
 ]
 
 # MIDDLEWARE CONFIGURATION
