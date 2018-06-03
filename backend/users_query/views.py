@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
+from rest_framework import filters
 
 
 from . models import UserQuery
@@ -14,3 +15,5 @@ class UserQueryViewset(viewsets.ModelViewSet):
     queryset = UserQuery.objects.all()
     authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.UpdateOwnUserQuery,)
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name_of_patient','title_problem',)
