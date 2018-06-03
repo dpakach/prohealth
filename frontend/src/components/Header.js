@@ -2,7 +2,7 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Menu, Icon } from 'antd';
-import {logout} from '../actions/authActions';
+import {logoutAction} from '../actions/authActions';
 import { withRouter } from 'react-router';
 
 
@@ -17,7 +17,7 @@ class Header extends React.Component {
     }
 
     logout = () => {
-        this.props.dispatch(logout());
+        this.props.dispatch(logoutAction());
         this.props.history.push('/login');
     }
 
