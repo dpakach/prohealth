@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
+import {reduxForm, Field, propTypes} from 'redux-form';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
@@ -74,7 +75,7 @@ class LoginComponent extends Component {
         event.preventDefault();
         const form_data = _.pick(this.state, ['email', 'password']);
         login(form_data);
-        this.props.history.push('/');
+        this.history.push('/');
     };
 
     render() {
