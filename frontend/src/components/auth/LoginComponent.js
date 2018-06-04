@@ -75,7 +75,7 @@ class LoginComponent extends Component {
         event.preventDefault();
         const form_data = _.pick(this.state, ['email', 'password']);
         login(form_data);
-        this.history.push('/');
+        history.push("/");
     };
 
     render() {
