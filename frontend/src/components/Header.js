@@ -4,24 +4,29 @@ import { connect } from 'react-redux';
 import { Menu, Icon } from 'antd';
 import {logoutAction} from '../actions/authActions';
 import { withRouter } from 'react-router';
+import PropTypes from "prop-types";
 
 
 class Header extends React.Component {
 
     constructor (props) {
         super(props);
-
         this.state = {
-            test: 'value'
-        }
+            authenticated: localStorage.getItem('authenticated')
+        };
     }
+
+    static propTypes = {
+        authenticated: PropTypes.bool
+    };
 
     logout = () => {
         this.props.dispatch(logoutAction());
         this.props.history.push('/login');
+        localStorage.setItem('authenticated', false);
     }
 
-    renderLinks = () => {
+    renderLinks = (auth) => {
         if (this.props.authenticated) {
             return (
                 [
@@ -32,7 +37,6 @@ class Header extends React.Component {
                     <a onClick={this.logout}><Icon type="logout"/>Logout</a>
                 </Menu.Item>
                 ]
-
             );
         } else {
             return (
@@ -49,6 +53,7 @@ class Header extends React.Component {
     }
 
     render(){
+        const auth = localStorage.getItem('authenticated');
         return (
             <header>
                 <Menu
@@ -58,7 +63,7 @@ class Header extends React.Component {
                     <Menu.Item>
                         <NavLink to="/" exact={true}>ProHealth</NavLink>
                     </Menu.Item>
-                    {this.renderLinks()}
+                    {this.renderLinks(auth)}
                 </Menu>
             </header>
         )
@@ -66,7 +71,7 @@ class Header extends React.Component {
 
 } 
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
         authenticated: state.auth.authenticated,
     }

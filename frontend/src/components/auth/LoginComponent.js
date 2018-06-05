@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
-import {reduxForm, Field, propTypes} from 'redux-form';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import {login} from '../../utils/api';
-import {Form, Icon, Input, Button} from 'antd';
+import store from '../../store/configureStore';
+import {loginAction} from '../../actions/authActions';
+import {AuthUrls} from '../../constants/urls';
+// import store from '../../store/configureStore';
+import {Form, Icon, Input, Button, Alert} from 'antd';
 const FormItem = Form.Item;
 
 class LoginComponent extends Component {
@@ -20,6 +22,7 @@ class LoginComponent extends Component {
             emailValid: false,
             passwordValid: false,
             formValid: false,
+            nonFieldErrors: '',
         };
     }
 
@@ -63,6 +66,7 @@ class LoginComponent extends Component {
             this.validateForm,
         );
     };
+
     validateForm = () => {
         this.setState({
             formValid: this.state.emailValid && this.state.passwordValid,
@@ -74,54 +78,92 @@ class LoginComponent extends Component {
     handleSubmit = event => {
         event.preventDefault();
         const form_data = _.pick(this.state, ['email', 'password']);
-        login(form_data);
-        history.push("/");
+        fetch(AuthUrls.LOGIN, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(form_data),
+        })
+            //.then(response => this.handleErrors(response))
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw Error(
+                    'Some thing went wrong! Please make sure the credentials are valid',
+                );
+            })
+            .then(data => {
+                this.setState({nonFieldErrors: ''});
+                localStorage.setItem('authentication', data['key']);
+                localStorage.setItem('authenticated', true);
+                store.dispatch(loginAction(data['key']));
+                this.props.history.push('/');
+            })
+            .catch(error => {
+                this.setState({nonFieldErrors: error.message});
+            });
     };
 
     render() {
         return (
-            <div className="section section--form">
+            <div>
                 <h1 className="heading-primary u-margin-top-big">Login</h1>
-                <Form className="login-form" onSubmit={this.handleSubmit}>
-                    <FormItem
-                        validateStatus={
-                            !this.state.formErrors.email ? 'success' : 'error'
-                        }>
-                        <label htmlFor="email">email</label>
-                        <Input
-                            prefix={<Icon type="user" />}
-                            placeholder="email"
-                            type="email"
-                            name="email"
-                            onChange={this.handleChange}
+                {this.state.nonFieldErrors && (
+                    <div className="section section--form">
+                        <Alert
+                            message="error"
+                            type="error"
+                            showIcon
+                            description={this.state.nonFieldErrors}
                         />
-                    </FormItem>
-                    <FormItem
-                        validateStatus={
-                            !this.state.formErrors.password
-                                ? 'success'
-                                : 'error'
-                        }>
-                        <label htmlFor="password">password</label>
-                        <Input
-                            prefix={<Icon type="lock" />}
-                            placeholder="password"
-                            type="password"
-                            name="password"
-                            onChange={this.handleChange}
-                        />
-                    </FormItem>
-                    <Button
-                        type="primary"
-                        htmlType="submit"
-                        disabled={!this.state.formValid}
-                        className="login-form-button u-margin-bottom-small">
-                        Log In
-                    </Button>
-                    <div>
-                        Or <Link to="/signup"> register now!</Link>
                     </div>
-                </Form>
+                )}
+                <div className="section section--form">
+                    <Form className="login-form" onSubmit={this.handleSubmit}>
+                        <FormItem
+                            validateStatus={
+                                !this.state.formErrors.email
+                                    ? 'success'
+                                    : 'error'
+                            }>
+                            <label htmlFor="email">email</label>
+                            <Input
+                                prefix={<Icon type="user" />}
+                                placeholder="email"
+                                type="email"
+                                name="email"
+                                onChange={this.handleChange}
+                            />
+                        </FormItem>
+                        <FormItem
+                            validateStatus={
+                                !this.state.formErrors.password
+                                    ? 'success'
+                                    : 'error'
+                            }>
+                            <label htmlFor="password">password</label>
+                            <Input
+                                prefix={<Icon type="lock" />}
+                                placeholder="password"
+                                type="password"
+                                name="password"
+                                onChange={this.handleChange}
+                            />
+                        </FormItem>
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            disabled={!this.state.formValid}
+                            className="login-form-button u-margin-bottom-small">
+                            Log In
+                        </Button>
+                        <div>
+                            Or <Link to="/signup"> register now!</Link>
+                        </div>
+                    </Form>
+                </div>
             </div>
         );
     }
