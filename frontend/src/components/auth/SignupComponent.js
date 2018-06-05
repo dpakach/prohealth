@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
-import {signup} from '../../utils/api';
-import {Form, Icon, Input, Button, DatePicker, Select} from 'antd';
-import {FormErrors} from '../FormErrors';
-import {renderError} from '../../utils/renderUtils';
+import {Form, Icon, Input, Button, DatePicker, Select, Alert} from 'antd';
 // import validate from '../../utils/validate';
 
 const FormItem = Form.Item;
@@ -30,6 +27,7 @@ class SignupComponent extends Component {
             is_doc: false,
 
             formErrors: {},
+            nonFieldErrors: '',
             emailValid: false,
             passwordValid: false,
             formValid: true,
@@ -39,8 +37,8 @@ class SignupComponent extends Component {
     // state change and management
     //
     handleSelectChange = value => {
-        this.setState({'gender': value});
-    }
+        this.setState({gender: value});
+    };
 
     handleChange = e => {
         let name = e.target.name;
@@ -102,6 +100,7 @@ class SignupComponent extends Component {
             this.validateForm,
         );
     };
+
     validateForm = () => {
         this.setState({
             formValid: this.state.emailValid && this.state.passwordValid,
@@ -124,25 +123,30 @@ class SignupComponent extends Component {
             'profile_photo',
             'photo_id',
         ]);
-        console.log(form_data);
-        signup(form_data);
 
-        this.props.history.push('/login');
-
-        // fetch(AuthUrls.SIGNUP, {
-        //     method: 'POST', 
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify(form_data)
-        // }).then(response => {
-        //     // console.log(response.getAllResponseHeaders().toLowerCase());
-        //     console.log(response);
-        //     return response.json();
-        // }).then( data => {
-        //     //this.props.history.push('/login')
-        //     console.log(data);
-        // });
+        fetch(AuthUrls.SIGNUP, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(form_data),
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log(response);
+                    return response.json();
+                }
+                throw Error(
+                    'Some thing went wrong! Please make sure the information is valid',
+                );
+            })
+            .then(data => {
+                this.setState({nonFieldErrors: ''});
+                this.props.history.push('/login');
+            })
+            .catch(error => {
+                this.setState({nonFieldErrors: error.message});
+            });
 
         // fetch(AuthUrls.SIGNUP, {
         //     method: 'POST',
@@ -162,8 +166,19 @@ class SignupComponent extends Component {
 
     render() {
         return (
-            <div className="section section--form">
+            <div>
                 <h1 className="heading-primary u-margin-top-big">Signup</h1>
+                {this.state.nonFieldErrors && (
+                    <div className="section section--form">
+                        <Alert
+                            message="error"
+                            type="error"
+                            showIcon
+                            description={this.state.nonFieldErrors}
+                        />
+                    </div>
+                )}
+            <div className="section section--form">
                 <Form className="login-form" onSubmit={this.handleSubmit}>
                     <FormItem>
                         <label>First Name</label>
@@ -216,14 +231,14 @@ class SignupComponent extends Component {
                     </FormItem>
 
                     <FormItem>
-                        <label>Gender</label><br />
+                        <label>Gender</label>
+                        <br />
                         <Select
                             showSearch
                             style={{width: 200}}
                             placeholder="Gender"
                             name="gender"
-                            onChange={this.handleSelectChange}
-                            >
+                            onChange={this.handleSelectChange}>
                             <Option value="M">Male</Option>
                             <Option value="F">Female</Option>
                         </Select>
@@ -267,6 +282,7 @@ class SignupComponent extends Component {
                         Signup
                     </Button>
                 </Form>
+            </div>
             </div>
         );
     }

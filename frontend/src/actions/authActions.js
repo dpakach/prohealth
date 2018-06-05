@@ -9,6 +9,6 @@ export const logoutAction = () => {
 export const loginAction = (token) => {
     return {
         type: AuthTypes.LOGOUT,
-        token
+        token,
     };
 };
