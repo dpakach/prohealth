@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Menu, Icon } from 'antd';
 import {logoutAction} from '../actions/authActions';
 import { withRouter } from 'react-router';
-import PropTypes from "prop-types";
 
 
 class Header extends React.Component {
@@ -16,14 +15,9 @@ class Header extends React.Component {
         };
     }
 
-    static propTypes = {
-        authenticated: PropTypes.bool
-    };
-
     logout = () => {
         this.props.dispatch(logoutAction());
         this.props.history.push('/login');
-        localStorage.setItem('authenticated', false);
     }
 
     renderLinks = (auth) => {
