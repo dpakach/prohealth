@@ -1,6 +1,5 @@
 import React from 'react';
 
-import QueryCta from './QueryCta';
 import { Link } from 'react-router-dom';
 
 const Prescription = props => (
@@ -16,9 +15,9 @@ const Prescription = props => (
                 <li className="card__list-item">Work Hard</li>
                 <li className="card__list-item">Play hard</li>
             </ul>
-            <a className="btn btn--secondary btn--card" href="#">
+            <Link className="btn btn--secondary btn--card" href="#">
                 View Details
-            </a>
+            </Link>
             <Link className="btn btn--primary btn--card" to="#">
                 Resolve
             </Link>
