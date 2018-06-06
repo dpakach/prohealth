@@ -1,11 +1,16 @@
 import React from 'react';
+import QueryHeader from './QueryHeader';
+import Chat from './Chat';
 
-const QueryDetailComponent = (props) => {
+const QueryDetailComponent = props => {
     return (
-        <p>
-            query detail
-        </p>
-    )
-}
+        <div>
+            <div className="header">
+                <QueryHeader />
+            </div>
+            <Chat />
+        </div>
+    );
+};
 
 export default QueryDetailComponent;
