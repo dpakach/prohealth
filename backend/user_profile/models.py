@@ -47,12 +47,13 @@ class UserProfile(AbstractUser):
 
     # USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = [
-                    'first_name',
-                    'last_name',
+    #                 'first_name',
+    #                 'last_name',
                     'date_of_birth',
-                    'gender',
-                    'is_doc',
-                    'photo_id'
+    #                 'gender',
+    #                 'is_doc',
+    #                 'photo_id',
+                    'email'
                     ]
 
     def get_full_name(self):
