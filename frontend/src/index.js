@@ -10,6 +10,8 @@ import AppRouter from './routers/AppRouter';
 import './styles/style.css';
 import './styles/main.scss';
 
+import './style.less';
+
 // import {login, logout} from './actions/authActions';
 
 //store.subscribe(() => {
