@@ -15,7 +15,7 @@ const Prescription = props => (
                 <li className="card__list-item">Work Hard</li>
                 <li className="card__list-item">Play hard</li>
             </ul>
-            <Link className="btn btn--secondary btn--card" href="#">
+            <Link className="btn btn--secondary btn--card" to="#">
                 View Details
             </Link>
             <Link className="btn btn--primary btn--card" to="#">
