@@ -11,13 +11,8 @@ from .views.update_password import UpdatePasswordView
 from . import views
 
 urlpatterns = [
-    # url(r'auth/', include('rest_auth.urls')),
-    # url(r'^auth/registration/', include('rest_auth.registration.urls')),
-    # url(r'^password-reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-    #     TemplateView.as_view(template_name="index.html"),
-    #     name='password_reset_confirm'),
 
-        # Login / logout
+    # Login / logout
     url(r'^login/$', LoginView.as_view()),
     url(r'^logout/$', LogoutView.as_view()),
 
