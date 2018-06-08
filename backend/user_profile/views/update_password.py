@@ -20,10 +20,10 @@ class UpdatePasswordView(APIView):
             validate_password(password)
             request.user.set_password(password)
             request.user.save()
-            return Response({constants.SUCCESS: 'Password has been updated'})
+            return Response({'Success': 'Password has been updated'})
         except KeyError:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         except TypeError:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         except ValidationError as e:
-            return Response({constants.ERROR: e}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'Error': e}, status=status.HTTP_400_BAD_REQUEST)
