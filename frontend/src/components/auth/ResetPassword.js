@@ -96,7 +96,7 @@ class ResetPassword extends React.Component {
                 style={{width: 400}}>
                 <div>
                     {this.state.nonFieldErrors && (
-                        <div className="section section--form">
+                        <div className="u-margin-bottom-small">
                             <Alert
                                 message="error"
                                 type="error"
@@ -107,7 +107,7 @@ class ResetPassword extends React.Component {
                     )}
 
                     {this.state.success && (
-                        <div className="section section--form">
+                        <div className="u-margin-bottom-small">
                             <Alert
                                 message="success"
                                 type="success"
@@ -118,7 +118,7 @@ class ResetPassword extends React.Component {
                     )}
 
                     {!this.state.nonFieldErrors && !this.state.success &&(
-                        <div className="section section--form">
+                        <div className="u-margin-bottom-small">
                             <Alert
                                 message="password reset"
                                 type="info"

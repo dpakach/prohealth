@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
-import {Form, Icon, Input, Button, DatePicker, Select, Alert} from 'antd';
+import {Card, Form, Icon, Input, Button, DatePicker, Select, Alert} from 'antd';
 // import validate from '../../utils/validate';
 
 const FormItem = Form.Item;
@@ -16,15 +16,10 @@ class SignupComponent extends Component {
         this.state = {
             first_name: '',
             last_name: '',
-            username: '',
-            email: '',
-            password: '',
-            password2: '',
             date_of_birth: '',
             gender: '',
             photo_id: null,
             profile_photo: null,
-            is_doc: false,
 
             formErrors: {},
             nonFieldErrors: '',
@@ -41,12 +36,9 @@ class SignupComponent extends Component {
     };
 
     handleChange = e => {
-        let name = e.target.name;
-        let value = e.target.value;
-        this.setState({[name]: value}, () => {
-            this.validateField(name, value);
-        });
+        this.setState({[e.target.name]: e.target.value});
     };
+
     onDateChange = (date, dateString) => {
         this.setState({date_of_birth: dateString});
     };
@@ -62,51 +54,6 @@ class SignupComponent extends Component {
         // });
     };
 
-    // form fields validation
-
-    validateField = (fieldName, value) => {
-        let fieldValidationErrors = this.state.formErrors;
-        let emailValid = this.state.emailValid;
-        let passwordValid = this.state.passwordValid;
-
-        switch (fieldName) {
-            case 'email':
-                emailValid = value.match(
-                    /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i,
-                );
-                fieldValidationErrors.email = emailValid ? '' : ' is invalid';
-                break;
-            case 'password':
-                passwordValid = value.length >= 6;
-                fieldValidationErrors.password = passwordValid
-                    ? ''
-                    : ' is too short';
-                break;
-            case 'password2':
-                passwordValid = value === this.state.password;
-                fieldValidationErrors.password = passwordValid
-                    ? ''
-                    : 'passwords do not match';
-                break;
-            default:
-                break;
-        }
-        this.setState(
-            {
-                formErrors: fieldValidationErrors,
-                emailValid: emailValid,
-                passwordValid: passwordValid,
-            },
-            this.validateForm,
-        );
-    };
-
-    validateForm = () => {
-        this.setState({
-            formValid: this.state.emailValid && this.state.passwordValid,
-        });
-    };
-
     // form submittion
 
     handleSubmit = event => {
@@ -114,12 +61,8 @@ class SignupComponent extends Component {
         const form_data = _.pick(this.state, [
             'first_name',
             'last_name',
-            'email',
-            'username',
-            'password',
             'date_of_birth',
             'gender',
-            'is_doc',
             'profile_photo',
             'photo_id',
         ]);
@@ -166,124 +109,78 @@ class SignupComponent extends Component {
 
     render() {
         return (
-            <div>
-                <h1 className="heading-primary u-margin-top-big">Signup</h1>
-                {this.state.nonFieldErrors && (
+            <Card
+                title="Update Profile"
+                className="u-center-content"
+                bordered={false}
+                style={{width: 400}}>
+                <div>
+                    {!true && (
+                        <div className="u-margin-bottom-small">
+                            <Alert
+                                message="error"
+                                type="error"
+                                showIcon
+                                description={'error message'}
+                            />
+                        </div>
+                    )}
                     <div className="section section--form">
-                        <Alert
-                            message="error"
-                            type="error"
-                            showIcon
-                            description={this.state.nonFieldErrors}
-                        />
+                        <Form
+                            className="login-form"
+                            onSubmit={this.handleSubmit}>
+                            <FormItem>
+                                <label>First Name</label>
+                                <Input
+                                    prefix={<Icon type="user" />}
+                                    placeholder="First Name"
+                                    type="text"
+                                    name="first_name"
+                                    onChange={this.handleChange}
+                                />
+                            </FormItem>
+                            <FormItem>
+                                <label>Last Name</label>
+                                <Input
+                                    prefix={<Icon type="user" />}
+                                    placeholder="Last Name"
+                                    type="text"
+                                    name="last_name"
+                                    onChange={this.handleChange}
+                                />
+                            </FormItem>
+
+                            <FormItem>
+                                <label>Date Of Birth</label>
+                                <br />
+                                <DatePicker onChange={this.onDateChange} />
+                            </FormItem>
+
+                            <FormItem>
+                                <label>Gender</label>
+                                <br />
+                                <Select
+                                    showSearch
+                                    style={{width: 200}}
+                                    placeholder="Gender"
+                                    name="gender"
+                                    onChange={this.handleSelectChange}>
+                                    <Option value="M">Male</Option>
+                                    <Option value="F">Female</Option>
+                                </Select>
+                            </FormItem>
+
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                disabled={!this.state.formValid}
+                                className="login-form-button">
+                                Update
+                            </Button>
+                        </Form>
                     </div>
-                )}
-            <div className="section section--form">
-                <Form className="login-form" onSubmit={this.handleSubmit}>
-                    <FormItem>
-                        <label>First Name</label>
-                        <Input
-                            prefix={<Icon type="user" />}
-                            placeholder="First Name"
-                            type="text"
-                            name="first_name"
-                            onChange={this.handleChange}
-                        />
-                    </FormItem>
-                    <FormItem>
-                        <label>Last Name</label>
-                        <Input
-                            prefix={<Icon type="user" />}
-                            placeholder="Last Name"
-                            type="text"
-                            name="last_name"
-                            onChange={this.handleChange}
-                        />
-                    </FormItem>
-                    <FormItem>
-                        <label>Username</label>
-                        <Input
-                            prefix={<Icon type="user" />}
-                            placeholder="Username"
-                            type="text"
-                            name="username"
-                            onChange={this.handleChange}
-                        />
-                    </FormItem>
-                    <FormItem
-                        validateStatus={
-                            !this.state.formErrors.email ? 'success' : 'error'
-                        }>
-                        <label>email</label>
-                        <Input
-                            prefix={<Icon type="user" />}
-                            placeholder="email"
-                            type="email"
-                            name="email"
-                            onChange={this.handleChange}
-                        />
-                    </FormItem>
-
-                    <FormItem>
-                        <label>Date Of Birth</label>
-                        <br />
-                        <DatePicker onChange={this.onDateChange} />
-                    </FormItem>
-
-                    <FormItem>
-                        <label>Gender</label>
-                        <br />
-                        <Select
-                            showSearch
-                            style={{width: 200}}
-                            placeholder="Gender"
-                            name="gender"
-                            onChange={this.handleSelectChange}>
-                            <Option value="M">Male</Option>
-                            <Option value="F">Female</Option>
-                        </Select>
-                    </FormItem>
-
-                    <FormItem
-                        validateStatus={
-                            !this.state.formErrors.password
-                                ? 'success'
-                                : 'error'
-                        }>
-                        <label>password</label>
-                        <Input
-                            prefix={<Icon type="lock" />}
-                            placeholder="password"
-                            type="password"
-                            name="password"
-                            onChange={this.handleChange}
-                        />
-                    </FormItem>
-                    <FormItem
-                        validateStatus={
-                            !this.state.formErrors.password
-                                ? 'success'
-                                : 'error'
-                        }>
-                        <label>Confirm password</label>
-                        <Input
-                            prefix={<Icon type="lock" />}
-                            placeholder="Confirm password"
-                            type="password"
-                            name="password2"
-                            onChange={this.handleChange}
-                        />
-                    </FormItem>
-                    <Button
-                        type="primary"
-                        htmlType="submit"
-                        disabled={!this.state.formValid}
-                        className="login-form-button">
-                        Signup
-                    </Button>
-                </Form>
-            </div>
-            </div>
+                </div>
+            </Card>
         );
     }
 }
