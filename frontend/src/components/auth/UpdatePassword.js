@@ -100,12 +100,12 @@ class FeaturePage extends React.Component {
         return (
             <Card
                 title="UpdateProfile"
-                className="u-center-content"
+                className="u-center-content u-box-shadow-small"
                 bordered={false}
                 style={{width: 300}}>
                 <div>
                     {this.state.nonFieldErrors && (
-                        <div className="section section--form">
+                        <div className="u-margin-bottom-small">
                             <Alert
                                 message="error"
                                 type="error"
@@ -116,7 +116,7 @@ class FeaturePage extends React.Component {
                     )}
 
                     {this.state.success && (
-                        <div className="section section--form">
+                        <div className="u-margin-bottom-small">
                             <Alert
                                 message="success"
                                 type="success"
