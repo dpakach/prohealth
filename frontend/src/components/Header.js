@@ -1,21 +1,44 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {Menu, Icon} from 'antd';
+import {Menu, message, Icon} from 'antd';
 import {logoutAction} from '../actions/authActions';
 import {withRouter} from 'react-router';
+import {AuthUrls} from '../constants/urls';
 
 class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             authenticated: localStorage.getItem('authenticated'),
+            logoutError: '',
         };
     }
 
     logout = () => {
+        fetch(AuthUrls.LOGOUT, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token ${localStorage.getItem(
+                    'authentication',
+                )}`,
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    message.success('successfully logged out');
+                    this.props.history.push('/user/login/');
+                    return;
+                }
+                throw Error(
+                    'Some thing went wrong! Please make sure the information is valid',
+                );
+            })
+            .catch(error => {
+                message.error('some error occured while logging out');
+            });
         this.props.dispatch(logoutAction());
-        this.props.history.push('/login');
     };
 
     renderLinks = auth => {
