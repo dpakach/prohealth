@@ -109,7 +109,7 @@ class LoginComponent extends Component {
     render() {
         return (
             <div>
-                <h1 className="heading-primary u-margin-top-big">Login</h1>
+                <h1 className="heading-primary u-margin-top-small">Login</h1>
                 {this.state.nonFieldErrors && (
                     <div className="section section--form">
                         <Alert
@@ -120,7 +120,7 @@ class LoginComponent extends Component {
                         />
                     </div>
                 )}
-                <div className="section section--form">
+                <div>
                     <Form className="login-form" onSubmit={this.handleSubmit}>
                         <FormItem
                             validateStatus={
@@ -152,16 +152,24 @@ class LoginComponent extends Component {
                                 onChange={this.handleChange}
                             />
                         </FormItem>
-                        <Button
-                            type="primary"
-                            htmlType="submit"
-                            disabled={!this.state.formValid}
-                            className="login-form-button u-margin-bottom-small">
-                            Log In
-                        </Button>
-                        <div>
-                            Or <Link to="/signup"> register now!</Link>
-                        </div>
+                        <FormItem>
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                disabled={!this.state.formValid}
+                                className="login-form-button u-margin-bottom-small">
+                                Log In
+                            </Button>
+                            <div>
+                                Or <Link to="/signup"> register now!</Link>
+                                <p>
+                                    <Link
+                                        to="/reset-password">
+                                        Forgot password
+                                    </Link>
+                                </p>
+                            </div>
+                        </FormItem>
                     </Form>
                 </div>
             </div>

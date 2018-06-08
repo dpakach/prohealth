@@ -16,15 +16,9 @@ class SignupComponent extends Component {
         this.state = {
             first_name: '',
             last_name: '',
-            username: '',
             email: '',
             password: '',
             password2: '',
-            date_of_birth: '',
-            gender: '',
-            photo_id: null,
-            profile_photo: null,
-            is_doc: false,
 
             formErrors: {},
             nonFieldErrors: '',
@@ -36,9 +30,6 @@ class SignupComponent extends Component {
 
     // state change and management
     //
-    handleSelectChange = value => {
-        this.setState({gender: value});
-    };
 
     handleChange = e => {
         let name = e.target.name;
@@ -46,20 +37,6 @@ class SignupComponent extends Component {
         this.setState({[name]: value}, () => {
             this.validateField(name, value);
         });
-    };
-    onDateChange = (date, dateString) => {
-        this.setState({date_of_birth: dateString});
-    };
-
-    onFileChange = event => {
-        const data = new FormData();
-        data.append('file', event.target.files[0]);
-        data.append('name', 'some value user types');
-        data.append('description', 'some value user types');
-        // '/files' is your node.js route that triggers our middleware
-        // axios.post('/files', data).then(response => {
-        //     console.log(response); // do something with the response
-        // });
     };
 
     // form fields validation
@@ -115,13 +92,7 @@ class SignupComponent extends Component {
             'first_name',
             'last_name',
             'email',
-            'username',
             'password',
-            'date_of_birth',
-            'gender',
-            'is_doc',
-            'profile_photo',
-            'photo_id',
         ]);
 
         fetch(AuthUrls.SIGNUP, {
@@ -148,20 +119,6 @@ class SignupComponent extends Component {
                 this.setState({nonFieldErrors: error.message});
             });
 
-        // fetch(AuthUrls.SIGNUP, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(form_data),
-        // })
-        //     .then(res => {
-        //         console.log(res);
-        //         return res.json();
-        //     })
-        //     .then(data => {
-        //         console.log(data);
-        //     });
     };
 
     render() {
@@ -178,7 +135,7 @@ class SignupComponent extends Component {
                         />
                     </div>
                 )}
-            <div className="section section--form">
+            <div>
                 <Form className="login-form" onSubmit={this.handleSubmit}>
                     <FormItem>
                         <label>First Name</label>
@@ -200,16 +157,6 @@ class SignupComponent extends Component {
                             onChange={this.handleChange}
                         />
                     </FormItem>
-                    <FormItem>
-                        <label>Username</label>
-                        <Input
-                            prefix={<Icon type="user" />}
-                            placeholder="Username"
-                            type="text"
-                            name="username"
-                            onChange={this.handleChange}
-                        />
-                    </FormItem>
                     <FormItem
                         validateStatus={
                             !this.state.formErrors.email ? 'success' : 'error'
@@ -222,26 +169,6 @@ class SignupComponent extends Component {
                             name="email"
                             onChange={this.handleChange}
                         />
-                    </FormItem>
-
-                    <FormItem>
-                        <label>Date Of Birth</label>
-                        <br />
-                        <DatePicker onChange={this.onDateChange} />
-                    </FormItem>
-
-                    <FormItem>
-                        <label>Gender</label>
-                        <br />
-                        <Select
-                            showSearch
-                            style={{width: 200}}
-                            placeholder="Gender"
-                            name="gender"
-                            onChange={this.handleSelectChange}>
-                            <Option value="M">Male</Option>
-                            <Option value="F">Female</Option>
-                        </Select>
                     </FormItem>
 
                     <FormItem
@@ -274,6 +201,7 @@ class SignupComponent extends Component {
                             onChange={this.handleChange}
                         />
                     </FormItem>
+
                     <Button
                         type="primary"
                         htmlType="submit"
