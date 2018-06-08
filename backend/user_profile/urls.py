@@ -17,8 +17,8 @@ urlpatterns = [
     url(r'^logout/$', LogoutView.as_view()),
 
     # Password management
-    url(r'^reset_password/$', ResetPasswordView.as_view()),
-    url(r'^update_password/$', UpdatePasswordView.as_view()),
+    url(r'^reset-password/$', ResetPasswordView.as_view()),
+    url(r'^update-password/$', UpdatePasswordView.as_view()),
 
     # Profiles
     url(r'^profiles/$', ProfileView.as_view()),
