@@ -1,16 +1,30 @@
 from django.conf.urls import url
 from django.conf.urls import include
-from rest_framework.routers import DefaultRouter
 from django.views.generic import TemplateView
+from .views.user import UserView, UserDetail
+from .views.login import LoginView
+from .views.logout import LogoutView
+from .views.profile import ProfileView, ProfileDetail
+from .views.reset_password import ResetPasswordView
+from .views.update_password import UpdatePasswordView
 
 from . import views
 
-router = DefaultRouter()
-router.register('profile', views.UserProfileViewSet)
 urlpatterns = [
-    url(r'', include(router.urls)),
-    url(r'auth/', include('rest_auth.urls')),
-    url(r'^password-reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        TemplateView.as_view(template_name="index.html"),
-        name='password_reset_confirm'),
+
+    # Login / logout
+    url(r'^login/$', LoginView.as_view()),
+    url(r'^logout/$', LogoutView.as_view()),
+
+    # Password management
+    url(r'^reset-password/$', ResetPasswordView.as_view()),
+    url(r'^update-password/$', UpdatePasswordView.as_view()),
+
+    # Profiles
+    url(r'^profiles/$', ProfileView.as_view()),
+    url(r'^profiles/(?P<profile_id>[\d]+)$', ProfileDetail.as_view()),
+
+    # Users
+    url(r'^users/$', UserView.as_view()),
+    url(r'^users/(?P<user_id>[\d]+)$', UserDetail.as_view()),
 ]
