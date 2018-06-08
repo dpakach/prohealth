@@ -17,7 +17,7 @@ class UserQuerySerializer(serializers.ModelSerializer):
         model = UserQuery
         fields = '__all__'
     
-class MedicineSerializer(PrimaryKeyRelatedField, serializers.ModelSerializer):
+class MedicineSerializer(serializers.ModelSerializer):
     # queryset = Medicine.objects.all()
     class Meta:
         model = Medicine
@@ -25,7 +25,7 @@ class MedicineSerializer(PrimaryKeyRelatedField, serializers.ModelSerializer):
 
 
 class PrescriptionSerializer(serializers.ModelSerializer):
-    medicine = MedicineSerializer(many=True, read_only=False, queryset=Medicine.objects.all())
+    medicine = MedicineSerializer(many=True, read_only=False)
     class Meta:
         model = Prescription
         fields = ('id','medicine','description','prescribed_date','query')
@@ -33,7 +33,7 @@ class PrescriptionSerializer(serializers.ModelSerializer):
     def create(self, validate_data):
         medicine_data = validate_data.pop('medicine')
         prescription = Prescription.objects.create(**validate_data)
-        for medicine_data in medicine_data:
+        for medicine_data in prescription:
             Medicine.objects.create(prescription=prescription, **medicine_data)
         return prescription
 

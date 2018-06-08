@@ -1,4 +1,4 @@
-
+from rest_framework.decorators import detail_route
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
@@ -23,6 +23,12 @@ class UserQueryViewset(viewsets.ModelViewSet):
 class PrescriptionViewset(viewsets.ModelViewSet):
     serializer_class = PrescriptionSerializer
     queryset = Prescription.objects.all()
+    
+    @detail_route(methods=['GET'])
+    def medicine(request, pk=None):
+        qs = self.get_object().medicine.all()
+        serializer = MedicineSerializer(qs, many=True)
+        return Response(serializer.data)
 
 class MedicineViewset(viewsets.ModelViewSet):
     serializer_class = MedicineSerializer
