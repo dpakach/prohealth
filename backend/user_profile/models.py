@@ -1,66 +1,76 @@
+import uuid
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
-import os, random
+from django.conf import settings
+from django.contrib.auth.models import BaseUserManager
 
-def upload_posts_media_to(instance, filename):
-    username = instance.username
-    _, file_extension = os.path.splitext(filename)
-    filename = str(random.getrandbits(64)) + file_extension
-    return f'photos/{username}/{filename}'
+class UserManager(BaseUserManager):
+    use_in_migrations = True
 
-# class UserProfileManager(BaseUserManager):
+    def _create_user(self, email, password, **kwargs):
+        email = self.normalize_email(email)
+        is_staff = kwargs.pop('is_staff', False)
+        is_superuser = kwargs.pop('is_superuser', False)
+        user = self.model(
+            email=email,
+            is_active=True,
+            is_staff=is_staff,
+            is_superuser=is_superuser,
+            **kwargs
+        )
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
-#     def create_user(self, email, first_name, last_name, date_of_birth, gender, profile_photo, photo_id, is_doc, password=None):
-#         if not email:
-#             raise ValueError('Users must have an email address.')
+    def create_user(self, email, password=None, **extra_fields):
+        return self._create_user(email, password, **extra_fields)
 
-#         email = self.normalize_email(email)
-#         user = self.model(email=email, first_name=first_name, last_name=last_name, date_of_birth=date_of_birth, gender=gender, profile_photo=profile_photo, photo_id=photo_id, is_doc=is_doc)
-
-#         user.set_password(password)
-
-#         user.save(using=self._db)
-
-#         return user
+    def create_superuser(self, email, password, **extra_fields):
+        return self._create_user(email, password, is_staff=True, is_superuser=True, **extra_fields)
 
 
-class UserProfile(AbstractUser):
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
+
+class User(AbstractBaseUser, PermissionsMixin):
+    date_joined = models.DateTimeField(auto_now_add=True)
     email = models.EmailField(max_length=255, unique=True)
-    date_of_birth = models.DateField(null=False)
-    GENDER_CHOICES = (
-        (None, None),
-        ('M', 'Male'),
-        ('F', 'Female')
-    )
-    gender = models.CharField(
-        max_length=2,
-        choices=GENDER_CHOICES,
-        null=False,
-    )
-    is_doc = models.BooleanField(null=False, default=False)
-    profile_photo = models.ImageField(
-        null=True, upload_to=upload_posts_media_to, default=None)
-    photo_id = models.ImageField(
-        null=True, upload_to=upload_posts_media_to, default=None)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    objects = UserManager()
 
-    # USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = [
-                    'first_name',
-                    'last_name',
-                    'date_of_birth',
-                    'gender',
-                    'is_doc',
-                    'photo_id'
-                    ]
+    USERNAME_FIELD = 'email'
 
-    def get_full_name(self):
-        return self.first_name + self.last_name
+    def __str__(self):
+        return self.email
 
     def get_short_name(self):
         return self.first_name
 
+    def get_full_name(self):
+        return self.first_name + self.last_name
+
+    def save(self, *args, **kwargs):
+        if not self.password:
+            self.password = str(uuid.uuid4()).replace('-', '')
+        super(User, self).save(*args, **kwargs)
+
+
+class Profile(models.Model):
+    image = models.ImageField(blank=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+
     def __str__(self):
-        return self.email
-    
+        return self.user.email
+
+
+class ResetPasswordCode(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    code = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
+
+    class Meta:
+        default_related_name = 'reset_password_codes'
+
+    def __str__(self):
+        return f'{self.user.email} - {self.code}'
+
