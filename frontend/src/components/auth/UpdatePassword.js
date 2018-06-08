@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
 
-import {Alert, Card, Form, Icon, Input, Button, Checkbox} from 'antd';
+import {Alert, Card, Form, Icon, Input, Button, message, Checkbox} from 'antd';
 const FormItem = Form.Item;
 
 class FeaturePage extends React.Component {
@@ -73,16 +73,20 @@ class FeaturePage extends React.Component {
         event.preventDefault();
         const form_data = _.pick(this.state, ['new_password1']);
 
-        fetch(AuthUrls.SIGNUP, {
+        fetch(AuthUrls.UPDATE_PASSWORD, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                Authorization: `Token ${localStorage.getItem(
+                    'authentication',
+                )}`,
             },
-            body: JSON.stringify({}),
+            body: JSON.stringify({password: this.state.new_password1}),
         })
             .then(response => {
                 if (response.ok) {
                     console.log(response);
+                    message.success('password updated successfully');
                     return response.json();
                 }
                 throw Error(

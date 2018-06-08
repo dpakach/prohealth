@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {withRouter} from 'react-router';
 import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
 import {Form, Icon, Input, Button, DatePicker, Select, Alert} from 'antd';
@@ -113,7 +114,8 @@ class SignupComponent extends Component {
             })
             .then(data => {
                 this.setState({nonFieldErrors: ''});
-                this.props.history.push('/login');
+
+                this.props.history.push('/user/login/');
             })
             .catch(error => {
                 this.setState({nonFieldErrors: error.message});
@@ -124,9 +126,9 @@ class SignupComponent extends Component {
     render() {
         return (
             <div>
-                <h1 className="heading-primary u-margin-top-big">Signup</h1>
+                <h1 className="heading-primary u-margin-top-small">Signup</h1>
                 {this.state.nonFieldErrors && (
-                    <div className="section section--form">
+                    <div className="u-margin-bottom-small">
                         <Alert
                             message="error"
                             type="error"
@@ -216,4 +218,4 @@ class SignupComponent extends Component {
     }
 }
 
-export default SignupComponent;
+export default withRouter(SignupComponent);

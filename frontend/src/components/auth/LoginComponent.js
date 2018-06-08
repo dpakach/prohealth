@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {withRouter} from 'react-router';
 import _ from 'lodash';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
@@ -95,10 +96,11 @@ class LoginComponent extends Component {
                 );
             })
             .then(data => {
+                console.log(data);
                 this.setState({nonFieldErrors: ''});
-                localStorage.setItem('authentication', data['key']);
+                localStorage.setItem('authentication', data['token']);
                 localStorage.setItem('authenticated', true);
-                store.dispatch(loginAction(data['key']));
+                store.dispatch(loginAction(data['token']));
                 this.props.history.push('/');
             })
             .catch(error => {
@@ -183,4 +185,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(LoginComponent);
+export default withRouter(connect(mapStateToProps)(LoginComponent));
