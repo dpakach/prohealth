@@ -21,8 +21,6 @@ class Medicine(models.Model):
     
 
 
-    
-
 class Appointment(models.Model):
     appointed_doc = models.CharField(max_length=25)
     appointed_time = models.DateTimeField()
@@ -70,7 +68,7 @@ class Prescription(models.Model):
     medicine = models.ManyToManyField(Medicine)
     description = models.TextField()
     prescribed_date = models.DateTimeField(auto_now_add=True)
-    query = models.ForeignKey(UserQuery)
+    query = models.ForeignKey(UserQuery, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.prescribed_date)
