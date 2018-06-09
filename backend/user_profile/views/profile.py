@@ -2,11 +2,18 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from user_profile.models import Profile
-from user_profile.serializers import ProfileSerializer, ProfileSerializerUpdate, UserSerializerLogin
+from user_profile.models import UserProfile, DoctorProfile
+from user_profile.serializers import (
+    UserProfileSerializer,
+    UserProfileSerializerUpdate,
+    DoctorProfileSerializer,
+    DoctorProfileSerializerUpdate,
+    UserSerializerLogin
+)
+ 
 
 # profiles
-class ProfileView(APIView):
+class UserProfileView(APIView):
 
     @staticmethod
     def get(request):
@@ -14,12 +21,12 @@ class ProfileView(APIView):
         List profiles
         """
 
-        profiles = Profile.objects.all()
-        return Response(ProfileSerializer(profiles, many=True).data)
+        profiles = UserProfile.objects.all()
+        return Response(UserProfileSerializer(profiles, many=True).data)
 
 
 # profiles/{profile_id}
-class ProfileDetail(APIView):
+class UserProfileDetail(APIView):
 
     @staticmethod
     def patch(request, profile_id):
@@ -27,11 +34,42 @@ class ProfileDetail(APIView):
         Update profile of authenticated user
         """
 
-        profile = get_object_or_404(Profile, pk=profile_id)
+        profile = get_object_or_404(UserProfile, pk=profile_id)
         if profile.user != request.user:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
-        serializer = ProfileSerializerUpdate(profile, data=request.data, context={'request': request}, partial=True)
+        serializer = UserProfileSerializerUpdate(profile, data=request.data, context={'request': request}, partial=True)
         if serializer.is_valid():
             profile = serializer.save()
             return Response(UserSerializerLogin(profile.user).data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# profiles
+class DoctorProfileView(APIView):
+
+    @staticmethod
+    def get(request):
+        """
+        List profiles
+        """
+
+        profiles = DoctorProfile.objects.all()
+        return Response(DoctorProfileSerializer(profiles, many=True).data)
+
+
+# profiles/{profile_id}
+class DoctorProfileDetail(APIView):
+
+    @staticmethod
+    def patch(request, profile_id):
+        """
+        Update profile of authenticated user
+        """
+
+        profile = get_object_or_404(DoctorProfile, pk=profile_id)
+        if profile.user != request.user:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        serializer = DoctorProfileSerializerUpdate(profile, data=request.data, context={'request': request}, partial=True)
+        if serializer.is_valid():
+            profile = serializer.save()
+            return Response(DoctorSerializerLogin(profile.user).data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

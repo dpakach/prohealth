@@ -1,8 +1,14 @@
-import uuid
+import uuid, os, random
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import BaseUserManager
+
+def upload_posts_media_to(instance, filename):
+    username = instance.username
+    _, file_extension = os.path.splitext(filename)
+    filename = str(random.getrandbits(64)) + file_extension
+    return f'photos/{username}/{filename}'
 
 class UserManager(BaseUserManager):
     use_in_migrations = True
@@ -37,6 +43,21 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_patient = models.BooleanField(default=True)
+    is_doctor = models.BooleanField(default=False)
+    date_of_birth = models.DateField(null=True, default=None)
+    GENDER_CHOICES = (
+        (None, None),
+        ('M', 'Male'),
+        ('F', 'Female')
+    )
+    gender = models.CharField(
+        max_length=2,
+        choices=GENDER_CHOICES,
+        null=True,
+        default=None,
+    )
+
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
@@ -56,8 +77,26 @@ class User(AbstractBaseUser, PermissionsMixin):
         super(User, self).save(*args, **kwargs)
 
 
-class Profile(models.Model):
-    image = models.ImageField(blank=True)
+class UserProfile(models.Model):
+    profile_photo = models.ImageField(
+        null=True, upload_to=upload_posts_media_to, default=None)
+    photo_doc = models.ImageField(
+        null=True, upload_to=upload_posts_media_to, default=None)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+
+    def __str__(self):
+        return self.user.email
+
+class DoctorProfile(models.Model):
+    profile_photo = models.ImageField(
+        null=True, upload_to=upload_posts_media_to, default=None)
+    photo_doc = models.ImageField(
+        null=True, upload_to=upload_posts_media_to, default=None)
+    hospital = models.CharField(max_length=255)
+    qualification = models.CharField(max_length=255)
+    description = models.TextField(max_length=500)
+    speciality = models.CharField(max_length=255)
+    exp_pts = models.IntegerField(default=0)
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
 
     def __str__(self):

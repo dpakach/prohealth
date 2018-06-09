@@ -1,23 +1,33 @@
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
-from user_profile.models import Profile, User
+from user_profile.models import UserProfile, User, DoctorProfile
 
 class UserSerializer(serializers.ModelSerializer):
-    profile = serializers.SerializerMethodField()
+    user_profile = serializers.SerializerMethodField()
+    doctor_profile = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'first_name', 'last_name', 'profile',)
+        fields = ('id', 'email', 'first_name', 'last_name', 'user_profile', 'doctor_profile')
 
     @staticmethod
-    def get_profile(user):
+    def get_user_profile(user):
         """
         Get or create profile
         """
 
-        profile, created = Profile.objects.get_or_create(user=user)
-        return ProfileSerializer(profile, read_only=True).data
+        profile, created = UserProfile.objects.get_or_create(user=user)
+        return UserProfileSerializer(profile, read_only=True).data
+
+    @staticmethod
+    def get_doctor_profile(user):
+        """
+        Get or create profile
+        """
+
+        profile, created = DoctorProfile.objects.get_or_create(user=user)
+        return DoctorProfileSerializer(profile, read_only=True).data
 
 
 class UserSerializerCreate(serializers.ModelSerializer):
@@ -59,7 +69,7 @@ class UserSerializerLogin(UserSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'first_name', 'last_name', 'profile', 'token')
+        fields = ('id', 'email', 'first_name', 'last_name', 'user_profile', 'doctor_profile', 'token')
 
 
 class UserSerializerUpdate(serializers.ModelSerializer):
@@ -69,15 +79,28 @@ class UserSerializerUpdate(serializers.ModelSerializer):
         fields = ('first_name', 'last_name')
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Profile
+        model = UserProfile
         fields = '__all__'
 
 
-class ProfileSerializerUpdate(serializers.ModelSerializer):
+class UserProfileSerializerUpdate(serializers.ModelSerializer):
 
     class Meta:
-        model = Profile
-        fields = ('image',)
+        model = UserProfile
+        fields = ('profile_photo','photo_doc')
+
+class DoctorProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = DoctorProfile
+        fields = '__all__'
+
+
+class DoctorProfileSerializerUpdate(serializers.ModelSerializer):
+
+    class Meta:
+        model = DoctorProfile
+        fields = ('profile_photo','photo_doc', 'qualification', 'speciality', 'hospital', 'description', 'exp_pts')
