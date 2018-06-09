@@ -41,45 +41,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
 
-<<<<<<< HEAD
-class UserProfile(AbstractUser):
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    email = models.EmailField(max_length=255, unique=True)
-    date_of_birth = models.DateField(null=False)
-    GENDER_CHOICES = (
-        (None, None),
-        ('M', 'Male'),
-        ('F', 'Female')
-    )
-    gender = models.CharField(
-        max_length=2,
-        choices=GENDER_CHOICES,
-        null=False,
-    )
-    is_doc = models.BooleanField(null=False, default=False)
-    profile_photo = models.ImageField(
-        null=True, upload_to=upload_posts_media_to, default=None)
-    photo_id = models.ImageField(
-        null=True, upload_to=upload_posts_media_to, default=None)
-
-    # USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = [
-    #                 'first_name',
-    #                 'last_name',
-                    'date_of_birth',
-    #                 'gender',
-    #                 'is_doc',
-    #                 'photo_id',
-                    'email'
-                    ]
-=======
     def __str__(self):
         return self.email
 
     def get_short_name(self):
         return self.first_name
->>>>>>> origin
 
     def get_full_name(self):
         return self.first_name + self.last_name
@@ -92,14 +58,14 @@ class UserProfile(AbstractUser):
 
 class Profile(models.Model):
     image = models.ImageField(blank=True)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.email
 
 
 class ResetPasswordCode(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     code = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
 
     class Meta:
