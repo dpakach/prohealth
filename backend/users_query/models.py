@@ -21,15 +21,6 @@ class Medicine(models.Model):
     
 
 
-class Appointment(models.Model):
-    appointed_doc = models.CharField(max_length=25)
-    appointed_time = models.DateTimeField()
-    hospital = models.CharField(max_length=25)
-    venue = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.hospital
-
 
 class UserQuery(models.Model):
     """ class used to create users health related queries"""
@@ -72,3 +63,13 @@ class Prescription(models.Model):
 
     def __str__(self):
         return str(self.prescribed_date)
+
+
+class Appointment(models.Model):
+    appointed_doc = models.CharField(max_length=25)
+    appointed_time = models.DateTimeField()
+    hospital = models.CharField(max_length=25)
+    venue = models.CharField(max_length=100)
+    query = models.ForeignKey(UserQuery, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.hospital

@@ -31,9 +31,9 @@ class PrescriptionSerializer(serializers.ModelSerializer):
         fields = ('id','medicine','description','prescribed_date','query')
 
     def create(self, validate_data):
-        medicine_data = validate_data.pop('medicine')
+        medicine_data = validate_data.pop('medicine',[])
         prescription = Prescription.objects.create(**validate_data)
-        for medicine_data in prescription:
+        for data in medicine_data:
             Medicine.objects.create(prescription=prescription, **medicine_data)
         return prescription
 
