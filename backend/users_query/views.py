@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import filters
 from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.response import Response
 
 from . models import UserQuery, Prescription, Medicine, Appointment
 from . serializer import UserQuerySerializer, PrescriptionSerializer, AppointmentSerializer, MedicineSerializer
@@ -25,12 +25,9 @@ class PrescriptionViewset(viewsets.ModelViewSet):
     queryset = Prescription.objects.all()
     
     @detail_route(methods=['GET'])
-    def medicine(request, pk=None):
+    def medicine(self, request, pk=None):
         qs = self.get_object().medicine.all()
         serializer = MedicineSerializer(qs, many=True)
         return Response(serializer.data)
 
-class MedicineViewset(viewsets.ModelViewSet):
-    serializer_class = MedicineSerializer
-    queryset = Medicine.objects.all()
     
