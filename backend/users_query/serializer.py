@@ -5,6 +5,16 @@ from . models import UserQuery, Medicine, Appointment, Prescription
 
 class UserQuerySerializer(serializers.ModelSerializer):
     """ helps to serialize the data realted to UserQuery Model"""
+    token = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_token():
+        """
+        Get or create token
+        """
+
+        token, created = Token.objects.get_or_create()
+        return token.key
 
     def validate(self, data):
         if data['age_of_patient'] > 100 or data['age_of_patient']<0:
