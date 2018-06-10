@@ -1,5 +1,5 @@
 from django.db import models
-# from user_profile.models import UserProfile
+from user_profile.models import User
 # Create your models here.
 
 import uuid
@@ -37,10 +37,10 @@ class UserQuery(models.Model):
     weight_of_patient = models.SmallIntegerField(blank = True, null=True)
     title_problem = models.CharField(max_length = 510)
     description  = models.TextField()
-    file_related = models.FileField(blank=True, upload_to=get_file_path)
+    file_related = models.FileField(blank=True, upload_to=get_file_path, null=True)
     tag = models.CharField(max_length = 1, choices = TAG_CHOICES)
     date_of_submission = models.DateTimeField(auto_now_add=True)
-    # user = models.ForeignKey(UserProfile)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     taken = models.BooleanField(default=False)
     resolved = models.BooleanField(default=False)
     #appointment = models.OneToOneField(Appointment, blank=True)
