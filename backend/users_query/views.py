@@ -6,20 +6,33 @@ from rest_framework import filters
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+
+
 from . models import UserQuery, Prescription, Medicine, Appointment
 from . serializer import UserQuerySerializer, PrescriptionSerializer, AppointmentSerializer, MedicineSerializer
 from . import permissions
+from user_profile.models import User
 # Create your views here.
 
 class UserQueryViewset(viewsets.ModelViewSet):
     
+
     serializer_class = UserQuerySerializer
     queryset = UserQuery.objects.all()
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (permissions.UpdateOwnUserQuery,)
+    # permission_classes = (permissions.UpdateOwnUserQuery,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name_of_patient','title_problem',)
 
+    def perform_create(self, serializer):
+        return serializer.save(user=self.request.user)
+
+    def get_permissions(self):
+       if self.request.method == 'PATCH':
+           self.permission_classes = (permissions.IsUpdateQuery,)
+       return super(UserQueryViewset, self).get_permissions()
+
+   
 class PrescriptionViewset(viewsets.ModelViewSet):
     serializer_class = PrescriptionSerializer
     queryset = Prescription.objects.all()

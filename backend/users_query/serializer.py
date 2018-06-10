@@ -5,16 +5,6 @@ from . models import UserQuery, Medicine, Appointment, Prescription
 
 class UserQuerySerializer(serializers.ModelSerializer):
     """ helps to serialize the data realted to UserQuery Model"""
-    token = serializers.SerializerMethodField()
-
-    @staticmethod
-    def get_token():
-        """
-        Get or create token
-        """
-
-        token, created = Token.objects.get_or_create()
-        return token.key
 
     def validate(self, data):
         if data['age_of_patient'] > 100 or data['age_of_patient']<0:
@@ -26,6 +16,16 @@ class UserQuerySerializer(serializers.ModelSerializer):
     class Meta:
         model = UserQuery
         fields = '__all__'
+        read_only_fields = ('user',)
+
+    def validate_user(self, user):
+        """
+        Validate authenticated user
+        """
+
+        if user != self.context['request'].user:
+            raise serializers.ValidationError('You can not create post replies for other users')
+        return user
     
 class MedicineSerializer(serializers.ModelSerializer):
     # queryset = Medicine.objects.all()
@@ -41,10 +41,12 @@ class PrescriptionSerializer(serializers.ModelSerializer):
         fields = ('id','medicine','description','prescribed_date','query')
 
     def create(self, validate_data):
-        medicine_data = validate_data.pop('medicine',[])
+        medicine_data = validate_data.pop('medicine')
         prescription = Prescription.objects.create(**validate_data)
-        for data in medicine_data:
-            Medicine.objects.create(prescription=prescription, **medicine_data)
+        med_list = []
+        for medicine_details in medicine_data:
+            med_list.append(Medicine.objects.create(**medicine_details))
+        prescription.medicine.add(*med_list)
         return prescription
 
 class AppointmentSerializer(serializers.ModelSerializer):
