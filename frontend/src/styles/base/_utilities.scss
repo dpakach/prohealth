@@ -1,58 +1,58 @@
-.u-center-text{ 
-    text-align: center !important; 
+.u-center-text {
+    text-align: center !important;
 }
 
-.u-margin-bottom-big{ 
+.u-margin-bottom-big {
     margin-bottom: 8rem !important;
 
-    @include respond(tab-port){
-            margin-bottom: 5rem !important;
+    @include respond(tab-port) {
+        margin-bottom: 5rem !important;
     }
 }
 
-.u-margin-bottom-medium{ 
-    margin-bottom: 4rem !important; 
+.u-margin-bottom-medium {
+    margin-bottom: 4rem !important;
 
-    @include respond(tab-port){
-            margin-bottom: 3rem !important;
+    @include respond(tab-port) {
+        margin-bottom: 3rem !important;
     }
 }
 
-.u-margin-bottom-small{ 
-    margin-bottom: 1.5rem !important; 
+.u-margin-bottom-small {
+    margin-bottom: 1.5rem !important;
 
-    @include respond(tab-port){
-            margin-bottom: 1rem !important;
+    @include respond(tab-port) {
+        margin-bottom: 1rem !important;
     }
 }
 
 .u-box-shadow-small {
-    box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
+    box-shadow: 0 .5rem 1rem rgba($color-black, 0.15);
 }
 
-.u-margin-top-big{ 
-        margin-top: 8rem !important; 
+.u-margin-top-big {
+    margin-top: 8rem !important;
 
-        @include respond(tab-port){
-                margin-top: 5rem !important;
-        }
+    @include respond(tab-port) {
+        margin-top: 5rem !important;
+    }
 }
 
-.u-center-content{
+.u-center-content {
     position: absolute;
-    top: 50%;
+    top: 20%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 0%);
 }
 
-.u-hide-me{
-        &--phone{
-                @include respond(phone){
-                        display: none;
-                }
+.u-hide-me {
+    &--phone {
+        @include respond(phone) {
+            display: none;
         }
+    }
 }
 
-.u-hl-text{
-        color: $color-tertiary-light !important;
+.u-hl-text {
+    color: $color-tertiary-light !important;
 }

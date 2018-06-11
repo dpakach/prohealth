@@ -6,3 +6,7 @@ export const AuthUrls = {
     LOGOUT: `${ROOT_URL}api/logout/`,
     UPDATE_PASSWORD: `${ROOT_URL}api/update-password/`
 }
+
+export const QueryUrls = {
+    CREATE: `${ROOT_URL}api/query/`,
+}

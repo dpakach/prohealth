@@ -48,6 +48,7 @@ class LoginSignupComponent extends React.Component {
                     style={{width: '100%'}}
                     tabList={tabList}
                     activeTabKey={this.state.key}
+                    className="u-box-shadow-small"
                     onTabChange={key => {
                         this.onTabChange(key);
                     }}>

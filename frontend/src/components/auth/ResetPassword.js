@@ -91,7 +91,7 @@ class ResetPassword extends React.Component {
         return (
             <Card
                 title="Reset Password"
-                className="u-center-content"
+                className="u-center-content u-box-shadow-small"
                 bordered={false}
                 style={{width: 400}}>
                 <div>
