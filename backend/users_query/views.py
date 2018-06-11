@@ -36,11 +36,20 @@ class UserQueryViewset(viewsets.ModelViewSet):
 class PrescriptionViewset(viewsets.ModelViewSet):
     serializer_class = PrescriptionSerializer
     queryset = Prescription.objects.all()
-    
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
     @detail_route(methods=['GET'])
     def medicine(self, request, pk=None):
         qs = self.get_object().medicine.all()
         serializer = MedicineSerializer(qs, many=True)
         return Response(serializer.data)
+
+
+class AppointmentViewSet(viewsets.ModelViewSet):
+    serializer_class = AppointmentSerializer
+    queryset = Appointment.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     

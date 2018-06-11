@@ -7,7 +7,7 @@ from . import views
 router = DefaultRouter()
 router.register('user-query', views.UserQueryViewset)
 router.register (r'pescribe', views.PrescriptionViewset)
-
+router.register(r'appointment',views.AppointmentViewSet)
 
 
 urlpatterns = [
