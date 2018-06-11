@@ -44,6 +44,9 @@ class PrescriptionViewset(viewsets.ModelViewSet):
         qs = self.get_object().medicine.all()
         serializer = MedicineSerializer(qs, many=True)
         return Response(serializer.data)
+    
+    # def perform_create(self, serializer):
+    #     return serializer.save(doctor=self.request.user)
 
 
 class AppointmentViewSet(viewsets.ModelViewSet):
@@ -52,4 +55,6 @@ class AppointmentViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
+    def perform_create(self, serializer):
+        return serializer.save(user=self.request.user)
     
