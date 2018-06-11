@@ -1,5 +1,5 @@
 from django.db import models
-from user_profile.models import User
+from user_profile.models import User, DoctorProfile
 # Create your models here.
 
 import uuid
@@ -60,17 +60,19 @@ class Prescription(models.Model):
     description = models.TextField()
     prescribed_date = models.DateTimeField(auto_now_add=True)
     query = models.ForeignKey(UserQuery, on_delete=models.CASCADE)
-
+   
     def __str__(self):
         return str(self.prescribed_date)
 
 
 class Appointment(models.Model):
     appointed_doc = models.CharField(max_length=25)
-    appointed_time = models.DateTimeField(auto_now_add=True)
+    appointed_date = models.DateField(default=None)
+    appoint_time = models.TimeField(default=None)
     hospital = models.CharField(max_length=25)
     venue = models.CharField(max_length=100)
-    query = models.ForeignKey(UserQuery, on_delete=models.CASCADE)
+    query = models.ForeignKey(UserQuery, on_delete=models.CASCADE, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self):
         return self.hospital
