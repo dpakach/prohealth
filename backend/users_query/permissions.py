@@ -21,5 +21,3 @@ class IsUpdateQuery(permissions.BasePermission):
         else:
             return False
 
-
-
