@@ -30,7 +30,7 @@ class SignupComponent extends Component {
             email: '',
             password: '',
             password2: '',
-            asDoctor: false,
+            is_doctor: false,
 
             formErrors: {},
             nonFieldErrors: '',
@@ -55,7 +55,7 @@ class SignupComponent extends Component {
     //
     handleCheckbox = e => {
         console.log(e);
-        this.setState({['asDoctor']: e.target.checked})
+        this.setState({['is_doctor']: e.target.checked})
     }
 
     validateField = (fieldName, value) => {
@@ -110,6 +110,7 @@ class SignupComponent extends Component {
             'last_name',
             'email',
             'password',
+            'is_doctor',
         ]);
 
         fetch(AuthUrls.SIGNUP, {
@@ -227,7 +228,7 @@ class SignupComponent extends Component {
                         <FormItem>
                             <Checkbox
                                 onChange={this.handleCheckbox}
-                                name="isDoctor"
+                                name="is_doctor"
                             /><span>Log in as Doctor</span>
                         </FormItem>
                         <Button

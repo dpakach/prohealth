@@ -90,78 +90,83 @@ class UpdateUserProfile extends Component {
 
     render() {
         return (
-            <Card
-                title="Update User Profile"
-                className="u-margin-bottom-small"
-                bordered={false}
-                style={{width: 400}}>
-                <div>
-                    {!true && (
-                        <div className="u-margin-bottom-small">
-                            <Alert
-                                message="error"
-                                type="error"
-                                showIcon
-                                description={'error message'}
-                            />
+            <div>
+                {this.props.phase == 'starting' && (
+                    <p>update your profile before you start!!</p>
+                )}
+                <Card
+                    title="Update User Profile"
+                    className="u-margin-bottom-small"
+                    bordered={false}
+                    style={{width: 400}}>
+                    <div>
+                        {!true && (
+                            <div className="u-margin-bottom-small">
+                                <Alert
+                                    message="error"
+                                    type="error"
+                                    showIcon
+                                    description={'error message'}
+                                />
+                            </div>
+                        )}
+                        <div className="section section--form">
+                            <Form
+                                className="login-form"
+                                onSubmit={this.handleSubmit}>
+                                <FormItem>
+                                    <label>First Name</label>
+                                    <Input
+                                        prefix={<Icon type="user" />}
+                                        placeholder="First Name"
+                                        type="text"
+                                        name="first_name"
+                                        onChange={this.handleChange}
+                                    />
+                                </FormItem>
+                                <FormItem>
+                                    <label>Last Name</label>
+                                    <Input
+                                        prefix={<Icon type="user" />}
+                                        placeholder="Last Name"
+                                        type="text"
+                                        name="last_name"
+                                        onChange={this.handleChange}
+                                    />
+                                </FormItem>
+
+                                <FormItem>
+                                    <label>Date Of Birth</label>
+                                    <br />
+                                    <DatePicker onChange={this.onDateChange} />
+                                </FormItem>
+
+                                <FormItem>
+                                    <label>Gender</label>
+                                    <br />
+                                    <Select
+                                        showSearch
+                                        style={{width: 200}}
+                                        placeholder="Gender"
+                                        name="gender"
+                                        onChange={this.handleSelectChange}>
+                                        <Option value="M">Male</Option>
+                                        <Option value="F">Female</Option>
+                                    </Select>
+                                </FormItem>
+
+                                <Button
+                                    type="primary"
+                                    htmlType="submit"
+                                    disabled={!this.state.formValid}
+                                    className="login-form-button">
+                                    Update
+                                </Button>
+                            </Form>
                         </div>
-                    )}
-                    <div className="section section--form">
-                        <Form
-                            className="login-form"
-                            onSubmit={this.handleSubmit}>
-                            <FormItem>
-                                <label>First Name</label>
-                                <Input
-                                    prefix={<Icon type="user" />}
-                                    placeholder="First Name"
-                                    type="text"
-                                    name="first_name"
-                                    onChange={this.handleChange}
-                                />
-                            </FormItem>
-                            <FormItem>
-                                <label>Last Name</label>
-                                <Input
-                                    prefix={<Icon type="user" />}
-                                    placeholder="Last Name"
-                                    type="text"
-                                    name="last_name"
-                                    onChange={this.handleChange}
-                                />
-                            </FormItem>
-
-                            <FormItem>
-                                <label>Date Of Birth</label>
-                                <br />
-                                <DatePicker onChange={this.onDateChange} />
-                            </FormItem>
-
-                            <FormItem>
-                                <label>Gender</label>
-                                <br />
-                                <Select
-                                    showSearch
-                                    style={{width: 200}}
-                                    placeholder="Gender"
-                                    name="gender"
-                                    onChange={this.handleSelectChange}>
-                                    <Option value="M">Male</Option>
-                                    <Option value="F">Female</Option>
-                                </Select>
-                            </FormItem>
-
-                            <Button
-                                type="primary"
-                                htmlType="submit"
-                                disabled={!this.state.formValid}
-                                className="login-form-button">
-                                Update
-                            </Button>
-                        </Form>
                     </div>
-                </div>
-            </Card>
+                </Card>
+            </div>
         );
     }
 }
