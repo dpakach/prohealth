@@ -2,7 +2,17 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router';
 import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
-import {Form, Icon, Input, Button, DatePicker, Select, Alert} from 'antd';
+import {
+    Form,
+    message,
+    Icon,
+    Input,
+    Button,
+    DatePicker,
+    Select,
+    Alert,
+    Checkbox
+} from 'antd';
 // import validate from '../../utils/validate';
 
 const FormItem = Form.Item;
@@ -20,6 +30,7 @@ class SignupComponent extends Component {
             email: '',
             password: '',
             password2: '',
+            asDoctor: false,
 
             formErrors: {},
             nonFieldErrors: '',
@@ -41,6 +52,11 @@ class SignupComponent extends Component {
     };
 
     // form fields validation
+    //
+    handleCheckbox = e => {
+        console.log(e);
+        this.setState({['asDoctor']: e.target.checked})
+    }
 
     validateField = (fieldName, value) => {
         let fieldValidationErrors = this.state.formErrors;
@@ -114,13 +130,15 @@ class SignupComponent extends Component {
             })
             .then(data => {
                 this.setState({nonFieldErrors: ''});
-
+                message.success('Signed up successfully!');
+                if(this.state.asDoctor){
+                    console.log('hello') 
+                }
                 this.props.history.push('/user/login/');
             })
             .catch(error => {
                 this.setState({nonFieldErrors: error.message});
             });
-
     };
 
     render() {
@@ -137,82 +155,90 @@ class SignupComponent extends Component {
                         />
                     </div>
                 )}
-            <div>
-                <Form className="login-form" onSubmit={this.handleSubmit}>
-                    <FormItem>
-                        <label>First Name</label>
-                        <Input
-                            prefix={<Icon type="user" />}
-                            placeholder="First Name"
-                            type="text"
-                            name="first_name"
-                            onChange={this.handleChange}
-                        />
-                    </FormItem>
-                    <FormItem>
-                        <label>Last Name</label>
-                        <Input
-                            prefix={<Icon type="user" />}
-                            placeholder="Last Name"
-                            type="text"
-                            name="last_name"
-                            onChange={this.handleChange}
-                        />
-                    </FormItem>
-                    <FormItem
-                        validateStatus={
-                            !this.state.formErrors.email ? 'success' : 'error'
-                        }>
-                        <label>email</label>
-                        <Input
-                            prefix={<Icon type="user" />}
-                            placeholder="email"
-                            type="email"
-                            name="email"
-                            onChange={this.handleChange}
-                        />
-                    </FormItem>
+                <div>
+                    <Form className="login-form" onSubmit={this.handleSubmit}>
+                        <FormItem>
+                            <label>First Name</label>
+                            <Input
+                                prefix={<Icon type="user" />}
+                                placeholder="First Name"
+                                type="text"
+                                name="first_name"
+                                onChange={this.handleChange}
+                            />
+                        </FormItem>
+                        <FormItem>
+                            <label>Last Name</label>
+                            <Input
+                                prefix={<Icon type="user" />}
+                                placeholder="Last Name"
+                                type="text"
+                                name="last_name"
+                                onChange={this.handleChange}
+                            />
+                        </FormItem>
+                        <FormItem
+                            validateStatus={
+                                !this.state.formErrors.email
+                                    ? 'success'
+                                    : 'error'
+                            }>
+                            <label>email</label>
+                            <Input
+                                prefix={<Icon type="user" />}
+                                placeholder="email"
+                                type="email"
+                                name="email"
+                                onChange={this.handleChange}
+                            />
+                        </FormItem>
 
-                    <FormItem
-                        validateStatus={
-                            !this.state.formErrors.password
-                                ? 'success'
-                                : 'error'
-                        }>
-                        <label>password</label>
-                        <Input
-                            prefix={<Icon type="lock" />}
-                            placeholder="password"
-                            type="password"
-                            name="password"
-                            onChange={this.handleChange}
-                        />
-                    </FormItem>
-                    <FormItem
-                        validateStatus={
-                            !this.state.formErrors.password
-                                ? 'success'
-                                : 'error'
-                        }>
-                        <label>Confirm password</label>
-                        <Input
-                            prefix={<Icon type="lock" />}
-                            placeholder="Confirm password"
-                            type="password"
-                            name="password2"
-                            onChange={this.handleChange}
-                        />
-                    </FormItem>
+                        <FormItem
+                            validateStatus={
+                                !this.state.formErrors.password
+                                    ? 'success'
+                                    : 'error'
+                            }>
+                            <label>password</label>
+                            <Input
+                                prefix={<Icon type="lock" />}
+                                placeholder="password"
+                                type="password"
+                                name="password"
+                                onChange={this.handleChange}
+                            />
+                        </FormItem>
+                        <FormItem
+                            validateStatus={
+                                !this.state.formErrors.password
+                                    ? 'success'
+                                    : 'error'
+                            }>
+                            <label>Confirm password</label>
+                            <Input
+                                prefix={<Icon type="lock" />}
+                                placeholder="Confirm password"
+                                type="password"
+                                name="password2"
+                                onChange={this.handleChange}
+                            />
+                        </FormItem>
 
-                    <Button
-                        type="primary"
-                        htmlType="submit"
-                        disabled={!this.state.formValid}
-                        className="login-form-button">
-                        Signup
-                    </Button>
-                </Form>
-            </div>
+                        <FormItem>
+                            <Checkbox
+                                onChange={this.handleCheckbox}
+                                name="isDoctor"
+                            /><span>Log in as Doctor</span>
+                        </FormItem>
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            disabled={!this.state.formValid}
+                            className="login-form-button">
+                            Signup
+                        </Button>
+                    </Form>
+                </div>
             </div>
         );
     }

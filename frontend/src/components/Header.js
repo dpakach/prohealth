@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {NavLink} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Menu, message, Icon} from 'antd';
@@ -28,6 +29,7 @@ class Header extends React.Component {
             .then(response => {
                 if (response.ok) {
                     message.success('successfully logged out');
+                    localStorage.removeItem('authentication');
                     this.props.history.push('/user/login/');
                     return;
                 }
@@ -42,17 +44,24 @@ class Header extends React.Component {
     };
 
     renderLinks = auth => {
-        if (this.props.authenticated) {
+        // if (this.state.authenticated) {
+        // if(this.state.authenticated){
+        if(this.props.isAuthenticated){
             return [
                 <Menu.Item key="feature">
                     <NavLink to="/feature">
                         <Icon type="mail" />Feature
                     </NavLink>
                 </Menu.Item>,
+                <Menu.Item key="profile">
+                    <NavLink to="/profile/user">
+                        <Icon type="profile" />Profile
+                    </NavLink>
+                </Menu.Item>,
                 <Menu.Item key="logout">
-                    <a onClick={this.logout}>
+                    <NavLink onClick={this.logout} to="/">
                         <Icon type="logout" />Logout
-                    </a>
+                    </NavLink>
                 </Menu.Item>,
             ];
         } else {
@@ -62,12 +71,12 @@ class Header extends React.Component {
                         <Icon type="user" />Login / Signup
                     </NavLink>
                 </Menu.Item>,
+
             ];
         }
     };
 
     render() {
-        const auth = localStorage.getItem('authenticated');
         return (
             <header>
                 <Menu mode="horizontal" theme="dark">
@@ -76,16 +85,19 @@ class Header extends React.Component {
                             ProHealth
                         </NavLink>
                     </Menu.Item>
-                    {this.renderLinks(auth)}
+                    {this.renderLinks()}
                 </Menu>
             </header>
         );
     }
 }
 
+
 const mapStateToProps = state => {
+    //const {isAuthenticated} = state.auth.authenticated;
+    const isAuthenticated = localStorage.getItem('authenticated');
     return {
-        authenticated: state.auth.authenticated,
+        isAuthenticated,
     };
 };
 

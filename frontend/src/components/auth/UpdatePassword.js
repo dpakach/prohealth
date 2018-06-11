@@ -103,7 +103,7 @@ class FeaturePage extends React.Component {
     render() {
         return (
             <Card
-                title="UpdateProfile"
+                title="Update Password"
                 className="u-center-content u-box-shadow-small"
                 bordered={false}
                 style={{width: 300}}>
