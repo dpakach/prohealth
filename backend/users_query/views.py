@@ -20,7 +20,7 @@ class UserQueryViewset(viewsets.ModelViewSet):
     serializer_class = UserQuerySerializer
     queryset = UserQuery.objects.all()
     authentication_classes = (TokenAuthentication,)
-    # permission_classes = (permissions.UpdateOwnUserQuery,)
+    permission_classes = (IsAuthenticated,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name_of_patient','title_problem',)
 
@@ -29,7 +29,7 @@ class UserQueryViewset(viewsets.ModelViewSet):
 
     def get_permissions(self):
        if self.request.method == 'PATCH':
-           self.permission_classes = (permissions.IsUpdateQuery,)
+           self.permission_classes = (IsAuthenticated, permissions.UpdateOwnUserQuery,)
        return super(UserQueryViewset, self).get_permissions()
 
    
