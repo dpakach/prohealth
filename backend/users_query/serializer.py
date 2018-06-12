@@ -6,26 +6,26 @@ from . models import UserQuery, Medicine, Appointment, Prescription
 class UserQuerySerializer(serializers.ModelSerializer):
     """ helps to serialize the data realted to UserQuery Model"""
 
-    def validate(self, data):
-        if data['age_of_patient'] > 100 or data['age_of_patient']<0:
-            raise serializers.ValidationError("Age might not be feasible")
-        elif data['weight_of_patient']<1 or data['weight_of_patient']>150:
-            raise serializers.ValidationError("Weght might not be feasible")
-        return data
+    # def validate(self, data):
+    #     if data['age_of_patient'] > 100 or data['age_of_patient']<0:
+    #         raise serializers.ValidationError("Age might not be feasible")
+    #     elif data['weight_of_patient']<1 or data['weight_of_patient']>150:
+    #         raise serializers.ValidationError("Weght might not be feasible")
+    #     return data
     
     class Meta:
         model = UserQuery
         fields = '__all__'
         read_only_fields = ('user',)
 
-    def validate_user(self, user):
-        """
-        Validate authenticated user
-        """
+    # def validate_user(self, user):
+    #     """
+    #     Validate authenticated user
+    #     """
 
-        if user != self.context['request'].user:
-            raise serializers.ValidationError('You can not create post replies for other users')
-        return user
+    #     if user != self.context['request'].user:
+    #         raise serializers.ValidationError('You can not create post replies for other users')
+    #     return user
     
 class MedicineSerializer(serializers.ModelSerializer):
     # queryset = Medicine.objects.all()
