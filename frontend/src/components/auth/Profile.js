@@ -52,7 +52,7 @@ class Profile extends React.Component {
         const valid = this.props.match.params.action
             ? key_list.includes(this.props.match.params.action)
             : true;
-        console.log(this.props.match.params.action);
+        //console.log(this.props.match.params.action);
         if (!valid) {
             return <NotFoundPage />;
         }

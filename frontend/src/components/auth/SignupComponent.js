@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router';
 import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
+import {signupUser} from '../../actions/authActions';
 import {
     Form,
     message,
@@ -113,34 +114,9 @@ class SignupComponent extends Component {
             'is_doctor',
         ]);
 
-        fetch(AuthUrls.SIGNUP, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(form_data),
-        })
-            .then(response => {
-                if (response.ok) {
-                    console.log(response);
-                    return response.json();
-                }
-                throw Error(
-                    'Some thing went wrong! Please make sure the information is valid',
-                );
-            })
-            .then(data => {
-                this.setState({nonFieldErrors: ''});
-                message.success('Signed up successfully!');
-                if(this.state.asDoctor){
-                    console.log('hello') 
-                }
-                this.props.history.push('/user/login/');
-            })
-            .catch(error => {
-                this.setState({nonFieldErrors: error.message});
-            });
+        this.props.dispatch(signupUser(form_data, this.props.history));
     };
+
 
     render() {
         return (

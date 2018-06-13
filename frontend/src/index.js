@@ -12,10 +12,10 @@ import './styles/main.scss';
 
 // import {login, logout} from './actions/authActions';
 
-//store.subscribe(() => {
-//    const state = store.getState();
-//    console.log(state);
-//});
+store.subscribe(() => {
+    const state = store.getState();
+    console.log(state);
+});
 
 const jsx = (
     <Provider store={store}>

@@ -3,9 +3,9 @@ import {withRouter} from 'react-router';
 import _ from 'lodash';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-
+import {loginUser} from '../../actions/authActions';
 import store from '../../store/configureStore';
-import {loginAction} from '../../actions/authActions';
+// import {loginAction} from '../../actions/authActions';
 import {AuthUrls} from '../../constants/urls';
 // import store from '../../store/configureStore';
 import {Form, Icon, Input, Button, Alert} from 'antd';
@@ -79,46 +79,20 @@ class LoginComponent extends Component {
     handleSubmit = event => {
         event.preventDefault();
         const form_data = _.pick(this.state, ['email', 'password']);
-        fetch(AuthUrls.LOGIN, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(form_data),
-        })
-            //.then(response => this.handleErrors(response))
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw Error(
-                    'Some thing went wrong! Please make sure the credentials are valid',
-                );
-            })
-            .then(data => {
-                console.log(data);
-                this.setState({nonFieldErrors: ''});
-                localStorage.setItem('authentication', data['token']);
-                localStorage.setItem('authenticated', true);
-                store.dispatch(loginAction(data['token']));
-                this.props.history.push('/');
-            })
-            .catch(error => {
-                this.setState({nonFieldErrors: error.message});
-            });
+        this.props.dispatch(loginUser(form_data, this.props.history));
     };
 
     render() {
         return (
             <div>
                 <h1 className="heading-primary u-margin-top-small">Login</h1>
-                {this.state.nonFieldErrors && (
+                {this.props.errorMessage && this.props.errorMessage.login && (
                     <div className="section section--form">
                         <Alert
                             message="error"
                             type="error"
                             showIcon
-                            description={this.state.nonFieldErrors}
+                            description={this.props.errorMessage.login}
                         />
                     </div>
                 )}
@@ -179,10 +153,13 @@ class LoginComponent extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
+    const {auth} = state
+    const {isAuthenticated, errorMessage} = auth
     return {
-        authenticated: state.auth.authenticated,
-    };
-};
+        isAuthenticated,
+        errorMessage
+    }
+}
 
 export default withRouter(connect(mapStateToProps)(LoginComponent));

@@ -1,58 +1,59 @@
-import {AuthTypes} from '../constants/actionTypes';
-import {AuthUrls} from '../constants/urls';
-import history from './historyUtils';
-import axios from 'axios';
-import {loginAction} from '../actions/authActions';
-import store from '../store/configureStore';
+const BASE_URL = 'http://localhost:3001/api/'
 
-export const login = (form_data) => {
+function callApi(endpoint, authenticated) {
+  
+  let token = localStorage.getItem('id_token') || null
+  let config = {}
+  
+  if(authenticated) {
+    if(token) {
+      config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }
+    } else {
+      throw "No token saved!"
+    }
+  }
+  
+  return fetch(BASE_URL + endpoint, config)
+    .then(response =>
+      response.text()
+      .then(text => ({ text, response }))
+    ).then(({ text, response }) => {
+      if (!response.ok) {
+        return Promise.reject(text)
+      }
+      
+      return text
+    }).catch(err => console.log(err))
+}
 
-    // axios.post(AuthUrls.LOGIN, form_data)
-    //     .then(response => {
-    //         const token = response.data.key;
-    //         localStorage.setItem('authentication', token);
-    //         store.dispatch(loginAction(token))
-    //     }).catch(error => {
-    //         console.log(error);
-    //     });
-    fetch(AuthUrls.LOGIN, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form_data),
-    }).then(response => {
-        console.log(response);
-        return response.json();
-    }).then(data => {
-        console.log(data);
-        localStorage.setItem('authentication', data['key']);
-    }).catch(error => {
-        console.log(error);
-    });
-};
+export const CALL_API = Symbol('Call API')
 
-
-export const signup = form_data => {
-    fetch(AuthUrls.SIGNUP, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form_data),
-    });
-    //  fetch(AuthUrls.SIGNUP, {
-    //      method: 'POST',
-    //      headers: {
-    //          'Content Type': 'application/json',
-    //      },
-    //      body: JSON.stringify(form_data),
-    //  })
-    //      .then(res => {
-    //          console.log(res);
-    //          return res.json();
-    //      })
-    //      .then(data => {
-    //          console.log(data);
-    //      });
-};
+export default store => next => action => {
+  
+  const callAPI = action[CALL_API]
+  
+  // So the middleware doesn't get applied to every single action
+  if (typeof callAPI === 'undefined') {
+    return next(action)
+  }
+  
+  let { endpoint, types, authenticated } = callAPI
+  
+  const [ requestType, successType, errorType ] = types
+  
+  // Passing the authenticated boolean back in our data will let us distinguish between normal and secret quotes
+  return callApi(endpoint, authenticated).then(
+    response =>
+      next({
+        response,
+        authenticated,
+        type: successType
+      }),
+    error => next({
+      error: error.message || 'There was an error.',
+      type: errorType
+    })
+  )
+}
