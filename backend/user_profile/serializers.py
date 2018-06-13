@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'first_name', 'last_name', 'user_profile', 'doctor_profile')
+        fields = ('id', 'email', 'first_name', 'last_name', 'gender', 'date_of_birth', 'is_doctor', 'phone', 'user_profile', 'doctor_profile')
 
     @staticmethod
     def get_user_profile(user):
@@ -34,7 +34,7 @@ class UserSerializerCreate(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'password')
+        fields = ('email', 'first_name', 'last_name', 'password', 'gender', 'date_of_birth', 'is_doctor', 'phone')
 
     # def validate(self, data):
     #     """
@@ -69,14 +69,14 @@ class UserSerializerLogin(UserSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'first_name', 'last_name', 'user_profile', 'doctor_profile', 'token')
+        fields = ('id', 'email', 'first_name', 'last_name', 'gender', 'date_of_birth', 'is_doctor', 'user_profile', 'doctor_profile', 'token')
 
 
 class UserSerializerUpdate(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name')
+        fields = ('first_name', 'last_name', 'gender', 'date_of_birth', 'is_doctor')
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
