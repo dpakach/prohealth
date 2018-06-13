@@ -1,25 +1,57 @@
-import { AuthTypes } from '../constants/actionTypes';
+import {AuthTypes} from '../constants/actionTypes';
 
-const authReducerDefaultState = {
-    authenticated: false,
-    token: null,
-    user: {}
-}
+import {AuthUrls} from '../constants/urls';
 
-const authReducer = (state=authReducerDefaultState, action) => {
-    switch(action.type) {
-        case AuthTypes.LOGIN:
-            return {...state, authenticated: true, token: action.token};
+import {CALL_API} from '../utils/api';
 
-        case AuthTypes.LOGOUT:
-            return {...state, authenticated: false, token: null, user: null};
-
-        case AuthTypes.USER_PROFILE:
-            return {...state, user: action.user};
-
+const authReducer = (
+    state = {
+        isFetching: false,
+        isAuthenticated: localStorage.getItem('token') ? true : false,
+    },
+    action,
+) => {
+    switch (action.type) {
+        case AuthTypes.SIGNUP_SUCCESS:
+            return {...state, signup: true, errorMessage: {}};
+        case AuthTypes.SIGNUP_FAILURE:
+            return {
+                ...state,
+                signup: false,
+                errorMessage: {signup: action.message},
+            };
+        case AuthTypes.SIGNUP_RESEND_FAILURE:
+            return {
+                ...state,
+                signup: true,
+                errorMessage: {signupResend: action.message},
+            };
+        case AuthTypes.LOGIN_REQUEST:
+            return Object.assign({}, state, {
+                isFetching: true,
+                isAuthenticated: false,
+                user: action.creds,
+            });
+        case AuthTypes.LOGIN_SUCCESS:
+            return Object.assign({}, state, {
+                isFetching: false,
+                isAuthenticated: true,
+                errorMessage: {},
+            });
+        case AuthTypes.LOGIN_FAILURE:
+            return Object.assign({}, state, {
+                isFetching: false,
+                isAuthenticated: false,
+                errorMessage: {login: action.message},
+            });
+        case AuthTypes.LOGOUT_SUCCESS:
+            return Object.assign({}, state, {
+                isFetching: true,
+                isAuthenticated: false,
+            });
         default:
-            return state
+            return state;
     }
-}
+};
 
 export default authReducer;

@@ -6,6 +6,8 @@ import SignupComponent from './SignupComponent';
 import LoginComponent from './LoginComponent';
 import NotFoundPage from '../NotFoundPage';
 
+import {loginUser} from '../../actions/authActions';
+
 const tabList = [
     {
         key: 'login',
@@ -20,16 +22,18 @@ const tabList = [
 const key_list = ['login', 'signup'];
 
 const contentList = {
-    login: <LoginComponent />,
+    login: (<LoginComponent />),
     signup: <SignupComponent />,
 };
 
 class LoginSignupComponent extends React.Component {
     state = {
-        key: this.props.match.params.action || 'login',
-        valid:
-            this.props.match.params.action &&
-            key_list.includes(this.props.match.params.action),
+        key: 'login',
+        valid: true
+        // key: this.props.match.params.action || 'login',
+        // valid:
+        //     this.props.match.params.action &&
+        //     key_list.includes(this.props.match.params.action),
     };
 
     onTabChange = key => {
@@ -37,7 +41,7 @@ class LoginSignupComponent extends React.Component {
     };
 
     render() {
-        console.log(this.state);
+        console.log(this.props);
         if (!this.state.valid) {
             return <NotFoundPage />;
         }
@@ -58,5 +62,6 @@ class LoginSignupComponent extends React.Component {
         );
     }
 }
+
 
 export default LoginSignupComponent;

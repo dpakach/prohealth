@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {NavLink} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Menu, message, Icon} from 'antd';
-import {logoutAction} from '../actions/authActions';
+import {logoutUser} from '../actions/authActions';
 import {withRouter} from 'react-router';
 import {AuthUrls} from '../constants/urls';
 
@@ -17,30 +17,7 @@ class Header extends React.Component {
     }
 
     logout = () => {
-        fetch(AuthUrls.LOGOUT, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Token ${localStorage.getItem(
-                    'authentication',
-                )}`,
-            },
-        })
-            .then(response => {
-                if (response.ok) {
-                    message.success('successfully logged out');
-                    localStorage.removeItem('authentication');
-                    this.props.history.push('/user/login/');
-                    return;
-                }
-                throw Error(
-                    'Some thing went wrong! Please make sure the information is valid',
-                );
-            })
-            .catch(error => {
-                message.error('some error occured while logging out');
-            });
-        this.props.dispatch(logoutAction());
+        this.props.dispatch(logoutUser());
     };
 
     renderLinks = auth => {
@@ -77,6 +54,7 @@ class Header extends React.Component {
     };
 
     render() {
+        console.log(this.props);
         return (
             <header>
                 <Menu mode="horizontal" theme="dark">
@@ -93,12 +71,18 @@ class Header extends React.Component {
 }
 
 
-const mapStateToProps = state => {
-    //const {isAuthenticated} = state.auth.authenticated;
-    const isAuthenticated = localStorage.getItem('authenticated');
+Header.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = (state) => {
+    const {auth} = state
+    const {isAuthenticated, errorMessage} = auth
     return {
         isAuthenticated,
-    };
-};
+        errorMessage
+    }
+}
 
 export default withRouter(connect(mapStateToProps)(Header));
