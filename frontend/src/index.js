@@ -6,11 +6,16 @@ import {Provider} from 'react-redux';
 import store from './store/configureStore';
 
 import AppRouter from './routers/AppRouter';
+import { receiveLogin } from './actions/authActions';
 
 import './styles/style.css';
 import './styles/main.scss';
 
-// import {login, logout} from './actions/authActions';
+const user = JSON.parse(localStorage.getItem('user'));
+
+if (user && user.token) {
+    store.dispatch(receiveLogin(user));
+}
 
 store.subscribe(() => {
     const state = store.getState();

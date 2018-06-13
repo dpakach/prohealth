@@ -8,13 +8,15 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 const {TextArea} = Input;
 
-class UpdateUserProfile extends Component {
+class UpdateDoctorProfile extends Component {
     // constructor and state initialization
 
     constructor(props) {
         super(props);
 
         this.state = {
+            user: {},
+
             hospital: '',
             qualification: '',
             bio: '',
@@ -31,7 +33,7 @@ class UpdateUserProfile extends Component {
     // state change and management
     //
     handleSelectChange = value => {
-        this.setState({gender: value});
+        this.setState({speciality: value});
     };
 
     handleChange = e => {
@@ -60,10 +62,11 @@ class UpdateUserProfile extends Component {
             'speciality',
         ]);
 
-        fetch(AuthUrls.SIGNUP, {
-            method: 'POST',
+        fetch(AuthUrls.USER_PROFILE + this.state.user.doctor_profile.id, {
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Token ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify(form_data),
         })
@@ -83,22 +86,19 @@ class UpdateUserProfile extends Component {
             .catch(error => {
                 this.setState({nonFieldErrors: error.message});
             });
-
-        // fetch(AuthUrls.SIGNUP, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(form_data),
-        // })
-        //     .then(res => {
-        //         console.log(res);
-        //         return res.json();
-        //     })
-        //     .then(data => {
-        //         console.log(data);
-        //     });
     };
+
+    componentDidMount() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        console.log(user);
+        this.setState({
+            user: user,
+            hospital: user.doctor_profile.hospital,
+            qualification: user.doctor_profile.qualification,
+            bio: user.doctor_profile.bio,
+            speciality: user.doctor_profile.speciality,
+        });
+    }
 
     render() {
         return (
@@ -122,16 +122,6 @@ class UpdateUserProfile extends Component {
                         <Form
                             className="login-form"
                             onSubmit={this.handleSubmit}>
-                            <FormItem>
-                                <label>Name</label>
-                                <Input
-                                    prefix={<Icon type="user" />}
-                                    placeholder="First Name"
-                                    type="text"
-                                    name="name"
-                                    onChange={this.handleChange}
-                                />
-                            </FormItem>
 
                             <FormItem>
                                 <label>Speciality</label>
@@ -141,6 +131,7 @@ class UpdateUserProfile extends Component {
                                     style={{width: 200}}
                                     placeholder="Speciality"
                                     name="speciality"
+                                    value={this.state.speciality}
                                     onChange={this.handleSelectChange}>
                                     <Option value="M">Male</Option>
                                     <Option value="F">Female</Option>
@@ -152,22 +143,25 @@ class UpdateUserProfile extends Component {
                                 <TextArea
                                     prefix={<Icon type="user" />}
                                     placeholder="Bio"
+                                    value={this.state.bio}
                                     autosize
                                     type="text"
                                     name="bio"
                                     onChange={this.handleChange}
                                 />
                             </FormItem>
+
                             <FormItem>
                                 <label>Qualification</label>
-                                <TextArea
-                                    prefix={<Icon type="user" />}
-                                    placeholder="Bio"
+                                <Input
+                                    placeholder="Qualification"
                                     type="text"
+                                    value={this.state.qualification}
                                     name="qualification"
                                     onChange={this.handleChange}
                                 />
                             </FormItem>
+
                             <Button
                                 type="primary"
                                 htmlType="submit"
@@ -183,4 +177,4 @@ class UpdateUserProfile extends Component {
     }
 }
 
-export default UpdateUserProfile;
+export default UpdateDoctorProfile;

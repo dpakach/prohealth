@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import moment from 'moment';
 import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
 import {Card, Form, Icon, Input, Button, DatePicker, Select, Alert} from 'antd';
@@ -6,6 +7,7 @@ import {Card, Form, Icon, Input, Button, DatePicker, Select, Alert} from 'antd';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
+const dateFormat = 'YYYY-MM-DD';
 
 class UpdateUserProfile extends Component {
     // constructor and state initialization
@@ -14,6 +16,7 @@ class UpdateUserProfile extends Component {
         super(props);
 
         this.state = {
+            user: {},
             first_name: '',
             last_name: '',
             date_of_birth: '',
@@ -39,8 +42,13 @@ class UpdateUserProfile extends Component {
         this.setState({[e.target.name]: e.target.value});
     };
 
-    onDateChange = (date, dateString) => {
-        this.setState({date_of_birth: dateString});
+    changeDate = () => {
+        return moment(this.state.date_of_birth, 'YYYY/MM/DD');
+    }
+
+    onDateChange = date => {
+        // console.log(date.format('YYYY-MM-DD'));
+        this.setState({date_of_birth: date.format('YYYY-MM-DD')});
     };
 
     onFileChange = event => {
@@ -57,16 +65,16 @@ class UpdateUserProfile extends Component {
         const form_data = _.pick(this.state, [
             'first_name',
             'last_name',
-            'date_of_birth',
+            // 'date_of_birth',
             'gender',
             'profile_photo',
             'photo_id',
         ]);
-
-        fetch(AuthUrls.SIGNUP, {
-            method: 'POST',
+        fetch(AuthUrls.USER_PROFILE + this.state.user.user_profile.id, {
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
+                Authorization: `Token ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify(form_data),
         })
@@ -81,14 +89,28 @@ class UpdateUserProfile extends Component {
             })
             .then(data => {
                 this.setState({nonFieldErrors: ''});
-                this.props.history.push('/login');
             })
             .catch(error => {
                 this.setState({nonFieldErrors: error.message});
             });
     };
 
+    componentDidMount() {
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        console.log(user);
+        this.setState({
+            user: user,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            gender: user.gender,
+            user_id: user.id,
+            date_of_birth: user.date_of_birth,
+        });
+    }
+
     render() {
+        console.log(this.state.date_of_birth);
         return (
             <div>
                 {this.props.phase == 'starting' && (
@@ -122,6 +144,7 @@ class UpdateUserProfile extends Component {
                                         type="text"
                                         name="first_name"
                                         onChange={this.handleChange}
+                                        value={this.state.first_name}
                                     />
                                 </FormItem>
                                 <FormItem>
@@ -132,13 +155,20 @@ class UpdateUserProfile extends Component {
                                         type="text"
                                         name="last_name"
                                         onChange={this.handleChange}
+                                        value={this.state.last_name}
                                     />
                                 </FormItem>
 
                                 <FormItem>
                                     <label>Date Of Birth</label>
                                     <br />
-                                    <DatePicker onChange={this.onDateChange} />
+                                <DatePicker
+                                    defaultValue={moment(
+                                        moment('1996-05-12', "YYYY/MM/DD"),
+                                        dateFormat,
+                                    )}
+                                    format={dateFormat}
+                                />
                                 </FormItem>
 
                                 <FormItem>
@@ -149,6 +179,7 @@ class UpdateUserProfile extends Component {
                                         style={{width: 200}}
                                         placeholder="Gender"
                                         name="gender"
+                                        value={this.state.gender}
                                         onChange={this.handleSelectChange}>
                                         <Option value="M">Male</Option>
                                         <Option value="F">Female</Option>

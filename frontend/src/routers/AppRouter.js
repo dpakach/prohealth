@@ -17,19 +17,25 @@ import LoginSignupComponent from '../components/auth/LoginSingupCard';
 import UpdatePassword from '../components/auth/UpdatePassword';
 import ResetPassword from '../components/auth/ResetPassword';
 import Profile from '../components/auth/Profile';
-import Starting from '../components/auth/Starting';
 
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-const PrivateRoute = ({component: Component, ...rest}) => {
-    const auth = localStorage.getItem('authenticated');
+const PrivateRoute = ({
+    component: Component,
+    auth,
+    ...rest
+}) => {
     if (!auth) message.error('you must be logged in');
     return (
         <Route
             {...rest}
             render={props =>
-                auth ? <Component {...props} /> : <Redirect to="/user/login" />
+                auth ? (
+                    <Component {...props} />
+                ) : (
+                    <Redirect to="/user/login" />
+                )
             }
         />
     );
@@ -41,7 +47,7 @@ class AppRouter extends React.Component {
         return (
             <BrowserRouter>
                 <div>
-                    <Header dispatch={dispatch}/>
+                    <Header dispatch={dispatch} />
                     <Switch>
                         <Route
                             path="/"
@@ -61,11 +67,11 @@ class AppRouter extends React.Component {
                                 );
                             }}
                         />
+                    */}
 
-                            */}
                         <Route
                             path="/user/login"
-                            render={(props) => {
+                            render={props => {
                                 return (
                                     <LoginComponent
                                         {...props}
@@ -77,7 +83,7 @@ class AppRouter extends React.Component {
 
                         <Route
                             path="/user/signup"
-                            render={(props) => {
+                            render={props => {
                                 return (
                                     <SignupComponent
                                         {...props}
@@ -89,31 +95,35 @@ class AppRouter extends React.Component {
 
                         <PrivateRoute
                             path="/profile/update"
+                            auth={this.props.isAuthenticated}
                             component={UpdateProfile}
                         />
                         <PrivateRoute
                             path="/update-password"
+                            auth={this.props.isAuthenticated}
                             component={UpdatePassword}
                         />
                         <PrivateRoute
                             path="/reset-password"
+                            auth={this.props.isAuthenticated}
                             component={ResetPassword}
                         />
                         <PrivateRoute
                             path="/query/create"
                             component={QueryCreateComponent}
+                            auth={this.props.isAuthenticated}
                         />
                         <PrivateRoute
                             path="/query/:id"
+                            auth={this.props.isAuthenticated}
                             component={QueryDetailComponent}
                         />
 
                         <PrivateRoute
                             path="/profile/:action"
+                            auth={this.props.isAuthenticated}
                             component={Profile}
                         />
-
-                        <Route path="/starting" component={Starting} />
 
                         <Route path="/feature" component={FeaturePage} />
                         <Route component={NotFoundPage} />

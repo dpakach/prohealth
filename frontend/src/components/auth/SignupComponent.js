@@ -12,7 +12,7 @@ import {
     DatePicker,
     Select,
     Alert,
-    Checkbox
+    Checkbox,
 } from 'antd';
 // import validate from '../../utils/validate';
 
@@ -32,6 +32,8 @@ class SignupComponent extends Component {
             password: '',
             password2: '',
             is_doctor: false,
+            date_of_birth: '',
+            gender: '',
 
             formErrors: {},
             nonFieldErrors: '',
@@ -56,8 +58,16 @@ class SignupComponent extends Component {
     //
     handleCheckbox = e => {
         console.log(e);
-        this.setState({['is_doctor']: e.target.checked})
-    }
+        this.setState({'is_doctor': e.target.checked});
+    };
+
+    handleSelectChange = value => {
+        this.setState({gender: value});
+    };
+
+    onDateChange = (date, dateString) => {
+        this.setState({date_of_birth: dateString});
+    };
 
     validateField = (fieldName, value) => {
         let fieldValidationErrors = this.state.formErrors;
@@ -112,11 +122,12 @@ class SignupComponent extends Component {
             'email',
             'password',
             'is_doctor',
+            'gender',
+            'date_of_birth',
         ]);
 
         this.props.dispatch(signupUser(form_data, this.props.history));
     };
-
 
     render() {
         return (
@@ -202,10 +213,32 @@ class SignupComponent extends Component {
                         </FormItem>
 
                         <FormItem>
+                            <label>Date Of Birth</label>
+                            <br />
+                            <DatePicker onChange={this.onDateChange} />
+                        </FormItem>
+
+                        <FormItem>
+                            <label>Gender</label>
+                            <br />
+                            <Select
+                                showSearch
+                                style={{width: 200}}
+                                placeholder="Gender"
+                                name="gender"
+                                onChange={this.handleSelectChange}>
+                                <Option value="M">Male</Option>
+                                <Option value="F">Female</Option>
+                            </Select>
+                        </FormItem>
+
+                        <FormItem>
                             <Checkbox
                                 onChange={this.handleCheckbox}
                                 name="is_doctor"
-                            /><span>Log in as Doctor</span>
+                            />
+                            <span>Signup as a Doctor</span>
+                            <p>Select this option if you are a Doctor.</p>
                         </FormItem>
                         <Button
                             type="primary"

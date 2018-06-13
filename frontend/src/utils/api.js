@@ -2,13 +2,13 @@ const BASE_URL = 'http://localhost:3001/api/'
 
 function callApi(endpoint, authenticated) {
   
-  let token = localStorage.getItem('id_token') || null
+  let token = localStorage.getItem('token') || null
   let config = {}
   
   if(authenticated) {
     if(token) {
       config = {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { 'Authorization': `Token ${token}` }
       }
     } else {
       throw "No token saved!"
