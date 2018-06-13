@@ -20,7 +20,7 @@ const requestLogin = creds => {
     };
 };
 
-const receiveLogin = user => {
+export const receiveLogin = user => {
     return {
         type: AuthTypes.LOGIN_SUCCESS,
         isFetching: false,
@@ -128,11 +128,38 @@ export function signupUser(creds, history) {
 }
 
 
-export function logoutUser() {
+export function updateUserProfile(creds, id) {
+    let config = {
+        method: 'PATCH',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(creds),
+    };
+
+    return dispatch => {
+        // We dispatch requestLogin to kickoff the call to the API
+        return fetch(`AuthUrls.USER_PROFILE${id}`, config)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw Error(
+                    'Some thing went wrong! Please make sure the information is valid',
+                );
+            })
+            .then(data => {
+                message.success('sucessfully updated profile');
+            })
+            .catch(err => console.log('Error: ', err));
+    };
+}
+
+export function logoutUser(history) {
     return dispatch => {
         dispatch(requestLogout());
         localStorage.removeItem('token');
         localStorage.removeItem('user');
+        message.success('logged out succesfully');
+        history.push('/user/login/');
         dispatch(receiveLogout());
     };
 }

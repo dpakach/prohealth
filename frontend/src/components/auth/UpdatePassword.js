@@ -78,7 +78,7 @@ class FeaturePage extends React.Component {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Token ${localStorage.getItem(
-                    'authentication',
+                    'token',
                 )}`,
             },
             body: JSON.stringify({password: this.state.new_password1}),

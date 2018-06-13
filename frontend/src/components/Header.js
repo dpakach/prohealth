@@ -17,7 +17,7 @@ class Header extends React.Component {
     }
 
     logout = () => {
-        this.props.dispatch(logoutUser());
+        this.props.dispatch(logoutUser(this.props.history));
     };
 
     renderLinks = auth => {
@@ -43,18 +43,22 @@ class Header extends React.Component {
             ];
         } else {
             return [
-                <Menu.Item key="login/signup">
+                <Menu.Item key="login">
                     <NavLink to="/user/login">
-                        <Icon type="user" />Login / Signup
+                        <Icon type="user" />Login
                     </NavLink>
                 </Menu.Item>,
 
+                <Menu.Item key="signup">
+                    <NavLink to="/user/signup">
+                        <Icon type="user" />Signup
+                    </NavLink>
+                </Menu.Item>,
             ];
         }
     };
 
     render() {
-        console.log(this.props);
         return (
             <header>
                 <Menu mode="horizontal" theme="dark">
