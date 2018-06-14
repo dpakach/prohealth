@@ -8,6 +8,10 @@ import history from '../utils/historyUtils';
 
 import {message} from 'antd';
 
+import store from '../store/configureStore';
+
+import {getUserToken} from '../utils/authUtils';
+
 // states for login action
 //
 //
@@ -25,7 +29,7 @@ export const receiveLogin = user => {
         type: AuthTypes.LOGIN_SUCCESS,
         isFetching: false,
         isAuthenticated: true,
-        id_token: user.id_token,
+        token: user.token,
     };
 };
 
@@ -66,6 +70,14 @@ const logoutError = message => {
     };
 };
 
+
+const setUserProfile = (payload) => {
+    return {
+        type: AuthTypes.USER_PROFILE,
+        payload: payload
+    };
+}
+
 // calls the API to get a token and dispatch the action
 //
 export function loginUser(creds, history) {
@@ -84,15 +96,21 @@ export function loginUser(creds, history) {
                 if (!response.ok) {
                     // If there was a problem, we want to
                     // dispatch the error condition
-                    dispatch(loginError('The email or password you entered is incorrect! Please make sure your email or password is valid'));
+                    dispatch(
+                        loginError(
+                            'The email or password you entered is incorrect! Please make sure your email or password is valid',
+                        ),
+                    );
                     return Promise.reject(user);
                 } else {
                     // If login was successful, set the token in local storage
                     localStorage.setItem('token', user.token);
                     localStorage.setItem('user', JSON.stringify(user));
+                    localStorage.setItem('is_doctor', user.is_doctor);
 
                     // Dispatch the success action
                     dispatch(receiveLogin(user));
+                    dispatch(setUserProfile(user))
 
                     history.push('/');
                 }
@@ -110,7 +128,7 @@ export function signupUser(creds, history) {
 
     return dispatch => {
         // We dispatch requestLogin to kickoff the call to the API
-        return fetch(AuthUrls.SIGNUP, config)
+        return fetch(AuthUrls.USERS, config)
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -127,6 +145,30 @@ export function signupUser(creds, history) {
     };
 }
 
+export function getUserProfile() {
+    const token = getUserToken(store.getState());
+    let config = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${token}`
+        },
+    };
+
+    return (dispatch) => {
+        if (token) {
+            fetch(AuthUrls.USER_PROFILE, config)
+                .then(response => {
+                dispatch(setUserProfile(response.data))
+            }).catch((error) => {
+                // If request is bad...
+                // Show an error to the user
+                console.log(error);
+                // TODO: send notification and redirect
+            });
+        }
+    };
+}
 
 export function updateUserProfile(creds, id) {
     let config = {
@@ -162,4 +204,20 @@ export function logoutUser(history) {
         history.push('/user/login/');
         dispatch(receiveLogout());
     };
+}
+
+
+// util functions
+function processServerError(error) {
+    return  Object.keys(error).reduce(function(newDict, key) {
+        if (key === "non_field_errors") {
+            newDict["_error"].push(error[key]);
+        } else if (key === "token") {
+            // token sent with request is invalid
+            newDict["_error"].push("The link is not valid any more.");
+        } else {
+            newDict[key] = error[key];
+        }
+        return newDict
+    }, {"_error": []});
 }

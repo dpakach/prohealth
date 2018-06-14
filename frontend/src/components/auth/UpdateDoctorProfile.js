@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
-import {Card, Form, Icon, Input, Button, DatePicker, Select, Alert} from 'antd';
+import {Card, message, Form, Icon, Input, Button, DatePicker, Select, Alert} from 'antd';
 // import validate from '../../utils/validate';
 
 const FormItem = Form.Item;
@@ -19,7 +19,7 @@ class UpdateDoctorProfile extends Component {
 
             hospital: '',
             qualification: '',
-            bio: '',
+            description: '',
             speciality: '',
 
             formErrors: {},
@@ -58,11 +58,12 @@ class UpdateDoctorProfile extends Component {
         const form_data = _.pick(this.state, [
             'hospital',
             'qualification',
-            'bio',
-            'speciality',
+            'description',
+            // 'speciality',
         ]);
+        console.log(form_data);
 
-        fetch(AuthUrls.USER_PROFILE + this.state.user.doctor_profile.id, {
+        fetch(AuthUrls.DOCTOR_PROFILE + this.state.user.doctor_profile.id, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -81,7 +82,8 @@ class UpdateDoctorProfile extends Component {
             })
             .then(data => {
                 this.setState({nonFieldErrors: ''});
-                this.props.history.push('/login');
+                localStorage.setItem('user', JSON.stringify(data));
+                message.success('profile updated successfully!')
             })
             .catch(error => {
                 this.setState({nonFieldErrors: error.message});
@@ -90,12 +92,11 @@ class UpdateDoctorProfile extends Component {
 
     componentDidMount() {
         const user = JSON.parse(localStorage.getItem('user'));
-        console.log(user);
         this.setState({
             user: user,
             hospital: user.doctor_profile.hospital,
             qualification: user.doctor_profile.qualification,
-            bio: user.doctor_profile.bio,
+            description: user.doctor_profile.description,
             speciality: user.doctor_profile.speciality,
         });
     }
@@ -139,14 +140,26 @@ class UpdateDoctorProfile extends Component {
                             </FormItem>
 
                             <FormItem>
+                                <label>Hospital</label>
+                                <br />
+                                <Input
+                                    placeholder="Speciality"
+                                    type="text"
+                                    name="hospital"
+                                    value={this.state.hospital}
+                                    onChange={this.handleChange}
+                                />
+                            </FormItem>
+
+                            <FormItem>
                                 <label>Bio</label>
                                 <TextArea
                                     prefix={<Icon type="user" />}
                                     placeholder="Bio"
-                                    value={this.state.bio}
+                                    value={this.state.description}
                                     autosize
                                     type="text"
-                                    name="bio"
+                                    name="description"
                                     onChange={this.handleChange}
                                 />
                             </FormItem>
