@@ -7,16 +7,20 @@ import UpdateDoctorProfile from './UpdateDoctorProfile';
 
 const TabPane = Tabs.TabPane;
 
-const UpdateProfile = props => (
+const UpdateProfile = props => {
+    const is_doctor = localStorage.getItem('is_doctor') === 'true';
+    return (
+        <Tabs type="card">
+            <TabPane tab="User" key="1">
+                <UpdateUserProfile {...props} />
+            </TabPane>
 
-    <Tabs type="card">
-        <TabPane tab="User" key="1">
-            <UpdateUserProfile {...props}/>
-        </TabPane>
-        <TabPane tab="Doctor" key="2">
-            <UpdateDoctorProfile  {...props}/>
-        </TabPane>
-    </Tabs>
-);
-
+            {is_doctor && (
+                <TabPane tab="Doctor" key="2">
+                    <UpdateDoctorProfile {...props} />
+                </TabPane>
+            )}
+        </Tabs>
+    );
+};
 export default UpdateProfile;
