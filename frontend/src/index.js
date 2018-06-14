@@ -6,10 +6,12 @@ import {Provider} from 'react-redux';
 import store from './store/configureStore';
 
 import AppRouter from './routers/AppRouter';
-import { receiveLogin } from './actions/authActions';
+import {receiveLogin} from './actions/authActions';
 
 import './styles/style.css';
 import './styles/main.scss';
+
+import {getUserToken} from './utils/authUtils';
 
 const user = JSON.parse(localStorage.getItem('user'));
 
@@ -19,7 +21,7 @@ if (user && user.token) {
 
 store.subscribe(() => {
     const state = store.getState();
-    console.log(state);
+    //    console.log(state);
 });
 
 const jsx = (

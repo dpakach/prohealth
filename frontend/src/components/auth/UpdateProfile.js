@@ -11,10 +11,10 @@ const UpdateProfile = props => (
 
     <Tabs type="card">
         <TabPane tab="User" key="1">
-            <UpdateUserProfile />
+            <UpdateUserProfile {...props}/>
         </TabPane>
         <TabPane tab="Doctor" key="2">
-            <UpdateDoctorProfile />
+            <UpdateDoctorProfile  {...props}/>
         </TabPane>
     </Tabs>
 );

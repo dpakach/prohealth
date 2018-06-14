@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import moment from 'moment';
+import {connect} from 'react-redux';
 import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
-import {Card, Form, Icon, Input, Button, DatePicker, Select, Alert} from 'antd';
+import {Card, message, Form, Icon, Input, Button, DatePicker, Select, Alert} from 'antd';
+import store from '../../store/configureStore';
 // import validate from '../../utils/validate';
 
 const FormItem = Form.Item;
@@ -19,7 +21,7 @@ class UpdateUserProfile extends Component {
             user: {},
             first_name: '',
             last_name: '',
-            date_of_birth: '',
+            date_of_birth: moment().format(dateFormat),
             gender: '',
             photo_id: null,
             profile_photo: null,
@@ -48,7 +50,8 @@ class UpdateUserProfile extends Component {
 
     onDateChange = date => {
         // console.log(date.format('YYYY-MM-DD'));
-        this.setState({date_of_birth: date.format('YYYY-MM-DD')});
+        // console.log(date);
+        this.setState({date_of_birth: date.format(dateFormat)});
     };
 
     onFileChange = event => {
@@ -59,22 +62,22 @@ class UpdateUserProfile extends Component {
     };
 
     // form submittion
-
     handleSubmit = event => {
         event.preventDefault();
         const form_data = _.pick(this.state, [
             'first_name',
             'last_name',
-            // 'date_of_birth',
+            'date_of_birth',
             'gender',
             'profile_photo',
             'photo_id',
         ]);
-        fetch(AuthUrls.USER_PROFILE + this.state.user.user_profile.id, {
+        console.log(form_data);
+        fetch(AuthUrls.USERS + this.state.user.id, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Token ${localStorage.getItem('token')}`,
+                'Authorization': `Token ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify(form_data),
         })
@@ -89,6 +92,8 @@ class UpdateUserProfile extends Component {
             })
             .then(data => {
                 this.setState({nonFieldErrors: ''});
+                localStorage.setItem('user', JSON.stringify(data));
+                message.success('profile updated successfully')
             })
             .catch(error => {
                 this.setState({nonFieldErrors: error.message});
@@ -98,19 +103,18 @@ class UpdateUserProfile extends Component {
     componentDidMount() {
         const user = JSON.parse(localStorage.getItem('user'));
 
-        console.log(user);
         this.setState({
             user: user,
             first_name: user.first_name,
             last_name: user.last_name,
             gender: user.gender,
             user_id: user.id,
-            date_of_birth: user.date_of_birth,
+            //date_of_birth: moment(user.date_of_birth).format(dateFormat),
         });
     }
 
     render() {
-        console.log(this.state.date_of_birth);
+        // console.log(this.props);
         return (
             <div>
                 {this.props.phase == 'starting' && (
@@ -164,9 +168,10 @@ class UpdateUserProfile extends Component {
                                     <br />
                                 <DatePicker
                                     defaultValue={moment(
-                                        moment('1996-05-12', "YYYY/MM/DD"),
+                                        moment(this.state.date_of_birth, "YYYY/MM/DD"),
                                         dateFormat,
                                     )}
+                                    onChange={this.onDateChange}
                                     format={dateFormat}
                                 />
                                 </FormItem>
@@ -202,4 +207,13 @@ class UpdateUserProfile extends Component {
     }
 }
 
-export default UpdateUserProfile;
+
+const mapStateToProps = state => {
+    const {auth} = state
+    const {user} = auth
+    return {
+        user
+    }
+}
+
+export default connect(mapStateToProps)(UpdateUserProfile);

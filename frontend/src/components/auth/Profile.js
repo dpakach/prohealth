@@ -8,6 +8,8 @@ import UpdateProfile from './UpdateProfile';
 import UpdatePassword from './UpdatePassword';
 import NotFoundPage from '../NotFoundPage';
 
+const is_doctor = localStorage.getItem('is_doctor');
+
 const tabList = [
     {
         key: 'user',
@@ -27,7 +29,12 @@ const tabList = [
     },
 ];
 
-const key_list = ['user', 'doctor', 'updatepassword', 'updateprofile'];
+let key_list = {
+    doctor: ['user', 'doctor', 'updatepassword', 'updateprofile'],
+    user: ['user', 'updatepassword', 'updateprofile'],
+};
+
+key_list = is_doctor ? key_list.doctor : key_list.user;
 
 const contentList = {
     user: <UserProfile />,
@@ -49,11 +56,12 @@ class Profile extends React.Component {
     };
 
     render() {
+        const is_doctor = localStorage.getItem('is_doctor');
         const valid = this.props.match.params.action
             ? key_list.includes(this.props.match.params.action)
             : true;
         //console.log(this.props.match.params.action);
-        if (!valid) {
+        if (!this.state.valid) {
             return <NotFoundPage />;
         }
         return (
@@ -67,7 +75,14 @@ class Profile extends React.Component {
                     onTabChange={key => {
                         this.onTabChange(key);
                     }}>
-                    {contentList[this.state.key]}
+                    {
+                        {
+                            user: <UserProfile />,
+                            doctor: <DoctorProfile />,
+                            updatepassword: <UpdatePassword />,
+                            updateprofile: <UpdateProfile {...this.props} />,
+                        }[this.state.key]
+                    }
                 </Card>
             </div>
         );
