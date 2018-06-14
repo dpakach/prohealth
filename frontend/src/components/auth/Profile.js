@@ -8,33 +8,49 @@ import UpdateProfile from './UpdateProfile';
 import UpdatePassword from './UpdatePassword';
 import NotFoundPage from '../NotFoundPage';
 
-const is_doctor = localStorage.getItem('is_doctor');
+const is_doctor = localStorage.getItem('is_doctor') === 'true';
 
-const tabList = [
-    {
-        key: 'user',
-        tab: 'User Profile',
-    },
-    {
-        key: 'doctor',
-        tab: 'Doctor',
-    },
-    {
-        key: 'updatepassword',
-        tab: 'Change Password',
-    },
-    {
-        key: 'updateprofile',
-        tab: 'Update Profile',
-    },
-];
+const tabList =
+    is_doctor
+        ? [
+              {
+                  key: 'user',
+                  tab: 'User Profile',
+              },
+              {
+                  key: 'doctor',
+                  tab: 'Doctor',
+              },
+              {
+                  key: 'updatepassword',
+                  tab: 'Change Password',
+              },
+              {
+                  key: 'updateprofile',
+                  tab: 'Update Profile',
+              },
+          ]
+        : [
+              {
+                  key: 'user',
+                  tab: 'User Profile',
+              },
+              {
+                  key: 'updatepassword',
+                  tab: 'Change Password',
+              },
+              {
+                  key: 'updateprofile',
+                  tab: 'Update Profile',
+              },
+          ];
 
-let key_list = {
-    doctor: ['user', 'doctor', 'updatepassword', 'updateprofile'],
-    user: ['user', 'updatepassword', 'updateprofile'],
-};
+let key_list =
+    is_doctor
+        ? ['user', 'doctor', 'updatepassword', 'updateprofile']
+        : ['user', 'updatepassword', 'updateprofile'];
 
-key_list = is_doctor ? key_list.doctor : key_list.user;
+// key_list = is_doctor ? key_list.doctor : key_list.user;
 
 const contentList = {
     user: <UserProfile />,
@@ -57,9 +73,6 @@ class Profile extends React.Component {
 
     render() {
         const is_doctor = localStorage.getItem('is_doctor');
-        const valid = this.props.match.params.action
-            ? key_list.includes(this.props.match.params.action)
-            : true;
         //console.log(this.props.match.params.action);
         if (!this.state.valid) {
             return <NotFoundPage />;

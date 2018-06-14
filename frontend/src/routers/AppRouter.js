@@ -41,6 +41,8 @@ const PrivateRoute = ({
     );
 };
 
+const is_doctor = localStorage.getItem('is_doctor');
+
 class AppRouter extends React.Component {
     render() {
         const {dispatch} = this.props;
@@ -93,11 +95,13 @@ class AppRouter extends React.Component {
                             }}
                         />
 
+                    {/*
                         <PrivateRoute
                             path="/profile/update"
                             auth={this.props.isAuthenticated}
                             component={UpdateProfile}
                         />
+                            */}
                         <PrivateRoute
                             path="/update-password"
                             auth={this.props.isAuthenticated}

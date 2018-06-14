@@ -3,9 +3,13 @@ import React from 'react';
 import {Row, Col, Icon} from 'antd';
 
 import UserProfile from './UserProfile.js';
+import NotFoundPage from '../NotFoundPage';
 
 const DoctorProfile = props => {
-
+    const is_doctor = localStorage.getItem('is_doctor') === 'true';
+    if (!is_doctor){
+        return <NotFoundPage />
+    }
     const user = JSON.parse(localStorage.getItem('user'));
     const { doctor_profile } = user;
     return (

@@ -109,7 +109,7 @@ class UpdateUserProfile extends Component {
             last_name: user.last_name,
             gender: user.gender,
             user_id: user.id,
-            //date_of_birth: moment(user.date_of_birth).format(dateFormat),
+            date_of_birth: moment(user.date_of_birth).format(dateFormat),
         });
     }
 
@@ -168,7 +168,7 @@ class UpdateUserProfile extends Component {
                                     <br />
                                 <DatePicker
                                     defaultValue={moment(
-                                        moment(this.state.date_of_birth, "YYYY/MM/DD"),
+                                        moment(this.state.date_of_birth),
                                         dateFormat,
                                     )}
                                     onChange={this.onDateChange}
