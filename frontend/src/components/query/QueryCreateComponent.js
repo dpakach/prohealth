@@ -1,23 +1,36 @@
 import React from 'react';
 
-import {Form, Input, Button} from 'antd';
+import {Form, Input, upload,  Button} from 'antd';
 
 const FormItem = Form.Item;
 
 class FormLayoutDemo extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+
+        }
+    }
+
+
+
     render() {
         return (
-            <div className="section section--detail u-margin-top-big">
-                <h1 className="heading-primary">post</h1>
-                <Form layout="vertical" className="">
+            <div>
+                <h1>post</h1>
+                <Form layout="vertical">
                     <FormItem label="Field A">
-                        <Input className="form__input" placeholder="input placeholder" />
+                        <Input placeholder="input placeholder" />
+                    </FormItem>
+                    <FormItem label="Field A">
+                        <upload />
                     </FormItem>
                     <FormItem label="Field B">
-                        <Input className="form__input" placeholder="input placeholder" />
+                        <Input placeholder="input placeholder" />
                     </FormItem>
                     <FormItem>
-                        <Button type="primary" className="btn btn--text">Submit</Button>
+                        <Button type="primary">Submit</Button>
                     </FormItem>
                 </Form>
             </div>

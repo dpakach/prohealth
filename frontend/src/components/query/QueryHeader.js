@@ -4,7 +4,7 @@ import Prescription from './Prescription';
 
 const QueryHeader = props => (
     <div>
-        <div className="header__text-box">
+        <div>
             <div className="header__text header__text--main">
                 Amet voluptatem aliquam consectetur
             </div>
@@ -21,7 +21,6 @@ const QueryHeader = props => (
             </div>
         </div>
 
-        <Prescription />
     </div>
 );
 
