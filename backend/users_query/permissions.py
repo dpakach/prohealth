@@ -55,3 +55,23 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         if request.method == 'GET':
             return True
         return obj.user == request.user
+
+
+class IsProjectOwner(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return obj.owner == request.user
+
+class IsDoctorUser(permissions.BasePermission):
+    """
+    Allows access only to doc users.
+    """
+    def has_permission(self, request, view):
+        return request.user and request.user.is_doctor
+
+
+class IsPatientUser(permissions.BasePermission):
+    """
+    Allows access only to patient users.
+    """
+    def has_permission(self, request, view):
+        return request.user and request.user.is_patient
