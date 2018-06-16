@@ -21,12 +21,15 @@ class UserQueryViewset(viewsets.ModelViewSet):
     serializer_class = UserQuerySerializer
     queryset = UserQuery.objects.all()
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (permissions.UpdateOwnUserQuery, IsAuthenticated, )
+    permission_classes = (permissions.IsProjectOwner , IsAuthenticated, permissions.IsPatientUser,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name_of_patient','title_problem',)
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
+    
+    # def get_queryset(self):
+    #     return UserQuery.objects.filter(user=self.request.user)
 
     # def get_permissions(self):
     #    if self.request.method == 'PATCH':
@@ -61,6 +64,11 @@ class PrescriptionViewset(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
+    # def get_permissions(self):
+    #    if self.request.method == 'POST':
+    #        self.permission_classes = (permissions.IsDoctorUser,IsAuthenticated)
+    #    return super(PrescriptionViewset, self).get_permissions()
+
     @detail_route(methods=['GET'])
     def medicine(self, request, pk=None):
         qs = self.get_object().medicine.all()
@@ -75,7 +83,7 @@ class AppointmentViewSet(viewsets.ModelViewSet):
     serializer_class = AppointmentSerializer
     queryset = Appointment.objects.all()
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,permissions.IsProjectOwner,)
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
