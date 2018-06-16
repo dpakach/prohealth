@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Prescription = props => (
-    <div className="card header__card">
+    <div className="card">
         <div className="card__content">
             <p>
                 <span className="card__price">Your Prescription</span>

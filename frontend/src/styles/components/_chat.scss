@@ -1,5 +1,4 @@
 .chat {
-    margin: 5rem 50rem 0 15rem;
     align-items: center;
     padding: 1rem;
     background-color: rgba($color-grey-light-3, 0.2);
@@ -21,17 +20,17 @@
     }
 
     &__message {
-        font-size: 1.2rem;
-        padding: 0.5rem 1rem;
+        font-size: 1.5rem;
+        padding: 1rem 4rem .5rem 4rem;
         border-radius: 2rem;
         margin: 1rem;
-        color: $color-white;
-        background-color: $color-grey-dark;
+        color: $color-grey-dark-3;
+        background-color: $color-grey-light-3;
         display: inline-block;
 
         &__self {
-            color: $color-grey-light-1;
-            background-color: $color-primary;
+            color: $color-black;
+            background-color: $color-white;
             text-align: right;
         }
     }
