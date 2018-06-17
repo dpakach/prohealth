@@ -54,13 +54,17 @@ THIRD_PARTY_APPS = [
     'webpack_loader',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_auth',
-    'corsheaders'
+    # 'rest_auth',
+    # 'allauth',
+    # 'allauth.account',
+    # 'rest_auth.registration',
+    'corsheaders',
 ]
 
 # Apps specific for this project go here.
 LOCAL_APPS = [
-    'user_profile.apps.UserProfileConfig'
+    'user_profile.apps.UserProfileConfig',
+    'users_query.apps.UsersQueryConfig',
 ]
 
 # MIDDLEWARE CONFIGURATION
@@ -240,11 +244,21 @@ WEBPACK_LOADER = {
 
 # Rest framework settings
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
+    # 'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication'
+        ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        # 'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        ),
+
 }
 
 APPEND_SLASH = True
 
-AUTH_USER_MODEL = 'user_profile.UserProfile'
+AUTH_USER_MODEL = 'user_profile.User'
 
 CORS_ORIGIN_ALLOW_ALL = True
+
