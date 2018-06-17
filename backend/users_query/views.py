@@ -21,7 +21,7 @@ class UserQueryViewset(viewsets.ModelViewSet):
     serializer_class = UserQuerySerializer
     queryset = UserQuery.objects.all()
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (permissions.IsProjectOwner , IsAuthenticated, permissions.IsPatientUser,)
+    permission_classes = (permissions.UpdateOwnUserQuery , IsAuthenticated, permissions.IsPatientUser,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name_of_patient','title_problem',)
 
@@ -83,7 +83,7 @@ class AppointmentViewSet(viewsets.ModelViewSet):
     serializer_class = AppointmentSerializer
     queryset = Appointment.objects.all()
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,permissions.IsProjectOwner,)
+    permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
