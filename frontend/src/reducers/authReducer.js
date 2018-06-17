@@ -9,26 +9,27 @@ const authReducer = (
         isFetching: false,
         isAuthenticated: localStorage.getItem('token') ? true : false,
         token: localStorage.getItem('token'),
-        user: {}
+        user: {},
+        errorMessage: '',
     },
     action,
 ) => {
     switch (action.type) {
         case AuthTypes.SIGNUP_SUCCESS:
-            return {...state, signup: true, errorMessage: {}};
+            return {...state, signup: true, errorMessage: ''};
 
         case AuthTypes.SIGNUP_FAILURE:
             return {
                 ...state,
                 signup: false,
-                errorMessage: {signup: action.message},
+                errorMessage: action.message,
             };
 
         case AuthTypes.SIGNUP_RESEND_FAILURE:
             return {
                 ...state,
                 signup: true,
-                errorMessage: {signupResend: action.message},
+                errorMessage: action.message,
             };
 
         case AuthTypes.LOGIN_REQUEST:
@@ -43,15 +44,16 @@ const authReducer = (
                 isFetching: false,
                 isAuthenticated: true,
                 token: action.token,
-                errorMessage: {},
+                errorMessage: '',
             });
 
         case AuthTypes.LOGIN_FAILURE:
             return Object.assign({}, state, {
                 isFetching: false,
                 isAuthenticated: false,
-                errorMessage: {login: action.message},
+                errorMessage: action.message,
             });
+
         case AuthTypes.LOGOUT_SUCCESS:
             return Object.assign({}, state, {
                 isFetching: true,

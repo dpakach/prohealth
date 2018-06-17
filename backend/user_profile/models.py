@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth.models import BaseUserManager
 
 def upload_posts_media_to(instance, filename):
-    username = instance.username
+    username = instance.user.email
     _, file_extension = os.path.splitext(filename)
     filename = str(random.getrandbits(64)) + file_extension
     return f'photos/{username}/{filename}'

@@ -94,6 +94,7 @@ export function loginUser(creds, history) {
             .then(response => response.json().then(user => ({user, response})))
             .then(({user, response}) => {
                 if (!response.ok) {
+                    console.log(response.json())
                     // If there was a problem, we want to
                     // dispatch the error condition
                     dispatch(

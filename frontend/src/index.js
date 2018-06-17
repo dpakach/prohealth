@@ -21,7 +21,7 @@ if (user && user.token) {
 
 store.subscribe(() => {
     const state = store.getState();
-    //    console.log(state);
+    console.log(state);
 });
 
 const jsx = (

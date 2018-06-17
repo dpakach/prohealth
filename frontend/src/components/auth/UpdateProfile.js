@@ -4,6 +4,7 @@ import {Tabs} from 'antd';
 
 import UpdateUserProfile from './UpdateUserProfile';
 import UpdateDoctorProfile from './UpdateDoctorProfile';
+import UploadProfilePic from './UploadProfilePic';
 
 const TabPane = Tabs.TabPane;
 
@@ -15,8 +16,12 @@ const UpdateProfile = props => {
                 <UpdateUserProfile {...props} />
             </TabPane>
 
+            <TabPane tab="Profile Pic" key="2">
+                <UploadProfilePic {...props} />
+            </TabPane>
+
             {is_doctor && (
-                <TabPane tab="Doctor" key="2">
+                <TabPane tab="Doctor" key="3">
                     <UpdateDoctorProfile {...props} />
                 </TabPane>
             )}
