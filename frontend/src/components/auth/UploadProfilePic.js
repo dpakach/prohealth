@@ -35,13 +35,12 @@ class UploadProfilePic extends React.Component {
             data: formData,
         })
             .then(response => {
-                if (response.ok) {
+                if (response.statusText === 'OK') {
                     message.success('upload successfully.');
                 }
-                console.log(response);
-        this.setState({
-            uploading: false,
-        });
+                this.setState({
+                    uploading: false,
+                });
             })
             .catch(e => {
                 message.error('upload failed.');
@@ -53,7 +52,7 @@ class UploadProfilePic extends React.Component {
         const props = {
             beforeUpload: file => {
                 this.setState(() => ({
-                    profile_photo: file
+                    profile_photo: file,
                 }));
                 return false;
             },
@@ -81,8 +80,7 @@ class UploadProfilePic extends React.Component {
 
 export default UploadProfilePic;
 
-{
-    /*
+/*
 import React from 'react';
 import {Upload, message, Button, Icon, Input} from 'antd';
 import axios from 'axios';
@@ -126,4 +124,3 @@ class UploadProfilePic extends React.Component {
 
 export default UploadProfilePic;
         */
-}

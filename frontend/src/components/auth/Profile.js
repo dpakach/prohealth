@@ -52,13 +52,6 @@ let key_list =
 
 // key_list = is_doctor ? key_list.doctor : key_list.user;
 
-const contentList = {
-    user: <UserProfile />,
-    doctor: <DoctorProfile />,
-    updatepassword: <UpdatePassword />,
-    updateprofile: <UpdateProfile />,
-};
-
 class Profile extends React.Component {
     state = {
         key: this.props.match.params.action || 'user',
@@ -72,8 +65,8 @@ class Profile extends React.Component {
     };
 
     render() {
-        const is_doctor = localStorage.getItem('is_doctor');
-        //console.log(this.props.match.params.action);
+        // const is_doctor = localStorage.getItem('is_doctor');
+        // console.log(this.props.match.params.action);
         if (!this.state.valid) {
             return <NotFoundPage />;
         }

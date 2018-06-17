@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
 
-import {Alert, Card, Form, Icon, Input, Button, Checkbox} from 'antd';
+import {Alert, Card, Form, Icon, Input, Button} from 'antd';
 const FormItem = Form.Item;
 
 class ResetPassword extends React.Component {
@@ -69,11 +69,11 @@ class ResetPassword extends React.Component {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({}),
+            body: JSON.stringify(form_data),
         })
             .then(response => {
                 if (response.ok) {
-                    console.log(response);
+                    // console.log(response);
                     return response.json();
                 }
                 throw Error(

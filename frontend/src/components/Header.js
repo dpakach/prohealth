@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {NavLink} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {Menu, message, Icon} from 'antd';
+import {Menu, Icon} from 'antd';
 import {logoutUser} from '../actions/authActions';
 import {withRouter} from 'react-router';
-import {AuthUrls} from '../constants/urls';
 
 class Header extends React.Component {
     constructor(props) {

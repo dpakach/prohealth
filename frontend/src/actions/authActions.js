@@ -2,10 +2,6 @@ import {AuthTypes} from '../constants/actionTypes';
 
 import {AuthUrls} from '../constants/urls';
 
-import {CALL_API} from '../utils/api';
-
-import history from '../utils/historyUtils';
-
 import {message} from 'antd';
 
 import store from '../store/configureStore';
@@ -61,14 +57,14 @@ const receiveLogout = user => {
     };
 };
 
-const logoutError = message => {
-    return {
-        type: AuthTypes.LOGOUT_FAILURE,
-        isFetching: false,
-        isAuthenticated: false,
-        message,
-    };
-};
+// const logoutError = message => {
+//     return {
+//         type: AuthTypes.LOGOUT_FAILURE,
+//         isFetching: false,
+//         isAuthenticated: false,
+//         message,
+//     };
+// };
 
 
 const setUserProfile = (payload) => {
@@ -94,7 +90,7 @@ export function loginUser(creds, history) {
             .then(response => response.json().then(user => ({user, response})))
             .then(({user, response}) => {
                 if (!response.ok) {
-                    console.log(response.json())
+                    // console.log(response.json())
                     // If there was a problem, we want to
                     // dispatch the error condition
                     dispatch(
@@ -164,7 +160,7 @@ export function getUserProfile() {
             }).catch((error) => {
                 // If request is bad...
                 // Show an error to the user
-                console.log(error);
+                // console.log(error);
                 // TODO: send notification and redirect
             });
         }
@@ -208,17 +204,17 @@ export function logoutUser(history) {
 }
 
 
-// util functions
-function processServerError(error) {
-    return  Object.keys(error).reduce(function(newDict, key) {
-        if (key === "non_field_errors") {
-            newDict["_error"].push(error[key]);
-        } else if (key === "token") {
-            // token sent with request is invalid
-            newDict["_error"].push("The link is not valid any more.");
-        } else {
-            newDict[key] = error[key];
-        }
-        return newDict
-    }, {"_error": []});
-}
+// // util functions
+// function processServerError(error) {
+//     return  Object.keys(error).reduce(function(newDict, key) {
+//         if (key === "non_field_errors") {
+//             newDict["_error"].push(error[key]);
+//         } else if (key === "token") {
+//             // token sent with request is invalid
+//             newDict["_error"].push("The link is not valid any more.");
+//         } else {
+//             newDict[key] = error[key];
+//         }
+//         return newDict
+//     }, {"_error": []});
+// }

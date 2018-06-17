@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router';
 import _ from 'lodash';
-import {AuthUrls} from '../../constants/urls';
+// import {AuthUrls} from '../../constants/urls';
 import {signupUser} from '../../actions/authActions';
 import {
     Form,
-    message,
     Icon,
     Input,
     Button,
@@ -57,7 +56,7 @@ class SignupComponent extends Component {
     // form fields validation
     //
     handleCheckbox = e => {
-        console.log(e);
+        // console.log(e);
         this.setState({'is_doctor': e.target.checked});
     };
 

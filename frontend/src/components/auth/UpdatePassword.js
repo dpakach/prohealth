@@ -1,8 +1,7 @@
 import React from 'react';
-import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
 
-import {Alert, Card, Form, Icon, Input, Button, message, Checkbox} from 'antd';
+import {Alert, Card, Form, Icon, Input, Button, message} from 'antd';
 const FormItem = Form.Item;
 
 class FeaturePage extends React.Component {
@@ -55,7 +54,6 @@ class FeaturePage extends React.Component {
             {
                 formErrors: fieldValidationErrors,
                 passwordValid: passwordValid,
-                passwordValid: passwordValid,
             },
             this.validateForm,
         );
@@ -71,7 +69,7 @@ class FeaturePage extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        const form_data = _.pick(this.state, ['new_password1']);
+        // const form_data = _.pick(this.state, ['new_password1']);
 
         fetch(AuthUrls.UPDATE_PASSWORD, {
             method: 'POST',
@@ -85,7 +83,7 @@ class FeaturePage extends React.Component {
         })
             .then(response => {
                 if (response.ok) {
-                    console.log(response);
+                    // console.log(response);
                     message.success('password updated successfully');
                     return response.json();
                 }
