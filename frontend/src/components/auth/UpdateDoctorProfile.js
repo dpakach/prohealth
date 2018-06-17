@@ -59,7 +59,7 @@ class UpdateDoctorProfile extends Component {
             'hospital',
             'qualification',
             'description',
-            // 'speciality',
+            'speciality',
         ]);
         console.log(form_data);
 
@@ -133,9 +133,13 @@ class UpdateDoctorProfile extends Component {
                                     placeholder="Speciality"
                                     name="speciality"
                                     value={this.state.speciality}
-                                    onChange={this.handleSelectChange}>
-                                    <Option value="M">Male</Option>
-                                    <Option value="F">Female</Option>
+                                    onChange={this.handleSelectChange}
+                                >
+
+                                    <Option value="neurology">Neurology</Option>
+                                    <Option value="cardialogy">Cardiology</Option>
+                                    <Option value="gynecology">Gynecology</Option>
+                                    <Option value="genral">General Physician</Option>
                                 </Select>
                             </FormItem>
 

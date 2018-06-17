@@ -11,7 +11,7 @@ const TabPane = Tabs.TabPane;
 const UpdateProfile = props => {
     const is_doctor = localStorage.getItem('is_doctor') === 'true';
     return (
-        <Tabs type="card">
+        <Tabs tabPosition="left" type="card">
             <TabPane tab="User" key="1">
                 <UpdateUserProfile {...props} />
             </TabPane>
