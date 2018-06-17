@@ -1,25 +1,69 @@
-import { AuthTypes } from '../constants/actionTypes';
+import {AuthTypes} from '../constants/actionTypes';
 
-const authReducerDefaultState = {
-    authenticated: false,
-    token: null,
-    user: {}
-}
+const authReducer = (
+    state = {
+        isFetching: false,
+        isAuthenticated: localStorage.getItem('token') ? true : false,
+        token: localStorage.getItem('token'),
+        user: {},
+        errorMessage: '',
+    },
+    action,
+) => {
+    switch (action.type) {
+        case AuthTypes.SIGNUP_SUCCESS:
+            return {...state, signup: true, errorMessage: ''};
 
-const authReducer = (state=authReducerDefaultState, action) => {
-    switch(action.type) {
-        case AuthTypes.LOGIN:
-            return {...state, authenticated: true, token: action.token};
+        case AuthTypes.SIGNUP_FAILURE:
+            return {
+                ...state,
+                signup: false,
+                errorMessage: action.message,
+            };
 
-        case AuthTypes.LOGOUT:
-            return {...state, authenticated: false, token: null, user: null};
+        case AuthTypes.SIGNUP_RESEND_FAILURE:
+            return {
+                ...state,
+                signup: true,
+                errorMessage: action.message,
+            };
+
+        case AuthTypes.LOGIN_REQUEST:
+            return Object.assign({}, state, {
+                isFetching: true,
+                isAuthenticated: false,
+                user: action.creds,
+            });
+
+        case AuthTypes.LOGIN_SUCCESS:
+            return Object.assign({}, state, {
+                isFetching: false,
+                isAuthenticated: true,
+                token: action.token,
+                errorMessage: '',
+            });
+
+        case AuthTypes.LOGIN_FAILURE:
+            return Object.assign({}, state, {
+                isFetching: false,
+                isAuthenticated: false,
+                errorMessage: action.message,
+            });
+
+        case AuthTypes.LOGOUT_SUCCESS:
+            return Object.assign({}, state, {
+                isFetching: true,
+                isAuthenticated: false,
+            });
 
         case AuthTypes.USER_PROFILE:
-            return {...state, user: action.user};
+            return Object.assign({}, state, {
+                user: action.payload,
+            });
 
         default:
-            return state
+            return state;
     }
-}
+};
 
 export default authReducer;
