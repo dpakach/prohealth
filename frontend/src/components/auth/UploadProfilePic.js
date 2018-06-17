@@ -4,7 +4,9 @@ import axios from 'axios';
 
 import {AuthUrls} from '../../constants/urls';
 
-const user_id = JSON.parse(localStorage.getItem('user')).user_profile.id;
+const user = JSON.parse(localStorage.getItem('user'));
+const user_id = user ? user.user_profile.id : null;
+
 const url = AuthUrls.USER_PROFILE + user_id;
 
 class UploadProfilePic extends React.Component {
