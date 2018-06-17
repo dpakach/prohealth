@@ -1,74 +1,90 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {NavLink} from 'react-router-dom';
-import { connect } from 'react-redux';
-import { Menu, Icon } from 'antd';
-import {logout} from '../actions/authActions';
-import { withRouter } from 'react-router';
-
+import {connect} from 'react-redux';
+import {Menu, Icon} from 'antd';
+import {logoutUser} from '../actions/authActions';
+import {withRouter} from 'react-router';
 
 class Header extends React.Component {
-
-    constructor (props) {
+    constructor(props) {
         super(props);
-
         this.state = {
-            test: 'value'
-        }
+            authenticated: localStorage.getItem('authenticated'),
+            logoutError: '',
+        };
     }
 
     logout = () => {
-        this.props.dispatch(logout());
-        this.props.history.push('/login');
-    }
+        this.props.dispatch(logoutUser(this.props.history));
+    };
 
-    renderLinks = () => {
-        if (this.props.authenticated) {
-            return (
-                [
+    renderLinks = auth => {
+        // if (this.state.authenticated) {
+        // if(this.state.authenticated){
+        if(this.props.isAuthenticated){
+            return [
                 <Menu.Item key="feature">
-                    <NavLink to="/feature"><Icon type="mail"/>Feature</NavLink>
+                    <NavLink to="/feature">
+                        <Icon type="mail" />Feature
+                    </NavLink>
+                </Menu.Item>,
+                <Menu.Item key="profile">
+                    <NavLink to="/profile/user">
+                        <Icon type="profile" />Profile
+                    </NavLink>
                 </Menu.Item>,
                 <Menu.Item key="logout">
-                    <a onClick={this.logout}><Icon type="logout"/>Logout</a>
-                </Menu.Item>
-                ]
-
-            );
-        } else {
-            return (
-                [
-                <Menu.Item key="login">
-                    <NavLink to="/login"><Icon type="login"/>Login</NavLink>
+                    <NavLink onClick={this.logout} to="/">
+                        <Icon type="logout" />Logout
+                    </NavLink>
                 </Menu.Item>,
-                <Menu.Item key="signup">
-                    <NavLink to="/signup"><Icon type="user-add"/>Signup</NavLink>
-                </Menu.Item>
-                ]
-            );
-        }
-    }
+            ];
+        } else {
+            return [
+                <Menu.Item key="login">
+                    <NavLink to="/user/login">
+                        <Icon type="user" />Login
+                    </NavLink>
+                </Menu.Item>,
 
-    render(){
+                <Menu.Item key="signup">
+                    <NavLink to="/user/signup">
+                        <Icon type="user" />Signup
+                    </NavLink>
+                </Menu.Item>,
+            ];
+        }
+    };
+
+    render() {
         return (
             <header>
-                <Menu
-                    mode="horizontal"
-                    theme="dark"
-                >
+                <Menu mode="horizontal" theme="dark">
                     <Menu.Item>
-                        <NavLink to="/" exact={true}>ProHealth</NavLink>
+                        <NavLink to="/" exact={true}>
+                            ProHealth
+                        </NavLink>
                     </Menu.Item>
                     {this.renderLinks()}
                 </Menu>
             </header>
-        )
+        );
     }
+}
 
-} 
 
-const mapStateToProps = state => {
+Header.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = (state) => {
+    const {auth} = state
+    const {isAuthenticated, errorMessage} = auth
     return {
-        authenticated: state.auth.authenticated,
+        isAuthenticated,
+        errorMessage
     }
 }
 
