@@ -1,47 +1,31 @@
 import React from 'react';
 
-// import {Form, Input, Tooltip, Icon, Checkbox, Button} from 'antd';
+import {Tabs} from 'antd';
 
-import {Form, Input, Button} from 'antd';
+import UpdateUserProfile from './UpdateUserProfile';
+import UpdateDoctorProfile from './UpdateDoctorProfile';
+import UploadProfilePic from './UploadProfilePic';
 
-const FormItem = Form.Item;
+const TabPane = Tabs.TabPane;
 
-class UpdateProfile extends React.Component {
-    handleSubmit = e => {
-        e.preventDefault();
-    };
+const UpdateProfile = props => {
+    const is_doctor = localStorage.getItem('is_doctor') === 'true';
+    return (
+        <Tabs tabPosition="left" type="card">
+            <TabPane tab="User" key="1">
+                <UpdateUserProfile {...props} />
+            </TabPane>
 
-    render() {
-        return (
-            <div>
-                <h1 className="heading-primary u-margin-top-big">post</h1>
-                <Form layout="vertical" className="section section--detail">
-                    <FormItem label="Field A">
-                        <Input className="form__input" placeholder="input placeholder" />
-                    </FormItem>
-                    <FormItem label="Field B">
-                        <Input className="form__input" placeholder="input placeholder" />
-                    </FormItem>
-                    <FormItem label="Field B">
-                        <Input className="form__input" placeholder="input placeholder" />
-                    </FormItem>
-                    <FormItem label="Field B">
-                        <Input className="form__input" placeholder="input placeholder" />
-                    </FormItem>
-                    <FormItem label="Field B">
-                        <Input className="form__input" placeholder="input placeholder" />
-                    </FormItem>
-                    <FormItem label="Field B">
-                        <Input className="form__input" placeholder="input placeholder" />
-                    </FormItem>
-                    <FormItem>
-                        <Button type="primary" className="btn btn--text">Submit</Button>
-                    </FormItem>
-                </Form>
-            </div>
-        );
-    }
-}
+            <TabPane tab="Profile Pic" key="2">
+                <UploadProfilePic {...props} />
+            </TabPane>
 
-
+            {is_doctor && (
+                <TabPane tab="Doctor" key="3">
+                    <UpdateDoctorProfile {...props} />
+                </TabPane>
+            )}
+        </Tabs>
+    );
+};
 export default UpdateProfile;

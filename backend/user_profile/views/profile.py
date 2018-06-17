@@ -71,5 +71,5 @@ class DoctorProfileDetail(APIView):
         serializer = DoctorProfileSerializerUpdate(profile, data=request.data, context={'request': request}, partial=True)
         if serializer.is_valid():
             profile = serializer.save()
-            return Response(DoctorSerializerLogin(profile.user).data)
+            return Response(UserSerializerLogin(profile.user).data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
