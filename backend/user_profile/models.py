@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib.auth.models import BaseUserManager
 
 def upload_posts_media_to(instance, filename):
-    username = instance.username
+    username = instance.user.email
     _, file_extension = os.path.splitext(filename)
     filename = str(random.getrandbits(64)) + file_extension
     return f'photos/{username}/{filename}'
@@ -45,6 +45,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_patient = models.BooleanField(default=True)
     is_doctor = models.BooleanField(default=False)
+    phone = models.CharField(max_length=10, null=True)
     date_of_birth = models.DateField(null=True, default=None)
     GENDER_CHOICES = (
         (None, None),
@@ -61,6 +62,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+    REQUIRED_FIELDS = [
+        'first_name',
+        'last_name',
+        'is_doctor',
+    ]
 
     def __str__(self):
         return self.email
