@@ -1,9 +1,5 @@
 import {AuthTypes} from '../constants/actionTypes';
 
-import {AuthUrls} from '../constants/urls';
-
-import {CALL_API} from '../utils/api';
-
 const authReducer = (
     state = {
         isFetching: false,

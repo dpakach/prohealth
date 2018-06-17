@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
-import {Card, message, Form, Icon, Input, Button, DatePicker, Select, Alert} from 'antd';
-// import validate from '../../utils/validate';
+import {Card, message, Form, Icon, Input, Button, Select, Alert} from 'antd';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -61,7 +60,7 @@ class UpdateDoctorProfile extends Component {
             'description',
             'speciality',
         ]);
-        console.log(form_data);
+        // console.log(form_data);
 
         fetch(AuthUrls.DOCTOR_PROFILE + this.state.user.doctor_profile.id, {
             method: 'PATCH',
@@ -73,7 +72,7 @@ class UpdateDoctorProfile extends Component {
         })
             .then(response => {
                 if (response.ok) {
-                    console.log(response);
+                    // console.log(response);
                     return response.json();
                 }
                 throw Error(

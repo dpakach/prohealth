@@ -1,13 +1,12 @@
 import React from 'react';
 
-import {Row, Col, Icon} from 'antd';
+import {Row, Col} from 'antd';
 
 import {ROOT_URL} from '../../constants/urls';
 
 const DoctorProfile = props => {
     
     const user = JSON.parse(localStorage.getItem('user'));
-    console.log(user);
     return (
         <div>
             <Row>
@@ -15,7 +14,7 @@ const DoctorProfile = props => {
                     <img
                         style={{height: 200}}
                         src= {ROOT_URL + user.user_profile.profile_photo}
-                        alt="Doctor's photo"
+                        alt="User"
                     />
                 </Col>
             <br/>

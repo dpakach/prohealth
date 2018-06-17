@@ -4,7 +4,9 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
 import {Card, message, Form, Icon, Input, Button, DatePicker, Select, Alert} from 'antd';
-import store from '../../store/configureStore';
+
+
+//import store from '../../store/configureStore';
 // import validate from '../../utils/validate';
 
 const FormItem = Form.Item;
@@ -72,7 +74,7 @@ class UpdateUserProfile extends Component {
             'profile_photo',
             'photo_id',
         ]);
-        console.log(form_data);
+        // console.log(form_data);
         fetch(AuthUrls.USERS + this.state.user.id, {
             method: 'PATCH',
             headers: {
@@ -83,7 +85,7 @@ class UpdateUserProfile extends Component {
         })
             .then(response => {
                 if (response.ok) {
-                    console.log(response);
+                    // console.log(response);
                     return response.json();
                 }
                 throw Error(
@@ -117,7 +119,7 @@ class UpdateUserProfile extends Component {
         // console.log(this.props);
         return (
             <div>
-                {this.props.phase == 'starting' && (
+                {this.props.phase === 'starting' && (
                     <p>update your profile before you start!!</p>
                 )}
                 <Card

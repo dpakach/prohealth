@@ -9,10 +9,8 @@ import FeaturePage from '../components/FeaturePage';
 import NotFoundPage from '../components/NotFoundPage';
 import LoginComponent from '../components/auth/LoginComponent';
 import SignupComponent from '../components/auth/SignupComponent';
-import UpdateProfile from '../components/auth/UpdateProfile';
 import QueryCreateComponent from '../components/query/QueryCreateComponent';
 import QueryDetailComponent from '../components/query/QueryDetailComponent';
-import LoginSignupComponent from '../components/auth/LoginSingupCard';
 
 import UpdatePassword from '../components/auth/UpdatePassword';
 import ResetPassword from '../components/auth/ResetPassword';
@@ -40,8 +38,6 @@ const PrivateRoute = ({
         />
     );
 };
-
-const is_doctor = localStorage.getItem('is_doctor');
 
 class AppRouter extends React.Component {
     render() {
