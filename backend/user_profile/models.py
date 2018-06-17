@@ -83,13 +83,12 @@ class User(AbstractBaseUser, PermissionsMixin):
             self.password = str(uuid.uuid4()).replace('-', '')
         super(User, self).save(*args, **kwargs)
 
-
 class UserProfile(models.Model):
     profile_photo = models.ImageField(
         null=True, upload_to=upload_posts_media_to, default=None)
     photo_doc = models.ImageField(
         null=True, upload_to=upload_posts_media_to, default=None)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.email
@@ -104,14 +103,14 @@ class DoctorProfile(models.Model):
     description = models.TextField(max_length=500)
     speciality = models.CharField(max_length=255)
     exp_pts = models.IntegerField(default=0)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user.email
 
 
 class ResetPasswordCode(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     code = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
 
     class Meta:

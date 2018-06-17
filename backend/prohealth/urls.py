@@ -22,16 +22,18 @@ from django.templatetags.static import static as static_tag
 from django.contrib import admin
 
 from rest_framework.documentation import include_docs_urls
+from rest_framework import schemas
 
 urlpatterns = [
     # Include urls here.
     # url(r'api/auth/', include('rest_framework.urls', namespace='rest_framework')),
     # url(r'api/core/', include('core.endpoints')),
-    # url(r'api/$', schemas.get_schema_view()),
+    url(r'api/$', schemas.get_schema_view()),
     url(settings.ADMIN_URL, admin.site.urls),
     url(r'^api/', include('user_profile.urls')),
     url(r'^docs/', include_docs_urls(title='API')),
-    # url(r'^(?!(api\/)).*', TemplateView.as_view(template_name="index.html")),
+    url(r'^api/', include('users_query.urls')),
+    url(r'^(?!(api\/)).*', TemplateView.as_view(template_name="index.html")),
 ]
 
 if settings.DEBUG:
