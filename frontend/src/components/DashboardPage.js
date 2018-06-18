@@ -6,7 +6,8 @@ class DashboardPage extends React.Component {
     render() {
         return (
             <div className="section section--profile">
-                <h1 className="heading-primary u-margin-top-big">DashBoard</h1>
+                <h1>Your queries</h1>
+                
 
                 <MyQueriesComponent />
             </div>

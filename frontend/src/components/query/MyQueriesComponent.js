@@ -3,28 +3,44 @@ import React from 'react';
 import QueryListItemComponent from './QueryListItemComponent';
 
 import {List} from 'antd';
+import {QueryUrls} from '../../constants/urls';
 
-const data = [
-    {
-        title: 'Ant Design Title 1',
-    },
-    {
-        title: 'Ant Design Title 2',
-    },
-    {
-        title: 'Ant Design Title 3',
-    },
-    {
-        title: 'Ant Design Title 4',
-    },
-];
+import {getUserInfo} from '../../utils/authUtils';
+import {getQueries, apiConfig} from '../../actions/queryActions';
 
-const MyQueriesComponent = props => (
-    <List
-        itemLayout="horizontal"
-        dataSource={data}
-        renderItem={item => <QueryListItemComponent item={item} />}
-    />
-);
+class MyQueriesComponent extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            query_list: [] 
+        }
+    }
+
+
+    componentDidMount() {
+        getQueries()
+            .then(data => {
+                this.setState({nonFieldErrors: ''});
+                this.setState({query_list: data});
+            })
+            .catch(error => {
+                this.setState({nonFieldErrors: error.message});
+            });
+    }
+
+
+
+    render() {
+        return (
+            <List
+                itemLayout="horizontal"
+                dataSource={this.state.query_list}
+                renderItem={item => <QueryListItemComponent item={item} />}
+            />
+        );
+    }
+}
 
 export default MyQueriesComponent;
