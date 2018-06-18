@@ -1,37 +1,29 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import {Card, Collapse} from 'antd';
+const Panel = Collapse.Panel;
+
+const callback = () => {
+    console.log('c');
+};
+
+const text = 'medicine1; 3 times a day 2 tablets each';
 
 const Prescription = props => (
-    <div className="card">
-        <div className="card__content">
-            <p>
-                <span className="card__price">Your Prescription</span>
-            </p>
-            <ul className="card__list">
-                <li className="card__list-item">Enjoy</li>
-                <li className="card__list-item">Have Fun</li>
-                <li className="card__list-item">Help others</li>
-                <li className="card__list-item">Work Hard</li>
-                <li className="card__list-item">Play hard</li>
-            </ul>
-            <Link className="btn btn--secondary btn--card" to="#">
-                View Details
-            </Link>
-            <Link className="btn btn--primary btn--card" to="#">
-                Resolve
-            </Link>
-
-
-            <span className="card__subheading">Appointment</span>
-            <ul className="card__list">
-                <li className="card__list-item">Date: 5th June, 2018</li>
-                <li className="card__list-item">Venue: Fakecity General Hospital</li>
-                <li className="card__list-item">Dr. John Doe, MBBS, general physician</li>
-            </ul>
-        </div>
-
-    </div>
+    <Card title="Prescription" bordered={false} style={{width: '100%'}}>
+        <Collapse onChange={callback}>
+            <Panel header="med1" key="1">
+                <p>{text}</p>
+            </Panel>
+            <Panel header="med2" key="2">
+                <p>{text}</p>
+            </Panel>
+            <Panel header="med3" key="3">
+                <p>{text}</p>
+            </Panel>
+        </Collapse>
+    </Card>
 );
 
 export default Prescription;

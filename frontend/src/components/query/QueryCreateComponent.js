@@ -3,6 +3,8 @@ import {withRouter} from 'react-router';
 import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
 
+import {createQuery} from '../../actions/queryActions';
+
 import {
     Form,
     message,
@@ -31,14 +33,18 @@ class QueryCreateComponent extends React.Component {
 
         this.state = {
             // form input  stuff
-            title: '',
+            title_problem: '',
             description: '',
+            name_of_patient: '',
+            age_of_patient: '',
+            weight_of_patient: '',
+            height_of_patient: '',
+            tag: '',
 
             // image-upload stuff
             previewVisible: false,
             previewImage: '',
-            fileList: [
-            ],
+            fileList: [],
 
             formErrors: {},
             nonFieldErrors: '',
@@ -72,15 +78,30 @@ class QueryCreateComponent extends React.Component {
     };
 
     handleSelectChange = value => {
-        this.setState({gender: value});
+        this.setState({tag: value});
     };
 
     // form submittion
     //
     handleSubmit = event => {
         event.preventDefault();
-        const form_data = _.pick(this.state, ['title', 'description']);
+        const form_data = _.pick(this.state, [
+            'title_problem',
+            'description',
+            'name_of_patient',
+            'age_of_patient',
+            'weight_of_patient',
+            'height_of_patient',
+            'tag'
+        ]);
         console.log(form_data);
+        createQuery(form_data)
+            .then(data => {
+                message.success('successfully created query');
+            })
+            .catch(e => {
+                message.error(e.message);
+            });
         // this.props.dispatch(signupUser(form_data, this.props.history));
     };
 
@@ -110,16 +131,18 @@ class QueryCreateComponent extends React.Component {
 
                 <div>
                     <Form onSubmit={this.handleSubmit}>
-                        <FormItem label="Title">
+                        <FormItem>
+                            <label>Title</label>
                             <Input
                                 placeholder="Title"
                                 type="text"
-                                name="title"
+                                name="title_problem"
                                 onChange={this.handleChange}
                             />
                         </FormItem>
 
-                        <FormItem label="Title">
+                        <FormItem>
+                            <label>Description</label>
                             <TextArea
                                 placeholder="Description"
                                 name="description"
@@ -129,6 +152,60 @@ class QueryCreateComponent extends React.Component {
                         </FormItem>
 
                         <FormItem>
+                            <label>Related</label>
+                            <br />
+                            <Select
+                                showSearch
+                                style={{width: 200}}
+                                placeholder="Speciality"
+                                name="speciality"
+                                onChange={this.handleSelectChange}
+                            >
+                                <Option value="S">Skin</Option>
+                                <Option value="E">ent</Option>
+                                <Option value="P">Physician</Option>
+                            </Select>
+                        </FormItem>
+                        <h3>Patient Stats</h3>
+
+                        <FormItem>
+                            <label>Name of Patient</label>
+                            <Input
+                                placeholder="Name of Patient"
+                                name="name_of_patient"
+                                onChange={this.handleChange}
+                            />
+                        </FormItem>
+
+                        <FormItem>
+                            <label>Age Of Patient</label>
+                            <Input
+                                placeholder="Age of Patient"
+                                name="age_of_patient"
+                                type="number"
+                                onChange={this.handleChange}
+                            />
+                        </FormItem>
+                        <FormItem>
+                            <label>Weight of Patient</label>
+                            <Input
+                                placeholder="Weight of Patient"
+                                name="weight_of_patient"
+                                type="number"
+                                onChange={this.handleChange}
+                            />
+                        </FormItem>
+                        <FormItem>
+                            <label>Height of Patient</label>
+                            <Input
+                                placeholder="Height of Patient"
+                                name="height_of_patient"
+                                type="number"
+                                onChange={this.handleChange}
+                            />
+                        </FormItem>
+                        <FormItem>
+                            <label>Attach a photo</label>
                             <div className="clearfix">
                                 <Upload
                                     action="//jsonplaceholder.typicode.com/posts/"
