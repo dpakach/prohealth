@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.renderers import TemplateHTMLRenderer
-
+from rest_framework_extensions.mixins import NestedViewSetMixin
 
 from . models import UserQuery, Prescription, Medicine, Appointment
 from . serializer import UserQuerySerializer, PrescriptionSerializer, AppointmentSerializer, MedicineSerializer
@@ -20,14 +20,46 @@ class UserQueryViewset(viewsets.ModelViewSet):
 
     serializer_class = UserQuerySerializer
     queryset = UserQuery.objects.all()
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (permissions.UpdateOwnUserQuery , IsAuthenticated, permissions.IsPatientUser,)
+    authentication_classes = (TokenAuthentication, )# def validate_user(self, user):
+    #     """
+    #     Validate authenticated user
+    #     """
+
+    #     if user != self.context['request'].user:
+    #         raise serializers.ValidationError('You can not create post replies for other users')
+    #     return user,)
+    permission_classes = (permissions.UpdateOwnUserQuery , IsAuthenticated, )
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name_of_patient','title_problem',)
 
+   
+
+    # def get_queryset(self):
+    #     return UserQuery.objects.filter(query=self.kwargs['query_pk'])
+
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
-    
+
+    # @detail_route(methods=['post'])
+    # def prescribes(self, request):
+    #     prescribe = self.get_object()
+    #     qs = prescribe.objects.all()
+
+    #     # page = self.paginate_queryset(qs)
+    #     # if page in not None:
+    #     #     serializer = PrescriptionSerializer(page, many = True)
+    #     #     return self.get_paginated_response(serializer.data)
+    #     serializer = PrescriptionSerializer(qs, many=True)
+    #     return Response(serializer.data)
+
+    # @detail_route(methods=['post'])
+    # def prescribe(self, request):
+    #     prescribe = self.get_object()
+
+    #     serializer = PrescriptionSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         new = Prescription.objects.create()
+    #     return Response({'id':new.id})    
     # def get_queryset(self):
     #     return UserQuery.objects.filter(user=self.request.user)
 
