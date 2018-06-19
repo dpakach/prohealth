@@ -25,7 +25,8 @@ class AppointmentForm extends React.Component {
             venue: '',
             appointed_doc: '',
             appointed_date: '',
-            appointed_time: '10:00',
+            appoint_time: '10:00',
+            query: this.props.match.params.id
         };
     }
 
@@ -50,11 +51,12 @@ class AppointmentForm extends React.Component {
             'hospital',
             'appointed_doc',
             'appointed_date',
-            'appointed_time',
+            'appoint_time',
             'venue',
+            'query'
         ]);
 
-        setAppointment(this.props.match.params.id, form_data)
+        setAppointment(form_data)
             .then(data => {
                 this.props.updateQuery();
             })
@@ -101,7 +103,7 @@ class AppointmentForm extends React.Component {
                             defaultValue={moment('10:00', format)}
                             format={format}
                             onChange={this.onTimeChange}
-                            name="appointed_time"
+                            name="appoint_time"
                         />
 
                         <Button type="primary" htmlType="submit">
