@@ -57,8 +57,9 @@ export const getQueryItem = id => {
         });
 };
 
-export const setAppointment = (id, form_data) => {
-    return fetch(QueryUrls.APPOINTMENT(id), apiConfig('post', form_data))
+export const setAppointment = (form_data) => {
+    console.log(form_data)
+    return fetch(QueryUrls.APPOINTMENT, apiConfig('post', form_data))
         .then(response => {
             if (response.ok) {
                 return response.json();
@@ -71,8 +72,9 @@ export const setAppointment = (id, form_data) => {
         });
 };
 
-export const pescribe = (id, form_data) => {
-    return fetch(QueryUrls.APPOINTMENT(id), apiConfig('post', form_data))
+export const pescribe = (form_data) => {
+    console.log(form_data)
+    return fetch(QueryUrls.PESCRIPTION, apiConfig('post', form_data))
         .then(response => {
             if (response.ok) {
                 return response.json();
@@ -84,3 +86,17 @@ export const pescribe = (id, form_data) => {
             Promise.reject(Error('failed to post resources'));
         });
 };
+
+export const getAppointment = () => {
+    return fetch(QueryUrls.APPOINTMENT, apiConfig())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                Promise.reject(Error('unable to post data'));
+            }
+        })
+        .catch(e => {
+            Promise.reject(Error('failed to post resources'));
+        });
+}

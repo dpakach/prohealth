@@ -14,6 +14,7 @@ class Prescription extends React.Component {
             quantity: '',
             times_a_day: null,
             remarks: '',
+            query: this.props.match.params.id
         };
     }
 
@@ -25,14 +26,19 @@ class Prescription extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        const form_data = _.pick(this.state, [
+        let form_data = _.pick(this.state, [
             'name',
             'quantity',
             'times_a_day',
             'remarks',
         ]);
 
-        pescribe(this.props.match.params.id, form_data)
+        form_data = {
+            medicine: [form_data],
+            query: this.state.query
+        }
+
+        pescribe(form_data)
             .then(data => {
                 this.props.updateQuery();
             })
