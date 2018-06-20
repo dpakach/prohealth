@@ -44,7 +44,7 @@ class QueryDetailComponent extends React.Component {
     render() {
         return (
             <Card
-                style={{width: '100%', height: '80vh', overflowY: 'scroll', background: '#ECECEC'}}
+                style={{width: '100%', height: '90vh', overflowY: 'scroll', background: '#ECECEC'}}
                 className="u-box-shadow-small">
                 <Row gutter={16}>
                     <Col span={18}>

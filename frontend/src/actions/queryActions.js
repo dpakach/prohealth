@@ -1,6 +1,7 @@
 import {QueryUrls} from '../constants/urls';
 
-
+// return configuration for api according to data and type of request
+//
 export const apiConfig = (type='get', data=null) => {
     return {
         method: type.toUpperCase(),
@@ -12,7 +13,8 @@ export const apiConfig = (type='get', data=null) => {
     }
 }
 
-
+// API request for creating new query
+//
 export const createQuery = form_data => {
     return fetch(QueryUrls.USER_QUERY, apiConfig('post', form_data))
         .then(response => {
@@ -27,6 +29,8 @@ export const createQuery = form_data => {
         });
 };
 
+// API request for fetching all querys
+//
 export const getQueries = () => {
     return fetch(QueryUrls.USER_QUERY, apiConfig())
         .then(response => {
@@ -43,6 +47,8 @@ export const getQueries = () => {
         });
 };
 
+// API request for fetching one query item
+//
 export const getQueryItem = id => {
     return fetch(QueryUrls.USER_QUERY + id, apiConfig())
         .then(response => {
@@ -57,9 +63,11 @@ export const getQueryItem = id => {
         });
 };
 
-export const setAppointment = (form_data) => {
+// Api request for creating new appointment item for a query
+//
+export const setAppointment = (form_data, id) => {
     console.log(form_data)
-    return fetch(QueryUrls.APPOINTMENT, apiConfig('post', form_data))
+    return fetch(QueryUrls.APPOINTMENT(id), apiConfig('post', form_data))
         .then(response => {
             if (response.ok) {
                 return response.json();
@@ -72,9 +80,11 @@ export const setAppointment = (form_data) => {
         });
 };
 
-export const pescribe = (form_data) => {
+// API request for creating pescription for a query item
+//
+export const pescribe = (form_data, id) => {
     console.log(form_data)
-    return fetch(QueryUrls.PESCRIPTION, apiConfig('post', form_data))
+    return fetch(QueryUrls.PESCRIPTION(id), apiConfig('post', form_data))
         .then(response => {
             if (response.ok) {
                 return response.json();
@@ -87,8 +97,10 @@ export const pescribe = (form_data) => {
         });
 };
 
-export const getAppointment = () => {
-    return fetch(QueryUrls.APPOINTMENT, apiConfig())
+// API request for fetching appointment of a query
+//
+export const getAppointment = (id) => {
+    return fetch(QueryUrls.APPOINTMENT(id), apiConfig())
         .then(response => {
             if (response.ok) {
                 return response.json();

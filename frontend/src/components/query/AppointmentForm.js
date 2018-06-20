@@ -56,7 +56,7 @@ class AppointmentForm extends React.Component {
             'query'
         ]);
 
-        setAppointment(form_data)
+        setAppointment(form_data, this.props.match.params.id)
             .then(data => {
                 this.props.updateQuery();
             })

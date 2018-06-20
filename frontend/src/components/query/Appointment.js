@@ -3,12 +3,14 @@ import React from 'react';
 import {Row, Col, Card} from 'antd';
 
 const Prescription = props => {
-    console.log(props);
+    // console.log(props);
     return (
         <Card title="Appointment" bordered={false} style={{width: '100%'}}>
-            <p>Location: Fakecity General Hospital</p>
-            <p>Doctor: Dr. John Doe</p>
-            <p>Date: 18th june 2018</p>
+            <p>Hospital: {props.appointment.hospital}</p>
+            <p>Venue: {props.appointment.venue}</p>
+            <p>Doctor: {props.appointment.appointed_doc}</p>
+            <p>Time: {props.appointment.appoint_time}</p>
+            <p>Date: {props.appointment.appointed_date}</p>
         </Card>
     );
 };
