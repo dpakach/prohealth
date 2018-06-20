@@ -66,8 +66,8 @@ class UserQuery(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     taken = models.BooleanField(default=False)
     resolved = models.BooleanField(default=False)
-    appointment = models.OneToOneField(Appointment, on_delete=models.CASCADE, blank=True, null=True)
-    prescription = models.OneToOneField(Prescription,  on_delete=models.CASCADE, blank=True, null=True)
+    appointment = models.OneToOneField(Appointment, on_delete=models.CASCADE, blank=True, null=False)
+    prescription = models.OneToOneField(Prescription,  on_delete=models.CASCADE, blank=True, null=False)
 
     def __str__(self):
         return self.title_problem
