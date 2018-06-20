@@ -16,7 +16,7 @@ class UserQuerySerializer(serializers.ModelSerializer):
     class Meta:
         model = UserQuery
         fields = '__all__'
-        read_only_fields = ('user',)
+        # read_only_fields = ('user',)
 
     # def validate_user(self, user):
     #     """
