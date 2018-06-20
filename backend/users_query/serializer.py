@@ -35,10 +35,11 @@ class MedicineSerializer(serializers.ModelSerializer):
 
 
 class PrescriptionSerializer(serializers.ModelSerializer):
+    
     medicine = MedicineSerializer(many=True, read_only=False)
     class Meta:
         model = Prescription
-        fields = ('id','medicine','description','prescribed_date','query')
+        fields = ('id','medicine','description','prescribed_date')
 
     def create(self, validate_data):
         medicine_data = validate_data.pop('medicine')
