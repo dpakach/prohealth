@@ -38,7 +38,7 @@ class Prescription extends React.Component {
             query: this.state.query
         }
 
-        pescribe(form_data)
+        pescribe(form_data, this.props.match.params.id)
             .then(data => {
                 this.props.updateQuery();
             })

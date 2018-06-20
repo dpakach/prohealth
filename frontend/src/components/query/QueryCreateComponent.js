@@ -97,12 +97,12 @@ class QueryCreateComponent extends React.Component {
         console.log(form_data);
         createQuery(form_data)
             .then(data => {
-                message.success('successfully created query');
+                const id = data.id;
+                this.props.history.push('/query/' + id)
             })
             .catch(e => {
                 message.error(e.message);
             });
-        // this.props.dispatch(signupUser(form_data, this.props.history));
     };
 
     render() {

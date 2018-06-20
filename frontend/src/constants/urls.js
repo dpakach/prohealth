@@ -11,6 +11,6 @@ export const AuthUrls = {
 
 export const QueryUrls = {
     USER_QUERY: `${ROOT_URL}/api/user-query/`,
-    APPOINTMENT: `${ROOT_URL}/api/appointment/`,
-    PESCRIPTION: `${ROOT_URL}/api/pescribe/`,
+    APPOINTMENT: (id) => `${ROOT_URL}/api/appointment/${id}/appointment`,
+    PESCRIPTION: (id) => `${ROOT_URL}/api/pescribe/${id}/pescribe`,
 }
