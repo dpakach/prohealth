@@ -176,31 +176,18 @@ class PrescriptionView(APIView):
     @staticmethod
     def get(request, query_id,**kwargs):
 
-        # prescribe = Prescription.objects.get(pk=query_id)
-        # queri = get_object_or_404(UserQuery,pk=query_id)
-        # prescribe = Prescription.objects.get(pk=query_id)
-
-        queri = get_object_or_404(UserQuery, pk=query_id)
-        # prescribe = get_object_or_404(Prescription,userqueri=queri)
-
-        
-
-        if type(obj.queri) == Response:
-            return prescribe
-        return Response(PrescriptionSerializer(obj.queri).data)
+        query = get_object_or_404(UserQuery, pk=query_id)
+        prescribe = get_object_or_404(Prescription,query=query)
+        return Response(PrescriptionSerializer(prescribe).data)
     
 
     @staticmethod
     def post(request, query_id):
 
-        queri = get_object_or_404(UserQuery,pk=query_id)
-        prescribe = Prescription.objects.get(userquery=queri)
-
+        query = get_object_or_404(UserQuery,pk=query_id)
         serializer = PrescriptionSerializer(data=request.data, context = {'request':request})
         if serializer.is_valid():
-            user = request.user
-            serializer.save(userquery=queri)
+            serializer.save(query=query)
             return Response(PrescriptionSerializer(serializer.instance).data, status=201)
         return Response(serializer.errors, status=400)
-   
-        
+

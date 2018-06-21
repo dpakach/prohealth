@@ -50,6 +50,7 @@ class PrescriptionSerializer(serializers.ModelSerializer):
         prescription.medicine.add(*med_list)
         return prescription
 
+
 class AppointmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointment
