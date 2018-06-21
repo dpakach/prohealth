@@ -6,7 +6,7 @@ const QueryListItemComponent = (props) => (
   <List.Item actions={[<a>edit</a>, <a>more</a>]}>
     <List.Item.Meta
       avatar={<Avatar src="#" />}
-      title={<Link to={`query/${props.item.id}`}>{props.item.title_problem}</Link>}
+      title={<Link to={`/query/${props.item.id}`}>{props.item.title_problem}</Link>}
       description={props.item.description}
     />
     <div>

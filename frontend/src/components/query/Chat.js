@@ -4,18 +4,18 @@ import {Card, Input, Button} from 'antd';
 class Chat extends React.Component {
     render() {
         return (
-            <div class="chat__main">
-                <ol id="messages" class="chat__messages" >
+            <div className="chat__main">
+                <ol id="messages" className="chat__messages" >
                 </ol>
 
-                <div class="chat__footer">
+                <div className="chat__footer">
                     <form id="message-form">
                         <input
                             name="message"
                             type="text"
                             placeholder="type your message here"
-                            autofocus
-                            autocomplete="off"
+                            autoFocus
+                            autoComplete="off"
                         />
                         <button>send</button>
                     </form>

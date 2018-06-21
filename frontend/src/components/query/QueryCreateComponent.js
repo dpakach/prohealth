@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router';
 import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
+import PropTypes from 'prop-types';
 
 import {createQuery} from '../../actions/queryActions';
 
@@ -92,18 +93,21 @@ class QueryCreateComponent extends React.Component {
             'age_of_patient',
             'weight_of_patient',
             'height_of_patient',
-            'tag'
+            'tag',
         ]);
-        console.log(form_data);
         createQuery(form_data)
             .then(data => {
                 const id = data.id;
-                this.props.history.push('/query/' + id)
+                this.props.history.push('/query/' + id);
             })
             .catch(e => {
                 message.error(e.message);
             });
     };
+
+    componentDidMount(){
+        return
+    }
 
     render() {
         const {previewVisible, previewImage, fileList} = this.state;
@@ -113,10 +117,12 @@ class QueryCreateComponent extends React.Component {
                 <div className="ant-upload-text">Upload</div>
             </div>
         );
+        console.log(this.props);
         return (
-            <div>
-                <h1 className="heading-primary u-margin-top-small">
-                    post query
+            <div className="section section--form">
+                <h1 className="heading-secondary u-margin-top-small">
+                    {this.props.type == 'create' && <p>Ask A Question</p>}
+                    {this.props.type == 'edit' && <p>Update your question</p>}
                 </h1>
                 {this.state.nonFieldErrors && (
                     <div className="u-margin-bottom-small">
@@ -159,8 +165,7 @@ class QueryCreateComponent extends React.Component {
                                 style={{width: 200}}
                                 placeholder="Speciality"
                                 name="speciality"
-                                onChange={this.handleSelectChange}
-                            >
+                                onChange={this.handleSelectChange}>
                                 <Option value="S">Skin</Option>
                                 <Option value="E">ent</Option>
                                 <Option value="P">Physician</Option>
@@ -239,6 +244,10 @@ class QueryCreateComponent extends React.Component {
             </div>
         );
     }
+}
+
+QueryCreateComponent.propTypes = {
+    type: PropTypes.string.isRequired
 }
 
 export default QueryCreateComponent;
