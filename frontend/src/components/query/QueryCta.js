@@ -38,8 +38,8 @@ const appointment = {
 
 const QueryCta = props => {
     return (
-        <div>
-            {!is_doctor && <Actions />}
+        <div style={{height: "80vh", overflowY: "scroll"}}>
+            {!is_doctor && <Actions {...props}/>}
             <Prescription pescr={pescribe} />
             <Appointment appointment={appointment} />
             {is_doctor && (

@@ -1,8 +1,10 @@
 import React from 'react';
 
 import {Row, Col, Card} from 'antd';
+import {getAppointment} from '../../actions/queryActions';
 
 const Prescription = props => {
+
     // console.log(props);
     return (
         <Card title="Appointment" bordered={false} style={{width: '100%'}}>

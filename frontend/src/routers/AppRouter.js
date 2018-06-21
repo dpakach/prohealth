@@ -111,15 +111,7 @@ class AppRouter extends React.Component {
                         <PrivateRoute
                             path="/query/create"
                             auth={this.props.isAuthenticated}
-                            render={props => {
-                                return (
-                                    <QueryCreateComponent
-                                        {...props}
-                                        type="create"
-                                        dispatch={dispatch}
-                                    />
-                                );
-                            }}
+                            component={QueryCreateComponent}
                         />
                         <PrivateRoute
                             path="/query/:id"
@@ -131,15 +123,7 @@ class AppRouter extends React.Component {
                         <PrivateRoute
                             path="/query/:id/edit"
                             auth={this.props.isAuthenticated}
-                            render={props => {
-                                return (
-                                    <QueryCreateComponent
-                                        {...props}
-                                        type="edit"
-                                        dispatch={dispatch}
-                                    />
-                                );
-                            }}
+                            component={QueryCreateComponent}
                         />
 
                         <PrivateRoute

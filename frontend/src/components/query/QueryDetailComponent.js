@@ -63,6 +63,7 @@ class QueryDetailComponent extends React.Component {
                             {...this.props}
                             query={this.state.query}
                             updateQuery={this.updateQuery}
+                            id={this.state.id}
                         />
                     </Col>
                 </Row>
