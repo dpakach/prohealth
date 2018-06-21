@@ -29,6 +29,11 @@ class Header extends React.Component {
                         <Icon type="mail" />Feature
                     </NavLink>
                 </Menu.Item>,
+                <Menu.Item key="queries">
+                    <NavLink to="/query">
+                        <Icon type="message" />Query
+                    </NavLink>
+                </Menu.Item>,
                 <Menu.Item key="profile">
                     <NavLink to="/profile/user">
                         <Icon type="profile" />Profile

@@ -2,6 +2,8 @@ import React from 'react';
 
 import {Link} from 'react-router-dom';
 import {Card, Collapse} from 'antd';
+import {getPescription} from '../../actions/queryActions';
+
 const Panel = Collapse.Panel;
 
 const callback = () => {

@@ -105,8 +105,8 @@ class QueryCreateComponent extends React.Component {
             });
     };
 
-    componentDidMount(){
-        return
+    componentDidMount() {
+        return;
     }
 
     render() {
@@ -117,25 +117,27 @@ class QueryCreateComponent extends React.Component {
                 <div className="ant-upload-text">Upload</div>
             </div>
         );
-        console.log(this.props);
         return (
-            <div className="section section--form">
+            <div className="section section--form u-margin-top-small">
+                    <h1>Ask A Question</h1>
+                {/*
                 <h1 className="heading-secondary u-margin-top-small">
                     {this.props.type == 'create' && <p>Ask A Question</p>}
                     {this.props.type == 'edit' && <p>Update your question</p>}
                 </h1>
-                {this.state.nonFieldErrors && (
-                    <div className="u-margin-bottom-small">
-                        <Alert
-                            message="error"
-                            type="error"
-                            showIcon
-                            description={this.state.nonFieldErrors}
-                        />
-                    </div>
-                )}
-
+                        * */}
                 <div>
+                    {this.state.nonFieldErrors && (
+                        <div className="u-margin-bottom-small">
+                            <Alert
+                                message="error"
+                                type="error"
+                                showIcon
+                                description={this.state.nonFieldErrors}
+                            />
+                        </div>
+                    )}
+
                     <Form onSubmit={this.handleSubmit}>
                         <FormItem>
                             <label>Title</label>
@@ -163,8 +165,7 @@ class QueryCreateComponent extends React.Component {
                             <Select
                                 showSearch
                                 style={{width: 200}}
-                                placeholder="Speciality"
-                                name="speciality"
+                                placeholder="Related"
                                 onChange={this.handleSelectChange}>
                                 <Option value="S">Skin</Option>
                                 <Option value="E">ent</Option>
@@ -244,10 +245,6 @@ class QueryCreateComponent extends React.Component {
             </div>
         );
     }
-}
-
-QueryCreateComponent.propTypes = {
-    type: PropTypes.string.isRequired
 }
 
 export default QueryCreateComponent;
