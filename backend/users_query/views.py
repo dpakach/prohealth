@@ -174,14 +174,20 @@ class UserQueryDetailView(APIView):
 class PrescriptionView(APIView):
 
     @staticmethod
-    def get(request, query_id):
+    def get(request, query_id,**kwargs):
 
         # prescribe = Prescription.objects.get(pk=query_id)
-        queri = get_object_or_404(UserQuery,pk=query_id)
-        prescribe = Prescription.objects.get(userquery=queri)
-        if type(prescribe) == Response:
+        # queri = get_object_or_404(UserQuery,pk=query_id)
+        # prescribe = Prescription.objects.get(pk=query_id)
+
+        queri = get_object_or_404(UserQuery, pk=query_id)
+        # prescribe = get_object_or_404(Prescription,userqueri=queri)
+
+        
+
+        if type(obj.queri) == Response:
             return prescribe
-        return Response(PrescriptionSerializer(prescribe).data)
+        return Response(PrescriptionSerializer(obj.queri).data)
     
 
     @staticmethod
@@ -193,39 +199,8 @@ class PrescriptionView(APIView):
         serializer = PrescriptionSerializer(data=request.data, context = {'request':request})
         if serializer.is_valid():
             user = request.user
-            serializer.save()
+            serializer.save(userquery=queri)
             return Response(PrescriptionSerializer(serializer.instance).data, status=201)
         return Response(serializer.errors, status=400)
-
-
-class PrescriptionDetailView(APIView):
-
-    @staticmethod
-    def get(request, query_id, prescription_id):
-        queri = get_object_or_404(UserQuery,pk=query_id)
-        prescription = Prescription.objects.get(userquery=queri, pk=prescription_id)
-
-        return Response(PrescriptionSerializer(prescription).data)
-
-    @staticmethod
-    def patch(request, query_id):
-        queri = get_object_or_404(UserQuery,pk=query_id)
-        prescription = Prescription.objects.get(userquery=queri)
-
-        serializer = PrescriptionSerializer(prescription, data=request.data, context={'request':request})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(PrescriptionSerializer(serializer.instance).data)
-        return Response(serializer.errors, status=400)
-
-    @staticmethod
-    def delete(request, query_id):
-        queri = get_object_or_404(UserQuery,pk=query_id)
-        prescription = Prescription.objects.get(userquery=queri)
-
-        if queri.user != request.user:
-            return Response(status=401)
-        post.delete()
-
-        return Response(status=204)
+   
         

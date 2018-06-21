@@ -35,15 +35,6 @@ class Appointment(models.Model):
     #     obj.user = request.user
     #     super().save_model(request, obj, form, change)
 
-class Prescription(models.Model):
-    medicine = models.ManyToManyField(Medicine)
-    description = models.TextField()
-    prescribed_date = models.DateTimeField(auto_now_add=True)
-    # query = models.OneToOneField(UserQuery, on_delete=models.CASCADE)
-   
-    def __str__(self):
-        return str(self.prescribed_date)
-
 
 class UserQuery(models.Model):
     """ class used to create users health related queries"""
@@ -66,8 +57,8 @@ class UserQuery(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     taken = models.BooleanField(default=False)
     resolved = models.BooleanField(default=False)
-    appointment = models.OneToOneField(Appointment, on_delete=models.CASCADE, blank=True, null=False)
-    prescription = models.OneToOneField(Prescription,  on_delete=models.CASCADE, blank=True, null=False)
+    appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE, blank=True, null=True)
+    # prescription = models.ForeignKey(Prescription,  on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.title_problem
@@ -78,5 +69,13 @@ class UserQuery(models.Model):
         super().save_model(request, obj, form, change)
 
 
+class Prescription(models.Model):
+    medicine = models.ManyToManyField(Medicine)
+    description = models.TextField()
+    prescribed_date = models.DateTimeField(auto_now_add=True)
+    query = models.OneToOneField(UserQuery, on_delete=models.CASCADE)
+   
 
+    def __str__(self):
+        return str(self.description)
 
