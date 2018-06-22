@@ -49,6 +49,7 @@ class PrescriptionSerializer(serializers.ModelSerializer):
             med_list.append(Medicine.objects.create(**medicine_details))
         prescription.medicine.add(*med_list)
         return prescription
+    
 
 
 class AppointmentSerializer(serializers.ModelSerializer):

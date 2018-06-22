@@ -20,16 +20,7 @@ class Medicine(models.Model):
         return self.name_of_medicine
     
 
-class Appointment(models.Model):
-    appointed_doc = models.CharField(max_length=25)
-    appointed_date = models.DateField(default=None)
-    appoint_time = models.TimeField(default=None)
-    hospital = models.CharField(max_length=25)
-    venue = models.CharField(max_length=100)
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
-    
-    def __str__(self):
-        return self.hospital
+
 
     # def save_model(self, request, obj, form, change):
     #     obj.user = request.user
@@ -57,7 +48,7 @@ class UserQuery(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     taken = models.BooleanField(default=False)
     resolved = models.BooleanField(default=False)
-    appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE, blank=True, null=True)
+    # appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE, blank=True, null=True)
     # prescription = models.ForeignKey(Prescription,  on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
@@ -79,3 +70,14 @@ class Prescription(models.Model):
     def __str__(self):
         return str(self.description)
 
+
+class Appointment(models.Model):
+    appointed_doc = models.CharField(max_length=25)
+    appointed_date = models.DateField(default=None)
+    appoint_time = models.TimeField(default=None)
+    hospital = models.CharField(max_length=25)
+    venue = models.CharField(max_length=100)
+    query = models.OneToOneField(UserQuery, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.hospital
