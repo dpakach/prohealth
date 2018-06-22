@@ -191,3 +191,71 @@ class PrescriptionView(APIView):
             return Response(PrescriptionSerializer(serializer.instance).data, status=201)
         return Response(serializer.errors, status=400)
 
+class AppointmentView(APIView):
+
+    @staticmethod
+    def get(request, query_id,**kwargs):
+
+        query = get_object_or_404(UserQuery, pk=query_id)
+        appoint = get_object_or_404(Appointment,query=query)
+        return Response(AppointmentSerializer(appoint).data)
+    
+
+    @staticmethod
+    def post(request, query_id):
+
+        query = get_object_or_404(UserQuery,pk=query_id)
+        serializer = AppointmentSerializer(data=request.data, context = {'request':request})
+        if serializer.is_valid():
+            serializer.save(query=query)
+            return Response(AppointmentSerializer(serializer.instance).data, status=201)
+        return Response(serializer.errors, status=400)
+
+
+class PrescriptionDetailView(APIView):
+
+    @staticmethod
+    def get(request, query_id, **kwargs):
+        query = get_object_or_404(UserQuery, pk=query_id)
+        prescribe = get_object_or_404(Prescription,query=query)
+        return Response(PrescriptionSerializer(prescribe).data)
+
+    @staticmethod
+    def patch(request, query_id, **kwargs):
+        query = get_object_or_404(UserQuery, pk=query_id)
+        prescribe = get_object_or_404(Prescription, query=query)
+        serializer = PrescriptionSerializer(prescribe, data=request.data, context={'request':request}, partial=True)
+        if serializer.is_valid():
+            serializer.save(query=query)
+            return Response(PrescriptionSerializer(serializer.instance).data)
+        return Response(serializer.errors, status=400)
+
+
+
+class AppointmentDetailView(APIView):
+
+    @staticmethod
+    def get(request, query_id, **kwargs):
+        query = get_object_or_404(UserQuery,pk=query_id)
+        appoint = get_object_or_404(Appointment, query=query)
+        return Response(AppointmentSerializer(appoint).data)
+
+    @staticmethod
+    def patch(request, query_id, **kwargs):
+        query = get_object_or_404(UserQuery, pk=query_id)
+        appoint = get_object_or_404(Appointment, query=query)
+        serializer = AppointmentSerializer(appoint, data=request.data, context={'request':request}, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(AppointmentSerializer(serializer.instance).data)
+        return Response(serializer.errors, status=400)
+
+    @staticmethod
+    def delete(request, query_id, **kwargs):
+        query = get_object_or_404(User, pk=query_id)
+        appoint = get_object_or_404(Appointment, query=query)
+        if queri.user != request.user:
+            return Response(status=401)#unauthorized
+        appoint.delete(query=query)
+        return Response(status=204)#no content
+        
