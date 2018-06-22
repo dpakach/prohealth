@@ -8,25 +8,23 @@ import Prescription from './Prescription';
 import Appointment from './Appointment';
 import Actions from './Actions';
 
-const is_doctor = false;
-const pescribe = {
-    medicine: [
-        {
-            id: 1,
-            name_of_medicine: 'sinex',
-            quantity: '2 tabs',
-            times_a_day: 3,
-            remarks: 'take it with water',
-        },
-        {
-            id: 2,
-            name_of_medicine: 'burfulonazol',
-            quantity: '35ml',
-            times_a_day: 2,
-            remarks: 'swallow directly',
-        },
-    ],
-};
+const is_doctor = true;
+const medicine = [
+    {
+        id: 1,
+        name_of_medicine: 'sinex',
+        quantity: '2 tabs',
+        times_a_day: 3,
+        remarks: 'take it with water',
+    },
+    {
+        id: 2,
+        name_of_medicine: 'burfulonazol',
+        quantity: '35ml',
+        times_a_day: 2,
+        remarks: 'swallow directly',
+    },
+];
 
 const appointment = {
     appointed_doc: 'Ram chandra subedi',
@@ -38,9 +36,9 @@ const appointment = {
 
 const QueryCta = props => {
     return (
-        <div style={{height: "80vh", overflowY: "scroll"}}>
-            {!is_doctor && <Actions {...props}/>}
-            <Prescription pescr={pescribe} />
+        <div style={{height: '80vh', overflowY: 'scroll'}}>
+            {!is_doctor && <Actions {...props} />}
+            <Prescription medicine={medicine} />
             <Appointment appointment={appointment} />
             {is_doctor && (
                 <div>
