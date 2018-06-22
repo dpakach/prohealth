@@ -19,7 +19,6 @@ const {TextArea} = Input;
 const format = 'HH:mm';
 
 class AppointmentForm extends React.Component {
-
     // constructor and state
     constructor(props) {
         super(props);
@@ -31,10 +30,8 @@ class AppointmentForm extends React.Component {
             appointed_doc: '',
             appointed_date: '',
             appoint_time: '10:00',
-            query: this.props.match.params.id,
         };
     }
-
 
     // Form field change handlers
     //
@@ -53,8 +50,6 @@ class AppointmentForm extends React.Component {
         this.setState({appointed_time: timeString});
     };
 
-
-
     // Modal handlers
     showModal = () => {
         this.setState({
@@ -70,13 +65,13 @@ class AppointmentForm extends React.Component {
             'appointed_date',
             'appoint_time',
             'venue',
-            'query',
         ]);
 
         setAppointment(form_data, this.props.match.params.id)
             .then(data => {
                 this.props.updateQuery();
                 this.setState({loading: false, visible: false});
+                this.props.update();
             })
             .catch(e => {
                 message.error(e.message);
@@ -87,14 +82,16 @@ class AppointmentForm extends React.Component {
         this.setState({visible: false});
     };
 
-
     // render method
     render() {
         return (
             <div>
                 <div>
                     <div>
-                        <Button type="primary" className="action__button" onClick={this.showModal}>
+                        <Button
+                            type="primary"
+                            className="action__button"
+                            onClick={this.showModal}>
                             Set Appointment
                         </Button>
                         <Modal
@@ -109,7 +106,6 @@ class AppointmentForm extends React.Component {
                                 <Button
                                     key="submit"
                                     type="primary"
-                                    disabled={true}
                                     loading={this.state.loading}
                                     onClick={this.handleOk}>
                                     Done

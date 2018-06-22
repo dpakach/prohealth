@@ -1,20 +1,62 @@
 import React from 'react';
 
-import {Row, Col, Card} from 'antd';
+import {Row, Icon, Col, Card} from 'antd';
 import {getAppointment} from '../../actions/queryActions';
+import AppointmentForm from './AppointmentForm';
 
-const Prescription = props => {
+class Appointment extends React.Component {
+    state = {
+        appointment: null,
+        loading: false,
+    };
 
-    // console.log(props);
-    return (
-        <Card title="Appointment" bordered={false} style={{width: '100%'}}>
-            <p>Hospital: {props.appointment.hospital}</p>
-            <p>Venue: {props.appointment.venue}</p>
-            <p>Doctor: {props.appointment.appointed_doc}</p>
-            <p>Time: {props.appointment.appoint_time}</p>
-            <p>Date: {props.appointment.appointed_date}</p>
-        </Card>
-    );
-};
+    updateAppointment = () => {
+        getAppointment(this.props.id)
+            .then(data => {
+                if (data) {
+                    this.setState({appointment: data});
+                    this.setState({loading: false});
+                }
+            })
+            .catch(e => {
+                return;
+            });
+    };
 
-export default Prescription;
+    componentDidMount() {
+        this.updateAppointment();
+    }
+
+    render() {
+        return (
+            <div>
+                {this.state.appointment && (
+                    <Card
+                        title="Appointment"
+                        bordered={false}
+                        style={{width: '100%'}}>
+                        {this.state.loading && <Icon type="loading" />}
+
+                        <div>
+                            <p>Hospital: {this.state.appointment.hospital}</p>
+                            <p>Venue: {this.state.appointment.venue}</p>
+                            <p>
+                                Doctor: {this.state.appointment.appointed_doc}
+                            </p>
+                            <p>Time: {this.state.appointment.appoint_time}</p>
+                            <p>Date: {this.state.appointment.appointed_date}</p>
+                        </div>
+                    </Card>
+                )}
+                { !this.state.loading && !this.state.appointment && (
+                    <AppointmentForm
+                        update={this.updateAppointment}
+                        {...this.props}
+                    />
+                )}
+            </div>
+        );
+    }
+}
+
+export default Appointment;

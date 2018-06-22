@@ -13,12 +13,12 @@ class PrescriptionForm extends React.Component {
         this.state = {
             loading: false,
             visible: false,
-            name: '',
+            name_of_medicine: '',
             quantity: '',
             times_a_day: null,
             remarks: '',
             medicines: '',
-            query: this.props.match.params.id,
+            query: this.props.id,
         };
     }
 
@@ -42,18 +42,20 @@ class PrescriptionForm extends React.Component {
     handleAdd = e => {
         e.preventDefault();
         let form_data = _.pick(this.state, [
-            'name',
+            'name_of_medicine',
             'quantity',
             'times_a_day',
             'remarks',
         ]);
 
-        pescribe(form_data, this.props.match.params.id)
+        pescribe(form_data, this.props.id)
             .then(data => {
                 this.props.updateQuery();
+
             })
             .catch(e => {
                 message.error(e.message);
+                this.props.update();
             });
     };
 
@@ -61,22 +63,6 @@ class PrescriptionForm extends React.Component {
         this.setState({visible: false});
     };
 
-    medicine = [
-        {
-            id: 1,
-            name_of_medicine: 'sinex',
-            quantity: '2 tabs',
-            times_a_day: 3,
-            remarks: 'take it with water',
-        },
-        {
-            id: 2,
-            name_of_medicine: 'burfulonazol',
-            quantity: '35ml',
-            times_a_day: 2,
-            remarks: 'swallow directly',
-        },
-    ];
     render() {
         return (
             <div>
@@ -86,7 +72,7 @@ class PrescriptionForm extends React.Component {
                             type="primary"
                             className="action__button"
                             onClick={this.showModal}>
-                            Give Prescription
+                            Add Prescription
                         </Button>
                         <Modal
                             visible={this.state.visible}
@@ -105,16 +91,17 @@ class PrescriptionForm extends React.Component {
                                     Done
                                 </Button>,
                             ]}>
-                            <Prescription medicine={this.medicine} />
-
+                            <Prescription {...this.props} id={this.props.id} />
                             <div>
                                 <Form
                                     layout="vertical"
+                                    id="PrescriptionForm"
                                     onSubmit={this.handleSubmit}>
                                     <Input
                                         placeholder="Name"
-                                        name="name"
+                                        name="name_of_medicine"
                                         onChange={this.handleChange}
+                                        value={this.state.name_of_medicine}
                                     />
                                     <Input
                                         type="text"

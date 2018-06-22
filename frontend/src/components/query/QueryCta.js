@@ -8,50 +8,20 @@ import Prescription from './Prescription';
 import Appointment from './Appointment';
 import Actions from './Actions';
 
-const is_doctor = true;
-const medicine = [
-    {
-        id: 1,
-        name_of_medicine: 'sinex',
-        quantity: '2 tabs',
-        times_a_day: 3,
-        remarks: 'take it with water',
-    },
-    {
-        id: 2,
-        name_of_medicine: 'burfulonazol',
-        quantity: '35ml',
-        times_a_day: 2,
-        remarks: 'swallow directly',
-    },
-];
-
-const appointment = {
-    appointed_doc: 'Ram chandra subedi',
-    appointed_date: '18th June, 2018',
-    appoint_time: '12:20 pm',
-    hospital: 'Fakecity General Hospital',
-    venue: 'Fake Town',
-};
-
+const is_doctor = false;
 const QueryCta = props => {
     return (
         <div style={{height: '80vh', overflowY: 'scroll'}}>
             {!is_doctor && <Actions {...props} />}
-            <Prescription medicine={medicine} />
-            <Appointment appointment={appointment} />
+            <Prescription {...props} id={props.id} />
             {is_doctor && (
-                <div>
-                    <AppointmentForm
-                        {...props}
-                        updateQuery={props.updateQuery}
-                    />
-                    <PrescriptionForm
-                        {...props}
-                        updateQuery={props.updateQuery}
-                    />
-                </div>
+                <PrescriptionForm
+                    {...props}
+                    update={this.is_doc}
+                    id={props.id}
+                />
             )}
+            <Appointment {...props} id={props.id} />
         </div>
     );
 };

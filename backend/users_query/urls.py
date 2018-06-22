@@ -6,7 +6,7 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^query$',views.UserQueryView.as_view()),
+    url(r'^query/$',views.UserQueryView.as_view()),
     url(r'^query/(?P<query_id>[\d]+)$',views.UserQueryDetailView.as_view()),
     url(r'^query/(?P<query_id>[\d]+)/prescribe$',views.PrescribeView.as_view()),
     url(r'^query/(?P<query_id>[\d]+)/prescribe/(?P<prescribe_id>[\d]+)$',views.PrescribeDetailView.as_view()),
