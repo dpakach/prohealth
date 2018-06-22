@@ -18,6 +18,7 @@ export const apiConfig = (type = 'get', data = null) => {
 export const createQuery = form_data => {
     return fetch(QueryUrls.USER_QUERY, apiConfig('post', form_data))
         .then(response => {
+            console.log(response)
             if (response.ok) {
                 return response.json();
             } else {
@@ -34,6 +35,7 @@ export const createQuery = form_data => {
 export const getQueries = () => {
     return fetch(QueryUrls.USER_QUERY, apiConfig())
         .then(response => {
+            console.log(response)
             if (response.ok) {
                 return response.json();
             } else {
@@ -51,6 +53,24 @@ export const getQueries = () => {
 //
 export const getQueryItem = id => {
     return fetch(QueryUrls.USER_QUERY + id, apiConfig())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                Promise.reject(Error('unable to fetch query'));
+            }
+        })
+        .catch(e => {
+            Promise.reject(Error('failed to load resource'));
+        });
+};
+
+
+
+// API request for updating one query item
+//
+export const updateQueryItem = (form_data, id) => {
+    return fetch(QueryUrls.USER_QUERY + id, apiConfig('patch', form_data))
         .then(response => {
             if (response.ok) {
                 return response.json();
@@ -99,23 +119,6 @@ export const setAppointment = (form_data, id) => {
         });
 };
 
-// API request for creating pescription for a query item
-//
-export const pescribe = (form_data, id) => {
-    console.log(form_data);
-    return fetch(QueryUrls.PESCRIPTION(id), apiConfig('post', form_data))
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                Promise.reject(Error('unable to post data'));
-            }
-        })
-        .catch(e => {
-            Promise.reject(Error('failed to post resources'));
-        });
-};
-
 // API request for fetching appointment of a query
 //
 export const getAppointment = id => {
@@ -132,6 +135,25 @@ export const getAppointment = id => {
         });
 };
 
+// API request for creating pescription for a query item
+//
+export const pescribe = (form_data, id) => {
+    console.log(form_data);
+    return fetch(QueryUrls.PESCRIPTION(id), apiConfig('post', form_data))
+        .then(response => {
+            console.log(response);
+            if (response.ok) {
+                return response.json();
+            } else {
+                Promise.reject(Error('unable to post data'));
+            }
+        })
+        .catch(e => {
+            Promise.reject(Error('failed to post resources'));
+        });
+};
+
+
 // API request for fetching prescription of a query
 //
 
@@ -145,6 +167,22 @@ export const getPescription = id => {
             }
         })
         .catch(e => {
-            Promise.reject(Error('unable to load resources'));
+            Promise.reject(Error(e.message));
         });
 };
+
+// API request for deleting a medicine(med_id) of a prescription of a query(id)
+//
+export const deleteMedicine = (id, med_id) => {
+    return fetch(QueryUrls.MEDICINE(id, med_id), apiConfig('delete'))
+        .then(response => {
+            if (response.ok) {
+                return;
+            } else {
+                Promise.reject(Error('unable to delete resources'));
+            }
+        })
+        .catch(e => {
+            Promise.reject(Error(e.message));
+        });
+}

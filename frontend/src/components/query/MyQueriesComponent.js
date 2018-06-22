@@ -53,6 +53,7 @@ class MyQueriesComponent extends React.Component {
                     renderItem={item => (
                         <QueryListItemComponent
                             updateQueries={this.updateQueries}
+                            key={item.id}
                             item={item}
                         />
                     )}

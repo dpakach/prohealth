@@ -10,7 +10,8 @@ export const AuthUrls = {
 }
 
 export const QueryUrls = {
-    USER_QUERY: `${ROOT_URL}/api/user-query/`,
-    APPOINTMENT: (id) => `${ROOT_URL}/api/appointment/${id}/appointment`,
-    PESCRIPTION: (id) => `${ROOT_URL}/api/pescribe/${id}/pescribe`,
+    USER_QUERY: `${ROOT_URL}/api/query/`,
+    APPOINTMENT: (id) => `${ROOT_URL}/api/query/${id}/appoint`,
+    PESCRIPTION: (id) => `${ROOT_URL}/api/query/${id}/prescribe`,
+    MEDICINE: (id, med_id) => `${ROOT_URL}/api/query/${id}/prescribe/${med_id}`,
 }

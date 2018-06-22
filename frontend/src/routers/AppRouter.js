@@ -10,6 +10,7 @@ import NotFoundPage from '../components/NotFoundPage';
 import LoginComponent from '../components/auth/LoginComponent';
 import SignupComponent from '../components/auth/SignupComponent';
 import QueryCreateComponent from '../components/query/QueryCreateComponent';
+import QueryUpdateComponent from '../components/query/QueryUpdateComponent';
 import QueryDetailComponent from '../components/query/QueryDetailComponent';
 import MyQueriesComponent from '../components/query/MyQueriesComponent';
 
@@ -112,6 +113,11 @@ class AppRouter extends React.Component {
                             path="/query/create"
                             auth={this.props.isAuthenticated}
                             component={QueryCreateComponent}
+                        />
+                        <PrivateRoute
+                            path="/query/:id/update"
+                            auth={this.props.isAuthenticated}
+                            component={QueryUpdateComponent}
                         />
                         <PrivateRoute
                             path="/query/:id"
