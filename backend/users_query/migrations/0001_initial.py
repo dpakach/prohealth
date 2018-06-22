@@ -36,15 +36,7 @@ class Migration(migrations.Migration):
                 ('quantity', models.IntegerField()),
                 ('times_a_day', models.IntegerField()),
                 ('remarks', models.TextField(blank=True, null=True)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Prescription',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('description', models.TextField()),
-                ('prescribed_date', models.DateTimeField(auto_now_add=True)),
-                ('medicine', models.ManyToManyField(to='users_query.Medicine')),
+                ('date_issued', models.DateTimeField(auto_now_add=True)),
             ],
         ),
         migrations.CreateModel(
@@ -62,9 +54,17 @@ class Migration(migrations.Migration):
                 ('date_of_submission', models.DateTimeField(auto_now_add=True)),
                 ('taken', models.BooleanField(default=False)),
                 ('resolved', models.BooleanField(default=False)),
-                ('appointment', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='users_query.Appointment')),
-                ('prescription', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='users_query.Prescription')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
+        ),
+        migrations.AddField(
+            model_name='medicine',
+            name='query',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='users_query.UserQuery'),
+        ),
+        migrations.AddField(
+            model_name='appointment',
+            name='query',
+            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='users_query.UserQuery'),
         ),
     ]
