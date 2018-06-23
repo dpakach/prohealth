@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
@@ -9,9 +8,12 @@ from . models import UserQuery, Medicine, Appointment
 from . serializer import UserQuerySerializer, AppointmentSerializer, MedicineSerializer
 from . import permissions
 from user_profile.models import User
+from notifications.models import Notification
+
 
 
 class UserQueryView(APIView):
+    serializer_class = UserQuerySerializer
 
     @staticmethod
     def get(request):
@@ -25,7 +27,15 @@ class UserQueryView(APIView):
         serializer = UserQuerySerializer(data=request.data, context = {'request':request})
         if serializer.is_valid():
             user = request.user
+
+            # for notification
+            title = "A new notification from " + request.user.first_name + " " + request.user.last_name
+            message = request.data.get('title_problem')
+            notification = Notification(user=request.user, title=title, message=message)
+            notification.save()
+
             serializer.save()
+
             return Response(UserQuerySerializer(serializer.instance).data, status=201)
         return Response(serializer.errors, status=400)
 
@@ -71,6 +81,14 @@ class AppointmentView(APIView):
         serializer = AppointmentSerializer(data=request.data, context = {'request':request})
         if serializer.is_valid():
             serializer.save(query=query)
+
+            # for notification
+            user = request.user
+            title = "A new notification from " + user.first_name + " " + user.last_name
+            message = request.data.get('title_problem')
+            notification = Notification(user=user, title=title, message=message)
+            notification.save()
+
             return Response(AppointmentSerializer(serializer.instance).data, status=201)
         return Response(serializer.errors, status=400)
 
