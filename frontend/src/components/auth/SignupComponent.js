@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router';
 import _ from 'lodash';
-// import {AuthUrls} from '../../constants/urls';
-import {signupUser} from '../../actions/authActions';
 import {AuthUrls} from '../../constants/urls';
+
 import {
     Form,
     Icon,
@@ -15,7 +14,6 @@ import {
     Checkbox,
     message,
 } from 'antd';
-// import validate from '../../utils/validate';
 
 const FormItem = Form.Item;
 const Option = Select.Option;

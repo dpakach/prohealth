@@ -1,9 +1,6 @@
 import React from 'react';
 
-import {Row, Col, Icon} from 'antd';
-
-import UserProfile from './UserProfile.js';
-import NotFoundPage from '../NotFoundPage';
+import {Icon} from 'antd';
 
 const DoctorProfile = props => {
     const {doctor_profile} = props;

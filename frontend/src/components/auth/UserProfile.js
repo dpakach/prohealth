@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Row, Icon, Col} from 'antd';
+import {Row, Col} from 'antd';
 
 import {ROOT_URL} from '../../constants/urls';
 
