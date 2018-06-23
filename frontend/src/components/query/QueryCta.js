@@ -42,6 +42,7 @@ class QueryCta extends React.Component {
                     {...this.props}
                     prescription={this.state.prescription}
                     updatePescription={this.updatePescription}
+                    loading={this.state.loading}
                     id={this.props.id}
                 />
                 {is_doctor && (
@@ -49,6 +50,7 @@ class QueryCta extends React.Component {
                         {...this.props}
                         prescription={this.state.prescription}
                         updatePescription={this.updatePescription}
+                        loading={this.state.loading}
                         id={this.props.id}
                     />
                 )}
