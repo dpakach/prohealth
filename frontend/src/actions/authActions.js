@@ -26,6 +26,7 @@ export const receiveLogin = user => {
         isFetching: false,
         isAuthenticated: true,
         token: user.token,
+        is_doctor: user.is_doctor,
     };
 };
 
@@ -66,13 +67,12 @@ const receiveLogout = user => {
 //     };
 // };
 
-
-const setUserProfile = (payload) => {
+const setUserProfile = payload => {
     return {
         type: AuthTypes.USER_PROFILE,
-        payload: payload
+        payload: payload,
     };
-}
+};
 
 // calls the API to get a token and dispatch the action
 //
@@ -87,56 +87,55 @@ export function loginUser(creds, history) {
         // We dispatch requestLogin to kickoff the call to the API
         dispatch(requestLogin(creds));
         return fetch(AuthUrls.LOGIN, config)
-            .then(response => response.json().then(user => ({user, response})))
-            .then(({user, response}) => {
+            .then(response => {
                 if (!response.ok) {
-                    // console.log(response.json())
                     // If there was a problem, we want to
                     // dispatch the error condition
-                    dispatch(
-                        loginError(
-                            'The email or password you entered is incorrect! Please make sure your email or password is valid',
-                        ),
-                    );
-                    return Promise.reject(user);
-                } else {
-                    // If login was successful, set the token in local storage
-                    localStorage.setItem('token', user.token);
-                    localStorage.setItem('user', JSON.stringify(user));
-                    localStorage.setItem('is_doctor', user.is_doctor);
-
-                    // Dispatch the success action
-                    dispatch(receiveLogin(user));
-                    dispatch(setUserProfile(user))
-
-                    history.push('/');
+                    console.log(response);
+                    switch (response.status) {
+                        case 404:
+                            dispatch(
+                                loginError(
+                                    'User with that email doesnot exists!',
+                                ),
+                            );
+                            break;
+                        case 400:
+                            dispatch(
+                                loginError(
+                                    'The email or password you entered is incorrect! Please make sure your email or password is valid',
+                                ),
+                            );
+                            break;
+                        case 500:
+                            dispatch(
+                                loginError(
+                                    'An error occured in the server. Please try again later.',
+                                ),
+                            );
+                            break;
+                        default:
+                            dispatch(
+                                loginError(
+                                    'There was a error. Please try again later.',
+                                ),
+                            );
+                    }
+                    return Promise.reject();
                 }
+                return response.json();
             })
-            .catch(err => console.log('Error: ', err));
-    };
-}
+            .then(user => {
+                // If login was successful, set the token in local storage
+                localStorage.setItem('token', user.token);
+                localStorage.setItem('user', JSON.stringify(user));
+                localStorage.setItem('is_doctor', user.is_doctor);
+                localStorage.setItem('user_id', user.id);
 
-export function signupUser(creds, history) {
-    let config = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(creds),
-    };
-
-    return dispatch => {
-        // We dispatch requestLogin to kickoff the call to the API
-        return fetch(AuthUrls.USERS, config)
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw Error(
-                    'Some thing went wrong! Please make sure the information is valid',
-                );
-            })
-            .then(data => {
-                message.success('signed up succesfully');
-                history.push('/user/login/');
+                // Dispatch the success action
+                dispatch(receiveLogin(user));
+                dispatch(setUserProfile(user));
+                history.push('/');
             })
             .catch(err => console.log('Error: ', err));
     };
@@ -148,73 +147,48 @@ export function getUserProfile() {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Token ${token}`
+            Authorization: `Token ${token}`,
         },
     };
 
-    return (dispatch) => {
+    return dispatch => {
         if (token) {
             fetch(AuthUrls.USER_PROFILE, config)
                 .then(response => {
-                dispatch(setUserProfile(response.data))
-            }).catch((error) => {
-                // If request is bad...
-                // Show an error to the user
-                // console.log(error);
-                // TODO: send notification and redirect
-            });
+                    dispatch(setUserProfile(response.data));
+                })
+                .catch(error => {
+                    // If request is bad...
+                    // Show an error to the user
+                    // console.log(error);
+                    // TODO: send notification and redirect
+                });
         }
     };
 }
 
-export function updateUserProfile(creds, id) {
-    let config = {
-        method: 'PATCH',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(creds),
-    };
-
-    return dispatch => {
-        // We dispatch requestLogin to kickoff the call to the API
-        return fetch(`AuthUrls.USER_PROFILE${id}`, config)
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw Error(
-                    'Some thing went wrong! Please make sure the information is valid',
-                );
-            })
-            .then(data => {
-                message.success('sucessfully updated profile');
-            })
-            .catch(err => console.log('Error: ', err));
-    };
-}
-
 export function logoutUser(history) {
+    let config = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${localStorage.getItem('token')}`,
+        },
+    };
     return dispatch => {
         dispatch(requestLogout());
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        message.success('logged out succesfully');
-        history.push('/user/login/');
-        dispatch(receiveLogout());
+        return fetch(AuthUrls.LOGOUT, config).then(response => {
+            console.log(response);
+            if (response.ok) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                localStorage.removeItem('is_doctor');
+                localStorage.removeItem('user_id');
+                history.push('/user/login/');
+                dispatch(receiveLogout());
+            } else {
+                message.error('There was a problem logging out');
+            }
+        });
     };
 }
-
-
-// // util functions
-// function processServerError(error) {
-//     return  Object.keys(error).reduce(function(newDict, key) {
-//         if (key === "non_field_errors") {
-//             newDict["_error"].push(error[key]);
-//         } else if (key === "token") {
-//             // token sent with request is invalid
-//             newDict["_error"].push("The link is not valid any more.");
-//         } else {
-//             newDict[key] = error[key];
-//         }
-//         return newDict
-//     }, {"_error": []});
-// }
