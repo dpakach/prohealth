@@ -1,13 +1,11 @@
 import React from 'react';
-import {Link, Row, Col} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 import QueryListItemComponent from './QueryListItemComponent';
 
-import {List, Button} from 'antd';
-import {QueryUrls} from '../../constants/urls';
+import {List, Icon} from 'antd';
 
-import {getUserInfo} from '../../utils/authUtils';
-import {getQueries, apiConfig} from '../../actions/queryActions';
+import {getQueries} from '../../actions/queryActions';
 
 class MyQueriesComponent extends React.Component {
     constructor(props) {
@@ -34,7 +32,7 @@ class MyQueriesComponent extends React.Component {
                 setTimeout(() => {
                     this.setState({nonFieldErrors: '', loading: false});
                     this.setState({query_list: queries});
-                }, 3000);
+                }, 1000);
             })
             .catch(error => {
                 this.setState({nonFieldErrors: error.message});
@@ -54,18 +52,25 @@ class MyQueriesComponent extends React.Component {
                 <p>
                     <Link to="query/create"> Ask New Question</Link>
                 </p>
-                <List
-                    itemLayout="horizontal"
-                    dataSource={this.state.query_list}
-                    renderItem={item => (
-                        <QueryListItemComponent
-                            updateQueries={this.updateQueries}
-                            key={item.id}
-                            item={item}
-                            loading={this.state.loading}
-                        />
-                    )}
-                />
+                {this.state.loading && (
+                    <div style={{width: '100%', textAlign: 'center'}} className="u-margin-top-small">
+                        <Icon style={{fontSize: '10rem'}} type="loading" />
+                    </div>
+                )}
+                {!this.state.loading && (
+                    <List
+                        itemLayout="horizontal"
+                        dataSource={this.state.query_list}
+                        renderItem={item => (
+                            <QueryListItemComponent
+                                updateQueries={this.updateQueries}
+                                key={item.id}
+                                item={item}
+                                loading={this.state.loading}
+                            />
+                        )}
+                    />
+                )}
             </div>
         );
     }

@@ -1,9 +1,7 @@
 import React from 'react';
 import {
-    Card,
     message,
     Form,
-    Icon,
     Input,
     Button,
     DatePicker,
@@ -15,7 +13,6 @@ import moment from 'moment';
 
 import {setAppointment} from '../../actions/queryActions';
 
-const {TextArea} = Input;
 const format = 'HH:mm';
 
 class AppointmentForm extends React.Component {
@@ -69,7 +66,7 @@ class AppointmentForm extends React.Component {
 
         setAppointment(form_data, this.props.match.params.id)
             .then(data => {
-                this.props.updateQuery();
+                this.props.update();
                 this.setState({loading: false, visible: false});
                 this.props.update();
             })

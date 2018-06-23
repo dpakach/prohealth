@@ -3,7 +3,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {PropTypes} from 'prop-types';
 import {Link} from 'react-router-dom';
-import {Row, Col} from 'antd';
 
 import MyQueriesComponent from './query/MyQueriesComponent';
 

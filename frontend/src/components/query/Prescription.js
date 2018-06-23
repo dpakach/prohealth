@@ -1,9 +1,7 @@
 import React from 'react';
 
-import {Link} from 'react-router-dom';
-import {Card, Button, Icon, Collapse, List} from 'antd';
-import {getPescription, deleteMedicine} from '../../actions/queryActions';
-import PrescriptionForm from './PrescriptionForm';
+import {Card, Button, Icon, List} from 'antd';
+import {deleteMedicine} from '../../actions/queryActions';
 
 const Prescription = props => {
     const deleteButton = id => {
