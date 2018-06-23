@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'^api/', include('notifications.urls')),
     url(r'^api/', include('users_query.urls')),
     url(r'^docs/', include_docs_urls(title='API')),
-    # url(r'^(?!(api\/)).*', TemplateView.as_view(template_name="index.html")),
+    url(r'^(?!(api\/)).*', TemplateView.as_view(template_name="index.html")),
 ]
 
 if settings.DEBUG:

@@ -86,15 +86,15 @@ class LoginComponent extends Component {
 
     render() {
         return (
-            <div>
+            <div className="section section--form">
                 <h1 className="heading-primary u-margin-top-small">Login</h1>
-                {this.props.errorMessage && this.props.errorMessage.login && (
-                    <div className="section section--form">
+                {this.props.errorMessage && (
+                    <div className="s">
                         <Alert
                             message="error"
                             type="error"
                             showIcon
-                            description={this.props.errorMessage.login}
+                            description={this.props.errorMessage}
                         />
                     </div>
                 )}
