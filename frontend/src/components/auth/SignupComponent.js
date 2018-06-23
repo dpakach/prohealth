@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router';
 import _ from 'lodash';
-// import {AuthUrls} from '../../constants/urls';
-import {signupUser} from '../../actions/authActions';
+import {AuthUrls} from '../../constants/urls';
+
 import {
     Form,
     Icon,
@@ -12,8 +12,8 @@ import {
     Select,
     Alert,
     Checkbox,
+    message,
 } from 'antd';
-// import validate from '../../utils/validate';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -31,8 +31,8 @@ class SignupComponent extends Component {
             password: '',
             password2: '',
             is_doctor: false,
-            date_of_birth: '',
-            gender: '',
+            date_of_birth: null,
+            gender: null,
 
             formErrors: {},
             nonFieldErrors: '',
@@ -57,7 +57,7 @@ class SignupComponent extends Component {
     //
     handleCheckbox = e => {
         // console.log(e);
-        this.setState({'is_doctor': e.target.checked});
+        this.setState({is_doctor: e.target.checked});
     };
 
     handleSelectChange = value => {
@@ -97,7 +97,7 @@ class SignupComponent extends Component {
         }
         this.setState(
             {
-                formErrors: fieldValidationErrors,
+                formErrors: [fieldValidationErrors],
                 emailValid: emailValid,
                 passwordValid: passwordValid,
             },
@@ -109,6 +109,16 @@ class SignupComponent extends Component {
         this.setState({
             formValid: this.state.emailValid && this.state.passwordValid,
         });
+    };
+
+    // render errors
+    //
+    renderError = key => {
+        if (this.state.formErrors[key]) {
+            return this.state.formErrors[key].map(e => (
+                <li style={{color:'orangered'}} key={Math.random()}>{e}</li>
+            ));
+        }
     };
 
     // form submittion
@@ -125,12 +135,30 @@ class SignupComponent extends Component {
             'date_of_birth',
         ]);
 
-        this.props.dispatch(signupUser(form_data, this.props.history));
+        let config = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(form_data),
+        };
+
+        // We dispatch requestLogin to kickoff the call to the API
+        return fetch(AuthUrls.USERS, config)
+            .then(response => response.json().then(data => ({data, response})))
+            .then(({response, data}) => {
+                if (response.ok) {
+                    message.success('signed up succesfully');
+                    this.props.history.push('/user/login/');
+                } else {
+                    // console.log(data)
+                    this.setState({formErrors: data});
+                }
+            })
+            .catch(err => console.log('Error: ', err));
     };
 
     render() {
         return (
-            <div>
+            <div className="section section--profile">
                 <h1 className="heading-primary u-margin-top-small">Signup</h1>
                 {this.state.nonFieldErrors && (
                     <div className="u-margin-bottom-small">
@@ -146,6 +174,7 @@ class SignupComponent extends Component {
                     <Form className="login-form" onSubmit={this.handleSubmit}>
                         <FormItem>
                             <label>First Name</label>
+
                             <Input
                                 prefix={<Icon type="user" />}
                                 placeholder="First Name"
@@ -164,6 +193,8 @@ class SignupComponent extends Component {
                                 onChange={this.handleChange}
                             />
                         </FormItem>
+
+
                         <FormItem
                             validateStatus={
                                 !this.state.formErrors.email
@@ -171,6 +202,7 @@ class SignupComponent extends Component {
                                     : 'error'
                             }>
                             <label>email</label>
+                            {this.renderError('email')}
                             <Input
                                 prefix={<Icon type="user" />}
                                 placeholder="email"
@@ -180,6 +212,8 @@ class SignupComponent extends Component {
                             />
                         </FormItem>
 
+
+
                         <FormItem
                             validateStatus={
                                 !this.state.formErrors.password
@@ -187,6 +221,7 @@ class SignupComponent extends Component {
                                     : 'error'
                             }>
                             <label>password</label>
+                            {this.renderError('password')}
                             <Input
                                 prefix={<Icon type="lock" />}
                                 placeholder="password"
@@ -202,6 +237,7 @@ class SignupComponent extends Component {
                                     : 'error'
                             }>
                             <label>Confirm password</label>
+                            {this.renderError('password2')}
                             <Input
                                 prefix={<Icon type="lock" />}
                                 placeholder="Confirm password"
@@ -214,11 +250,13 @@ class SignupComponent extends Component {
                         <FormItem>
                             <label>Date Of Birth</label>
                             <br />
+                            {this.renderError('date_of_birth')}
                             <DatePicker onChange={this.onDateChange} />
                         </FormItem>
 
                         <FormItem>
                             <label>Gender</label>
+                            {this.renderError('gender')}
                             <br />
                             <Select
                                 showSearch
