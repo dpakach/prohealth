@@ -141,22 +141,6 @@ export function loginUser(creds, history) {
     };
 }
 
-export function signupUser(creds, history) {
-    let config = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(creds),
-    };
-
-    // We dispatch requestLogin to kickoff the call to the API
-    return fetch(AuthUrls.USERS, config).then(response =>
-        response.json().then(data => ({
-            data,
-            response,
-        })),
-    );
-}
-
 export function getUserProfile() {
     const token = getUserToken(store.getState());
     let config = {
