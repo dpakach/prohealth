@@ -2,7 +2,6 @@ import React from 'react';
 import QueryHeader from './QueryHeader';
 import Chat from './Chat';
 import QueryCta from './QueryCta';
-import {QueryUrls} from '../../constants/urls';
 
 import {getUserInfo} from '../../utils/authUtils';
 import {getQueryItem} from '../../actions/queryActions';
@@ -27,7 +26,7 @@ class QueryDetailComponent extends React.Component {
         this.setState({loading: true});
         getQueryItem(this.state.id)
             .then(data => {
-                const user = getUserInfo(data.user).then(user => {
+                getUserInfo(data.user).then(user => {
                     this.setState({
                         user,
                         nonFieldErrors: '',

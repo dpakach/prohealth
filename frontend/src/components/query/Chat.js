@@ -1,5 +1,4 @@
 import React from 'react';
-import {Card, Input, Button} from 'antd';
 
 class Chat extends React.Component {
     render() {

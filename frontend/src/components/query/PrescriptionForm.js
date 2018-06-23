@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import {Card, Modal, message, Form, Icon, Input, Button} from 'antd';
+import { Modal, message, Form, Input, Button} from 'antd';
 import {pescribe} from '../../actions/queryActions';
 import Prescription from './Prescription';
 

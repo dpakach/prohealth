@@ -1,13 +1,10 @@
 import React from 'react';
 
-import {Link} from 'react-router-dom';
-import {Card} from 'antd';
-import AppointmentForm from './AppointmentForm';
 import PrescriptionForm from './PrescriptionForm';
 import Prescription from './Prescription';
 import Appointment from './Appointment';
 import Actions from './Actions';
-import {getPescription, deleteMedicine} from '../../actions/queryActions';
+import {getPescription} from '../../actions/queryActions';
 
 const is_doctor = true;
 class QueryCta extends React.Component {

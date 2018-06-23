@@ -1,5 +1,4 @@
 import React from 'react';
-import Prescription from './Prescription';
 import {Card, Icon, Row, Col} from 'antd';
 
 const QueryHeader = props => {

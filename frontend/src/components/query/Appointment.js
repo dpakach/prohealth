@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Row, Icon, Col, Card} from 'antd';
+import {Icon, Card} from 'antd';
 import {getAppointment} from '../../actions/queryActions';
 import AppointmentForm from './AppointmentForm';
 
@@ -20,9 +20,10 @@ class Appointment extends React.Component {
                         this.setState({loading: false});
                     }, 1000);
                 }
+                this.setState({loading: false});
             })
             .catch(e => {
-                return;
+                return this.setState({loading: false});
             });
     };
 

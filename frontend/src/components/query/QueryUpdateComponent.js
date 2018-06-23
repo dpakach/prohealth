@@ -1,8 +1,5 @@
-import React, {Component} from 'react';
-import {withRouter} from 'react-router';
+import React from 'react';
 import _ from 'lodash';
-import {AuthUrls} from '../../constants/urls';
-import PropTypes from 'prop-types';
 
 import {updateQueryItem, getQueryItem} from '../../actions/queryActions';
 
@@ -12,12 +9,10 @@ import {
     Icon,
     Input,
     Button,
-    DatePicker,
     Select,
     Upload,
     Modal,
     Alert,
-    Checkbox,
 } from 'antd';
 
 // import validate from '../../utils/validate';
