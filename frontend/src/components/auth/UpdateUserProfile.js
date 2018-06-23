@@ -3,8 +3,17 @@ import moment from 'moment';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
-import {Card, message, Form, Icon, Input, Button, DatePicker, Select, Alert} from 'antd';
-
+import {
+    Card,
+    message,
+    Form,
+    Icon,
+    Input,
+    Button,
+    DatePicker,
+    Select,
+    Alert,
+} from 'antd';
 
 //import store from '../../store/configureStore';
 // import validate from '../../utils/validate';
@@ -48,7 +57,7 @@ class UpdateUserProfile extends Component {
 
     changeDate = () => {
         return moment(this.state.date_of_birth, 'YYYY/MM/DD');
-    }
+    };
 
     onDateChange = date => {
         // console.log(date.format('YYYY-MM-DD'));
@@ -74,49 +83,37 @@ class UpdateUserProfile extends Component {
             'profile_photo',
             'photo_id',
         ]);
-        // console.log(form_data);
         fetch(AuthUrls.USERS + this.state.user.id, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Token ${localStorage.getItem('token')}`,
+                Authorization: `Token ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify(form_data),
         })
-            .then(response => {
+            .then(response => response.json().then(data => ({data, response})))
+            .then(({data, response}) => {
                 if (response.ok) {
-                    // console.log(response);
-                    return response.json();
+                    this.setState({nonFieldErrors: '', formErrors: {}});
+                    localStorage.setItem('user', JSON.stringify(data));
+                    this.props.tabChange('user');
+                    message.success('profile updated successfully');
+                } else {
+                    this.setState({formErrors: data});
                 }
-                throw Error(
-                    'Some thing went wrong! Please make sure the information is valid',
-                );
-            })
-            .then(data => {
-                this.setState({nonFieldErrors: ''});
-                localStorage.setItem('user', JSON.stringify(data));
-                message.success('profile updated successfully')
             })
             .catch(error => {
+                console.log(error);
                 this.setState({nonFieldErrors: error.message});
             });
     };
 
     componentDidMount() {
         const user = JSON.parse(localStorage.getItem('user'));
-
-        this.setState({
-            user: user,
-            first_name: user.first_name,
-            last_name: user.last_name,
-            gender: user.gender,
-            user_id: user.id,
-            date_of_birth: moment(user.date_of_birth).format(dateFormat),
-        });
+        this.setState({user, ...user,});
     }
 
     render() {
-        // console.log(this.props);
         return (
             <div>
                 {this.props.phase === 'starting' && (
@@ -165,17 +162,26 @@ class UpdateUserProfile extends Component {
                                     />
                                 </FormItem>
 
+                                {this.state.formErrors.date_of_birth && (
+                                    <ul>
+                                        {this.state.formErrors.date_of_birth.map(
+                                            e => (
+                                                <li key={Math.random()}>{e}</li>
+                                            ),
+                                        )}
+                                    </ul>
+                                )}
                                 <FormItem>
                                     <label>Date Of Birth</label>
                                     <br />
-                                <DatePicker
-                                    defaultValue={moment(
-                                        moment(this.state.date_of_birth),
-                                        dateFormat,
-                                    )}
-                                    onChange={this.onDateChange}
-                                    format={dateFormat}
-                                />
+                                    <DatePicker
+                                        defaultValue={moment(
+                                            moment(this.state.date_of_birth),
+                                            dateFormat,
+                                        )}
+                                        onChange={this.onDateChange}
+                                        format={dateFormat}
+                                    />
                                 </FormItem>
 
                                 <FormItem>
@@ -209,13 +215,12 @@ class UpdateUserProfile extends Component {
     }
 }
 
-
 const mapStateToProps = state => {
-    const {auth} = state
-    const {user} = auth
+    const {auth} = state;
+    const {user} = auth;
     return {
-        user
-    }
-}
+        user,
+    };
+};
 
 export default connect(mapStateToProps)(UpdateUserProfile);

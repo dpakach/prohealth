@@ -4,6 +4,7 @@ const authReducer = (
     state = {
         isFetching: false,
         isAuthenticated: localStorage.getItem('token') ? true : false,
+        is_doctor: localStorage.getItem('is_doctor') === 'true',
         token: localStorage.getItem('token'),
         user: {},
         errorMessage: '',
