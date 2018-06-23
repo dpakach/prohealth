@@ -15,22 +15,28 @@ class QueryDetailComponent extends React.Component {
 
         this.state = {
             id: this.props.match.params.id,
+            loading: false,
             query: {},
-            user: {}
+            user: {},
         };
 
         this.updateQuery = this.updateQuery.bind(this);
     }
 
-    updateQuery(){
+    updateQuery() {
+        this.setState({loading: true});
         getQueryItem(this.state.id)
             .then(data => {
-                const user = getUserInfo(data.user)
-                    .then(user => {
-                        this.setState({user});
+                const user = getUserInfo(data.user).then(user => {
+                    this.setState({
+                        user,
+                        nonFieldErrors: '',
+                        query: data,
                     });
-                this.setState({nonFieldErrors: ''});
-                this.setState({query: data});
+                    setTimeout(() => {
+                        this.setState({loading: false});
+                    }, 1000);
+                });
             })
             .catch(e => {
                 message.error('failed to load resource');
@@ -44,13 +50,22 @@ class QueryDetailComponent extends React.Component {
     render() {
         return (
             <Card
-                style={{width: '100%', height: '90vh', overflowY: 'scroll', background: '#ECECEC'}}
+                style={{
+                    width: '100%',
+                    height: '90vh',
+                    overflowY: 'scroll',
+                    background: '#ECECEC',
+                }}
                 className="u-box-shadow-small">
                 <Row gutter={16}>
                     <Col span={18}>
                         <Row gutter={16}>
                             <Col span={24}>
-                                <QueryHeader user={this.state.user} query={this.state.query} />
+                                <QueryHeader
+                                    user={this.state.user}
+                                    query={this.state.query}
+                                    loading={this.state.loading}
+                                />
                             </Col>
                             <Col span={24}>
                                 <Chat />
@@ -59,7 +74,7 @@ class QueryDetailComponent extends React.Component {
                     </Col>
 
                     <Col span={6}>
-                        <QueryCta 
+                        <QueryCta
                             {...this.props}
                             query={this.state.query}
                             updateQuery={this.updateQuery}

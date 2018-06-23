@@ -11,11 +11,14 @@ class Appointment extends React.Component {
     };
 
     updateAppointment = () => {
+        this.setState({loading: true});
         getAppointment(this.props.id)
             .then(data => {
                 if (data) {
                     this.setState({appointment: data});
-                    this.setState({loading: false});
+                    setTimeout(() => {
+                        this.setState({loading: false});
+                    }, 1000);
                 }
             })
             .catch(e => {
@@ -29,32 +32,46 @@ class Appointment extends React.Component {
 
     render() {
         return (
-            <div>
-                {this.state.appointment && (
-                    <Card
-                        title="Appointment"
-                        bordered={false}
-                        style={{width: '100%'}}>
-                        {this.state.loading && <Icon type="loading" />}
-
-                        <div>
-                            <p>Hospital: {this.state.appointment.hospital}</p>
-                            <p>Venue: {this.state.appointment.venue}</p>
-                            <p>
-                                Doctor: {this.state.appointment.appointed_doc}
-                            </p>
-                            <p>Time: {this.state.appointment.appoint_time}</p>
-                            <p>Date: {this.state.appointment.appointed_date}</p>
-                        </div>
-                    </Card>
+            <Card bordered={false} style={{width: '100%'}}>
+                {this.state.loading && (
+                    <div style={{width: '100%', textAlign: 'center'}}>
+                        <Icon style={{fontSize: '3rem'}} type="loading" />
+                    </div>
                 )}
-                { !this.state.loading && !this.state.appointment && (
+                {!this.state.loading &&
+                    this.state.appointment && (
+                        <Card
+                            title="Appointment"
+                            bordered={false}
+                            style={{width: '100%'}}>
+                            {this.state.loading && <Icon type="loading" />}
+
+                            <div>
+                                <p>
+                                    Hospital: {this.state.appointment.hospital}
+                                </p>
+                                <p>Venue: {this.state.appointment.venue}</p>
+                                <p>
+                                    Doctor:{' '}
+                                    {this.state.appointment.appointed_doc}
+                                </p>
+                                <p>
+                                    Time: {this.state.appointment.appoint_time}
+                                </p>
+                                <p>
+                                    Date:{' '}
+                                    {this.state.appointment.appointed_date}
+                                </p>
+                            </div>
+                        </Card>
+                    )}
+                {!this.state.appointment && (
                     <AppointmentForm
                         update={this.updateAppointment}
                         {...this.props}
                     />
                 )}
-            </div>
+            </Card>
         );
     }
 }
