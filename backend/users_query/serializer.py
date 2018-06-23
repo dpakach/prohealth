@@ -16,6 +16,7 @@ class UserQuerySerializer(serializers.ModelSerializer):
     class Meta:
         model = UserQuery
         fields = '__all__'
+        read_only_fields = ('user', )
     
     
 class MedicineSerializer(serializers.ModelSerializer):

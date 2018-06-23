@@ -73,7 +73,6 @@ class AppointmentView(APIView):
         appoint = get_object_or_404(Appointment,query=query)
         return Response(AppointmentSerializer(appoint).data)
     
-
     @staticmethod
     def post(request, query_id):
 

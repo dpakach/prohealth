@@ -10,7 +10,9 @@ import NotFoundPage from '../components/NotFoundPage';
 import LoginComponent from '../components/auth/LoginComponent';
 import SignupComponent from '../components/auth/SignupComponent';
 import QueryCreateComponent from '../components/query/QueryCreateComponent';
+import QueryUpdateComponent from '../components/query/QueryUpdateComponent';
 import QueryDetailComponent from '../components/query/QueryDetailComponent';
+import MyQueriesComponent from '../components/query/MyQueriesComponent';
 
 import UpdatePassword from '../components/auth/UpdatePassword';
 import ResetPassword from '../components/auth/ResetPassword';
@@ -19,21 +21,14 @@ import Profile from '../components/auth/Profile';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
-const PrivateRoute = ({
-    component: Component,
-    auth,
-    ...rest
-}) => {
+const PrivateRoute = ({component: Component, auth, ...rest}) => {
+
     if (!auth) message.error('you must be logged in');
     return (
         <Route
             {...rest}
             render={props =>
-                auth ? (
-                    <Component {...props} />
-                ) : (
-                    <Redirect to="/user/login" />
-                )
+                auth ? <Component {...props} /> : <Redirect to="/user/login" />
             }
         />
     );
@@ -53,7 +48,7 @@ class AppRouter extends React.Component {
                             exact={true}
                         />
 
-                    {/*
+                        {/*
                         <Route
                             path="/user/:action"
                             render={(props) => {
@@ -91,7 +86,7 @@ class AppRouter extends React.Component {
                             }}
                         />
 
-                    {/*
+                        {/*
                         <PrivateRoute
                             path="/profile/update"
                             auth={this.props.isAuthenticated}
@@ -109,14 +104,32 @@ class AppRouter extends React.Component {
                             component={ResetPassword}
                         />
                         <PrivateRoute
-                            path="/query/create"
-                            component={QueryCreateComponent}
+                            path="/query"
                             auth={this.props.isAuthenticated}
+                            component={MyQueriesComponent}
+                            exact={true}
+                        />
+                        <PrivateRoute
+                            path="/query/create"
+                            auth={this.props.isAuthenticated}
+                            component={QueryCreateComponent}
+                        />
+                        <PrivateRoute
+                            path="/query/:id/update"
+                            auth={this.props.isAuthenticated}
+                            component={QueryUpdateComponent}
                         />
                         <PrivateRoute
                             path="/query/:id"
                             auth={this.props.isAuthenticated}
                             component={QueryDetailComponent}
+                            exact={true}
+                        />
+
+                        <PrivateRoute
+                            path="/query/:id/edit"
+                            auth={this.props.isAuthenticated}
+                            component={QueryCreateComponent}
                         />
 
                         <PrivateRoute

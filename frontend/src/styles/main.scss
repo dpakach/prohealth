@@ -2,29 +2,27 @@
 @import 'abstracts/mixins';
 @import 'abstracts/variables';
 
-
-
 @import 'base/animations';
 @import 'base/base';
 @import 'base/typography';
 @import 'base/utilities';
 
-
-@import 'components/button';
+@import 'components/buttons';
 @import 'components/card';
-@import 'components/form';
-@import 'components/story';
-@import 'components/nav';
-@import 'components/popup';
-@import 'components/paginate';
+@import 'components/chat';
 
 @import 'layout/footer';
 @import 'layout/grid';
 @import 'layout/header';
 @import 'layout/items';
 
-
 @import 'pages/detail';
 @import 'pages/extras';
 @import 'pages/home';
 @import 'pages/profile';
+
+
+.action__button {
+    width: 100%;
+    margin-bottom: 2rem;
+}

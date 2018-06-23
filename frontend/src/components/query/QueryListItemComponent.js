@@ -1,18 +1,50 @@
 import React from 'react';
-import { List, Avatar } from 'antd';
-import { Link } from 'react-router-dom';
+import {List, Avatar, Button} from 'antd';
+import {Link, withRouter} from 'react-router-dom';
 
-const QueryListItemComponent = (props) => (
-  <List.Item actions={[<a>edit</a>, <a>more</a>]}>
-    <List.Item.Meta
-      avatar={<Avatar src="#" />}
-      title={<Link to="/query/34">{props.item.title}</Link>}
-      description="description"
-    />
-    <div>
-        content
-    </div>
-  </List.Item>
-)
+import {deleteQueryItem} from '../../actions/queryActions';
 
-export default QueryListItemComponent;
+const QueryListItemComponent = props => {
+    const deleteButton = (
+        <Button
+            type="danger"
+            onClick={e => {
+                deleteQueryItem(props.item.id).then(data => {
+                    props.updateQueries();
+                });
+            }}>
+            delete
+        </Button>
+    );
+
+    const editButton = (
+        <Button
+            type="primary"
+            onClick={e => {
+                props.history.push(`/query/${props.item.id}/update`);
+            }}>
+            edit
+        </Button>
+    );
+    return (
+        <div>
+            <List.Item actions={[deleteButton, editButton]}>
+                <List.Item.Meta
+                    avatar={<Avatar src="#" />}
+                    title={
+                        <Link to={`/query/${props.item.id}`}>
+                            {props.item.title_problem}
+                        </Link>
+                    }
+                    description={props.item.description}
+                />
+                <div>
+                    <h4>Created Date</h4>
+                    <p>{props.item.date_of_submission}</p>
+                </div>
+            </List.Item>
+        </div>
+    );
+};
+
+export default withRouter(QueryListItemComponent);
