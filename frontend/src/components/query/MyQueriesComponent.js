@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Row, Col} from 'react-router-dom';
 
 import QueryListItemComponent from './QueryListItemComponent';
 
@@ -15,19 +15,26 @@ class MyQueriesComponent extends React.Component {
 
         this.state = {
             query_list: [],
+            loading: false,
         };
     }
 
     updateQueries = () => {
+        this.setState({loading: true});
         getQueries()
             .then(data => {
                 const queries = data.map(d => {
                     const query = d;
-                    query.date_of_submission = d.date_of_submission.substr(0, 10)
-                    return query
+                    query.date_of_submission = d.date_of_submission.substr(
+                        0,
+                        10,
+                    );
+                    return query;
                 });
-                this.setState({nonFieldErrors: ''});
-                this.setState({query_list: queries});
+                setTimeout(() => {
+                    this.setState({nonFieldErrors: '', loading: false});
+                    this.setState({query_list: queries});
+                }, 3000);
             })
             .catch(error => {
                 this.setState({nonFieldErrors: error.message});
@@ -45,7 +52,7 @@ class MyQueriesComponent extends React.Component {
                     Questions you Asked
                 </h1>
                 <p>
-                    <Link to="query/create"> Create New</Link>
+                    <Link to="query/create"> Ask New Question</Link>
                 </p>
                 <List
                     itemLayout="horizontal"
@@ -55,6 +62,7 @@ class MyQueriesComponent extends React.Component {
                             updateQueries={this.updateQueries}
                             key={item.id}
                             item={item}
+                            loading={this.state.loading}
                         />
                     )}
                 />

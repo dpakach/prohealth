@@ -34,11 +34,6 @@ class PrescriptionForm extends React.Component {
         });
     };
 
-    handleOk = () => {
-        this.setState({loading: true});
-        this.setState({loading: false, visible: false});
-    };
-
     handleAdd = e => {
         e.preventDefault();
         let form_data = _.pick(this.state, [
@@ -50,12 +45,16 @@ class PrescriptionForm extends React.Component {
 
         pescribe(form_data, this.props.id)
             .then(data => {
-                this.props.updateQuery();
-
+                this.props.updatePescription();
+                this.setState({
+                    name_of_medicine: '',
+                    quantity: '',
+                    times_a_day: null,
+                    remarks: '',
+                });
             })
             .catch(e => {
                 message.error(e.message);
-                this.props.update();
             });
     };
 
@@ -83,15 +82,13 @@ class PrescriptionForm extends React.Component {
                                 <Button key="back" onClick={this.handleCancel}>
                                     Return
                                 </Button>,
-                                <Button
-                                    key="submit"
-                                    type="primary"
-                                    loading={this.state.loading}
-                                    onClick={this.handleOk}>
-                                    Done
-                                </Button>,
                             ]}>
-                            <Prescription {...this.props} id={this.props.id} />
+                            <Prescription
+                                {...this.props}
+                                prescription={this.props.prescription}
+                                updatePescription={this.props.updatePescription}
+                                id={this.props.id}
+                            />
                             <div>
                                 <Form
                                     layout="vertical"
@@ -107,12 +104,14 @@ class PrescriptionForm extends React.Component {
                                         type="text"
                                         placeholder="Quantity eg '25 ml' or '2 tablets'"
                                         onChange={this.handleChange}
+                                        value={this.state.quantity}
                                         name="quantity"
                                     />
                                     <Input
                                         type="number"
                                         placeholder="times a day"
                                         onChange={this.handleChange}
+                                        value={this.state.times_a_day}
                                         name="times_a_day"
                                     />
                                     <TextArea
@@ -120,6 +119,7 @@ class PrescriptionForm extends React.Component {
                                         placeholder="remarks"
                                         name="remarks"
                                         onChange={this.handleChange}
+                                        value={this.state.remarks}
                                         autosize
                                     />
                                 </Form>
