@@ -10,6 +10,8 @@ import {receiveLogin} from './actions/authActions';
 import './styles/style.css';
 import './styles/main.scss';
 
+import './style.less';
+
 //import {getUserToken} from './utils/authUtils';
 
 const user = JSON.parse(localStorage.getItem('user'));

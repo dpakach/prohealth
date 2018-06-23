@@ -25,7 +25,7 @@ class UserQueryView(APIView):
         serializer = UserQuerySerializer(data=request.data, context = {'request':request})
         if serializer.is_valid():
             user = request.user
-            serializer.save()
+            serializer.save(user=user)
             return Response(UserQuerySerializer(serializer.instance).data, status=201)
         return Response(serializer.errors, status=400)
 
@@ -63,7 +63,6 @@ class AppointmentView(APIView):
         appoint = get_object_or_404(Appointment,query=query)
         return Response(AppointmentSerializer(appoint).data)
     
-
     @staticmethod
     def post(request, query_id):
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 
-import {createQuery} from '../../actions/queryActions';
+import {updateQueryItem, getQueryItem} from '../../actions/queryActions';
 
 import {
     Form,
@@ -36,6 +36,7 @@ class QueryCreateComponent extends React.Component {
             weight_of_patient: '',
             height_of_patient: '',
             tag: '',
+            query_id: this.props.match.params.id,
 
             // image-upload stuff
             previewVisible: false,
@@ -69,7 +70,6 @@ class QueryCreateComponent extends React.Component {
     handleFileChange = ({fileList}) => this.setState({fileList});
 
     handleCheckbox = e => {
-        console.log(e);
         this.setState({is_doctor: e.target.checked});
     };
 
@@ -90,7 +90,7 @@ class QueryCreateComponent extends React.Component {
             'height_of_patient',
             'tag',
         ]);
-        createQuery(form_data)
+        updateQueryItem(form_data, this.state.id)
             .then(data => {
                 const id = data.id;
                 this.props.history.push('/query/' + id);
@@ -101,7 +101,14 @@ class QueryCreateComponent extends React.Component {
     };
 
     componentDidMount() {
-        return;
+        getQueryItem(this.props.match.params.id)
+            .then(data => {
+                this.setState({...data})
+            })
+            .catch(e => {
+                message.error('unable to load resources');
+            }
+            )
     }
 
     render() {
@@ -114,7 +121,7 @@ class QueryCreateComponent extends React.Component {
         );
         return (
             <div className="section section--form u-margin-top-small">
-                    <h1>Ask A Question</h1>
+                    <h1>Edit your Question</h1>
                 {/*
                 <h1 className="heading-secondary u-margin-top-small">
                     {this.props.type == 'create' && <p>Ask A Question</p>}
@@ -140,6 +147,7 @@ class QueryCreateComponent extends React.Component {
                                 placeholder="Title"
                                 type="text"
                                 name="title_problem"
+                                value={this.state.title_problem}
                                 onChange={this.handleChange}
                             />
                         </FormItem>
@@ -149,6 +157,7 @@ class QueryCreateComponent extends React.Component {
                             <TextArea
                                 placeholder="Description"
                                 name="description"
+                                value={this.state.description}
                                 autosize
                                 onChange={this.handleChange}
                             />
@@ -161,6 +170,7 @@ class QueryCreateComponent extends React.Component {
                                 showSearch
                                 style={{width: 200}}
                                 placeholder="Related"
+                                value={this.state.tag}
                                 onChange={this.handleSelectChange}>
                                 <Option value="S">Skin</Option>
                                 <Option value="E">ent</Option>
@@ -174,6 +184,7 @@ class QueryCreateComponent extends React.Component {
                             <Input
                                 placeholder="Name of Patient"
                                 name="name_of_patient"
+                                value={this.state.name_of_patient}
                                 onChange={this.handleChange}
                             />
                         </FormItem>
@@ -184,6 +195,7 @@ class QueryCreateComponent extends React.Component {
                                 placeholder="Age of Patient"
                                 name="age_of_patient"
                                 type="number"
+                                value={this.state.age_of_patient}
                                 onChange={this.handleChange}
                             />
                         </FormItem>
@@ -192,6 +204,7 @@ class QueryCreateComponent extends React.Component {
                             <Input
                                 placeholder="Weight of Patient"
                                 name="weight_of_patient"
+                                value={this.state.weight_of_patient}
                                 type="number"
                                 onChange={this.handleChange}
                             />
@@ -201,6 +214,7 @@ class QueryCreateComponent extends React.Component {
                             <Input
                                 placeholder="Height of Patient"
                                 name="height_of_patient"
+                                value={this.state.height_of_patient}
                                 type="number"
                                 onChange={this.handleChange}
                             />

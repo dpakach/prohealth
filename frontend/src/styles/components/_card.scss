@@ -1,137 +1,42 @@
-.card {
-  // Functionality
+.card{
+        width: 30rem;
+        background-color: $color-grey-light-1;
+        border-radius: 3px;
+        padding: .5rem;        
+        //border: 3px solid rgba($color-grey-dark-3, .5);
+        box-shadow: 0  0  1rem rgba($color-black, .3);
+        font-size: 1rem;
+                
+        &__content{
+                padding: 0 2rem 2rem 2rem;
 
-  min-width: 0;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
-  background-color: #f6f6f6;
-  font-size: 1.5rem;
-  transition: all 0.2s;
-  animation-name: moveInBottom;
-  animation-duration: 1s;
-  animation-timing-function: ease;
-  &:hover {
-    box-shadow: 0 1.5rem 4rem rgba($color-black, 0.3);
-    transform: translateY(-2rem) scale(1.05);
-  }
-
-  &__picture {
-    background-size: cover;
-    background-position: top right;
-    height: 18rem;
-    background-blend-mode: overlay;
-    border-top-right-radius: 3px;
-    border-top-left-radius: 3px;
-    clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
-    -webkit-clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
-    background-image: linear-gradient(
-      to right bottom,
-      $color-tertiary-light,
-      $color-tertiary-lightest
-    );
-    margin-bottom: 4rem;
-  }
-
-  &__heading {
-    font-size: 1.7rem;
-    font-weight: 400;
-    text-align: right;
-    text-transform: uppercase;
-    color: $color-white;
-    position: absolute;
-    top: 13rem;
-    right: 2rem;
-    width: 75%;
-
-    &--form {
-      top: 15rem;
-      right: 3rem;
-    }
-  }
-
-  &__heading-span {
-    padding: 1.2rem;
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
-    background-image: linear-gradient(
-      to right,
-      rgba($color-tertiary-dark, 1),
-      rgba($color-tertiary-light, 1)
-    );
-    box-shadow: 0rem 0rem 2rem rgba($color-black, 0.5);
-
-    &--form {
-      font-size: 3rem;
-      padding: 1rem;
-      word-spacing: 2rem;
-    }
-
-    a {
-      color: $color-grey-light-1;
-    }
-
-    -webkit-hyphens: auto;
-    -moz-hyphens: auto;
-    -ms-hyphens: auto;
-    hyphens: auto;
-  }
-
-  &__details {
-    padding: 1rem;
-    ul {
-      list-style: none;
-      width: 100%;
-      margin: 0 auto;
-
-      li {
-        display: grid;
-        font-size: 1.5rem;
-        grid-template-columns: auto 1fr;
-        justify-content: center;
-        align-items: center;
-        padding: 1rem;
-        &:not(:last-child) {
-          border-bottom: 2px solid $color-grey-dark-2;
         }
-        -webkit-hyphens: auto;
-        -moz-hyphens: auto;
-        -ms-hyphens: auto;
-        hyphens: auto;
-      }
-    }
-  }
 
-  &__key {
-    font-size: 3rem;
-    padding: 0 1rem 0 0;
-    justify-content: center;
-    align-items: center;
-    color: $color-tertiary-dark;
-  }
-  &__value {
-    justify-content: center;
-    align-items: center;
-    font-size: 1.8rem;
-    font-weight: 500;
-    word-spacing: 3px;
-    color: $color-grey-dark-4;
-  }
+        &__subheading{
+                font-size: 2.5rem;
+                margin: 1rem 0;
+                text-align: center;
+        }
 
-  &__form {
-    color: $black;
-    height: auto;
-    &:hover {
-      box-shadow: 0 1.5rem 4rem rgba($color-black, 0.3);
-      transform: translateY(0);
-    }
+        &__image{
+                width: 100%;
+        }
 
-    &__picture {
-      height: 20rem;
-      margin-bottom: 2rem;
-    }
-    button {
-      margin-bottom: 2rem;
-    }
-  }
+        &__price{
+                color: $color-grey-dark-4;
+                font-size: 3rem;
+                font-weight: 400;
+        }
+        &__list{
+                list-style: none;
+        }
+
+        &__list-item{
+                font-size: 1.4rem;
+//                text-align: center;
+                padding: 1rem;
+                &:not(:last-child){
+                        border-bottom: 1px solid $color-grey-light-3;
+                }
+        }
 }
