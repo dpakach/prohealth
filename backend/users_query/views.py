@@ -27,14 +27,15 @@ class UserQueryView(APIView):
         serializer = UserQuerySerializer(data=request.data, context = {'request':request})
         if serializer.is_valid():
             user = request.user
+            serializer.save(user=user)
 
             # for notification
             title = "A new notification from " + request.user.first_name + " " + request.user.last_name
             message = request.data.get('title_problem')
-            notification = Notification(user=request.user, title=title, message=message)
-            notification.save()
-
-            serializer.save()
+            users = User.objects.filter(is_doctor=True)
+            for doc_user in users:
+                notification = Notification(user=doc_user, title=title, message=message)
+                notification.save()
 
             return Response(UserQuerySerializer(serializer.instance).data, status=201)
         return Response(serializer.errors, status=400)
@@ -79,14 +80,16 @@ class AppointmentView(APIView):
         query = get_object_or_404(UserQuery,pk=query_id)
         serializer = AppointmentSerializer(data=request.data, context = {'request':request})
         if serializer.is_valid():
+            user = request.user
             serializer.save(query=query)
 
             # for notification
-            user = request.user
             title = "A new notification from " + user.first_name + " " + user.last_name
             message = request.data.get('title_problem')
-            notification = Notification(user=user, title=title, message=message)
-            notification.save()
+            users = User.objects.filter(is_doctor=True)
+            for doc_user in users:
+                notification = Notification(user=doc_user, title=title, message=message)
+                notification.save()
 
             return Response(AppointmentSerializer(serializer.instance).data, status=201)
         return Response(serializer.errors, status=400)

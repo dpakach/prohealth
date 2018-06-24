@@ -18,7 +18,7 @@ from django.views.generic import TemplateView
 
 from django.conf import settings
 from django.templatetags.static import static as static_tag
-
+from django.conf.urls.static import static
 from django.contrib import admin
 
 from rest_framework.documentation import include_docs_urls
@@ -33,9 +33,10 @@ urlpatterns = [
     url(r'^api/', include('user_profile.urls')),
     url(r'^api/', include('notifications.urls')),
     url(r'^api/', include('users_query.urls')),
-    url(r'^docs/', include_docs_urls(title='API')),
-    url(r'^(?!(api\/)).*', TemplateView.as_view(template_name="index.html")),
-]
+    url(r'^docs/', include_docs_urls(title='API')),]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += [url(r'^(?!(api\/)).*', TemplateView.as_view(template_name="index.html"))]
 
 if settings.DEBUG:
     if 'debug_toolbar' in settings.INSTALLED_APPS:
@@ -44,6 +45,5 @@ if settings.DEBUG:
         urlpatterns += [
             url(r'^__debug__/', include(debug_toolbar.urls)),
         ]
-    from django.conf.urls.static import static
 
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
