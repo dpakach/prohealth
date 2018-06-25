@@ -19,78 +19,70 @@ class Header extends React.Component {
         this.props.dispatch(logoutUser(this.props.history));
     };
 
+    renderLinkItem = (to, name, icon, onClick = null) => {
+        return (
+            <div className="nav__item">
+                <NavLink to={to} onClick={onClick}>
+                    <div className="nav__item--icon">
+                        <Icon type={icon} />
+                    </div>
+                    <div className="nav__item--text">{name}</div>
+                </NavLink>
+            </div>
+        );
+    };
+
     renderLinks = auth => {
-        // if (this.state.authenticated) {
-        // if(this.state.authenticated){
-        if(this.props.isAuthenticated){
+        if (this.props.isAuthenticated) {
             return [
-                <Menu.Item key="feature">
-                    <NavLink to="/feature">
-                        <Icon type="mail" />Feature
-                    </NavLink>
-                </Menu.Item>,
-                <Menu.Item key="queries">
-                    <NavLink to="/query">
-                        <Icon type="message" />Query
-                    </NavLink>
-                </Menu.Item>,
-                <Menu.Item key="profile">
-                    <NavLink to="/profile/user">
-                        <Icon type="profile" />Profile
-                    </NavLink>
-                </Menu.Item>,
-                <Menu.Item key="logout">
-                    <NavLink onClick={this.logout} to="/">
-                        <Icon type="logout" />Logout
-                    </NavLink>
-                </Menu.Item>,
+                this.renderLinkItem('/feature', 'Feature', 'mail'),
+                this.renderLinkItem('/query', 'Feature', 'message'),
+                this.renderLinkItem('/profile/user', 'Profile', 'profile'),
+                this.renderLinkItem('/logout', 'Logout', 'logout'),
             ];
         } else {
             return [
-                <Menu.Item key="login">
-                    <NavLink to="/user/login">
-                        <Icon type="user" />Login
-                    </NavLink>
-                </Menu.Item>,
-
-                <Menu.Item key="signup">
-                    <NavLink to="/user/signup">
-                        <Icon type="user" />Signup
-                    </NavLink>
-                </Menu.Item>,
+                this.renderLinkItem('/user/login', 'Login', 'user'),
+                this.renderLinkItem('/user/signup', 'Signup', 'user'),
             ];
         }
     };
 
     render() {
         return (
-            <header>
-                <Menu mode="horizontal" theme="dark">
-                    <Menu.Item>
-                        <NavLink to="/" exact={true}>
-                            ProHealth
-                        </NavLink>
-                    </Menu.Item>
-                    {this.renderLinks()}
-                </Menu>
-            </header>
+            <nav className="nav">
+                <div className="nav__logo-box">
+                    <NavLink to="/" exact={true}>
+                        <h1 className="nav__brand">ProHealth</h1>
+                    </NavLink>
+                </div>
+
+                <div className="nav__search">
+                    <input
+                        type="text"
+                        placeholder="Search"
+                        className="nav__search-bar"
+                    />
+                </div>
+
+                <div className="nav__nav-links">{this.renderLinks()}</div>
+            </nav>
         );
     }
 }
-
 
 Header.propTypes = {
     dispatch: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state) => {
-    const {auth} = state
-    const {isAuthenticated, errorMessage} = auth
+const mapStateToProps = state => {
+    const {auth} = state;
+    const {isAuthenticated, errorMessage} = auth;
     return {
         isAuthenticated,
-        errorMessage
-    }
-}
+        errorMessage,
+    };
+};
 
 export default withRouter(connect(mapStateToProps)(Header));
