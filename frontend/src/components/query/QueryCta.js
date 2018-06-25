@@ -6,7 +6,6 @@ import Appointment from './Appointment';
 import Actions from './Actions';
 import {getPescription} from '../../actions/queryActions';
 
-const is_doctor = true;
 class QueryCta extends React.Component {
     state = {
         prescription: null,
@@ -32,6 +31,7 @@ class QueryCta extends React.Component {
         this.updatePescription();
     }
     render() {
+        const is_doctor = localStorage.getItem('is_doctor') === 'true';
         return (
             <div style={{height: '80vh', overflowY: 'scroll'}}>
                 {!is_doctor && <Actions {...this.props} />}
