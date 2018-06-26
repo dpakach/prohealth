@@ -30,11 +30,13 @@ class UserQueryView(APIView):
             serializer.save(user=user)
 
             # for notification
-            title = "A new notification from " + request.user.first_name + " " + request.user.last_name
+            title = request.user.first_name + " " + request.user.last_name + " has asked you a question."
             message = request.data.get('title_problem')
             users = User.objects.filter(is_doctor=True)
+            query_id = serializer.data['id']
+            query = get_object_or_404(UserQuery, id=query_id)
             for doc_user in users:
-                notification = Notification(user=doc_user, title=title, message=message)
+                notification = Notification(user=doc_user, query=query, title=title, message=message)
                 notification.save()
 
             return Response(UserQuerySerializer(serializer.instance).data, status=201)
@@ -66,6 +68,7 @@ class UserQueryDetailView(APIView):
 
 
 class AppointmentView(APIView):
+    serializer_class = AppointmentSerializer
 
     @staticmethod
     def get(request, query_id,**kwargs):
@@ -84,12 +87,11 @@ class AppointmentView(APIView):
             serializer.save(query=query)
 
             # for notification
-            title = "A new notification from " + user.first_name + " " + user.last_name
-            message = request.data.get('title_problem')
-            users = User.objects.filter(is_doctor=True)
-            for doc_user in users:
-                notification = Notification(user=doc_user, title=title, message=message)
-                notification.save()
+            user = request.user
+            title = user.first_name + " " + user.last_name + " just created an appointment with you."
+            message = query.title_problem
+            notification = Notification(user=query.user, query=query, title=title, message=message)
+            notification.save()
 
             return Response(AppointmentSerializer(serializer.instance).data, status=201)
         return Response(serializer.errors, status=400)
@@ -123,6 +125,7 @@ class AppointmentDetailView(APIView):
         
 
 class PrescribeView(APIView):
+    serializer_class = MedicineSerializer
 
     @staticmethod
     def get(request, query_id):
@@ -137,6 +140,14 @@ class PrescribeView(APIView):
         serializer = MedicineSerializer(data=request.data, context = {'request':request})
         if serializer.is_valid():
             serializer.save(query=query)
+
+            # for notification
+            user = request.user
+            title = user.first_name + " " + user.last_name + " prescribed you."
+            message = query.title_problem
+            notification = Notification(user=query.user, query=query, title=title, message=message)
+            notification.save()
+
             return Response(MedicineSerializer(serializer.instance).data, status=201)
         return Response(serializer.errors, status=400)
 
