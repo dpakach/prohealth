@@ -75,9 +75,7 @@ class FeaturePage extends React.Component {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Token ${localStorage.getItem(
-                    'token',
-                )}`,
+                Authorization: `Token ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify({password: this.state.new_password1}),
         })
@@ -100,74 +98,61 @@ class FeaturePage extends React.Component {
     };
     render() {
         return (
-            <Card
-                title="Update Password"
-                className="u-center-content u-box-shadow-small"
-                bordered={false}
-                style={{width: 300}}>
-                <div>
-                    {this.state.nonFieldErrors && (
-                        <div className="u-margin-bottom-small">
-                            <Alert
-                                message="error"
-                                type="error"
-                                showIcon
-                                description={this.state.nonFieldErrors}
-                            />
-                        </div>
-                    )}
+            <div className="section section--form">
+                <h2 className="heading-secondary">Change Password</h2>
+                {this.state.nonFieldErrors && (
+                    <div className="u-margin-bottom-small">
+                        <Alert
+                            message="error"
+                            type="error"
+                            showIcon
+                            description={this.state.nonFieldErrors}
+                        />
+                    </div>
+                )}
 
-                    {this.state.success && (
-                        <div className="u-margin-bottom-small">
-                            <Alert
-                                message="success"
-                                type="success"
-                                showIcon
-                                description="your password was updated successfully"
-                            />
-                        </div>
-                    )}
+                {this.state.success && (
+                    <div className="u-margin-bottom-small">
+                        <Alert
+                            message="success"
+                            type="success"
+                            showIcon
+                            description="your password was updated successfully"
+                        />
+                    </div>
+                )}
 
-                    <Form className="login-form" onSubmit={this.handleSubmit}>
-                        <FormItem
-                            validateStatus={
-                                !this.state.formErrors.password
-                                    ? 'success'
-                                    : 'error'
-                            }>
-                            <Input
-                                prefix={<Icon type="lock" />}
-                                placeholder="enter a new password"
-                                type="password"
-                                name="new_password1"
-                                onChange={this.handleChange}
-                            />
-                        </FormItem>
-                        <FormItem
-                            validateStatus={
-                                !this.state.formErrors.password
-                                    ? 'success'
-                                    : 'error'
-                            }>
-                            <Input
-                                prefix={<Icon type="lock" />}
-                                placeholder="Confirm password"
-                                type="password"
-                                name="new_password2"
-                                onChange={this.handleChange}
-                            />
-                        </FormItem>
+                <form className="form login-form" onSubmit={this.handleSubmit}>
+                    <div className="form__group">
+                        <input
+                            prefix={<Icon type="lock" />}
+                            placeholder="enter a new password"
+                            type="password"
+                            name="new_password1"
+                            onChange={this.handleChange}
+                        />
+                    </div>
+                    <div className="form__group">
+                        <input
+                            prefix={<Icon type="lock" />}
+                            placeholder="Confirm password"
+                            type="password"
+                            name="new_password2"
+                            onChange={this.handleChange}
+                        />
+                    </div>
 
-                        <Button
+                    <div className="form__group">
+                        <button
                             type="primary"
-                            htmlType="submit"
+                            htmltype="submit"
                             disabled={!this.state.formValid}
-                            className="login-form-button">
+                            className="btn">
                             Submit
-                        </Button>
-                    </Form>
-                </div>{' '}
-            </Card>
+                        </button>
+                    </div>
+                </form>
+            </div>
         );
     }
 }

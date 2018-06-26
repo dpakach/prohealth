@@ -113,48 +113,39 @@ class QueryCreateComponent extends React.Component {
             </div>
         );
         return (
-            <div className="section section--form u-margin-top-small">
-                    <h1>Ask A Question</h1>
-                {/*
-                <h1 className="heading-secondary u-margin-top-small">
-                    {this.props.type == 'create' && <p>Ask A Question</p>}
-                    {this.props.type == 'edit' && <p>Update your question</p>}
-                </h1>
-                        * */}
-                <div>
-                    {this.state.nonFieldErrors && (
-                        <div className="u-margin-bottom-small">
-                            <Alert
-                                message="error"
-                                type="error"
-                                showIcon
-                                description={this.state.nonFieldErrors}
-                            />
-                        </div>
-                    )}
-
-                    <Form onSubmit={this.handleSubmit}>
-                        <FormItem>
+            <div className="section section--form section--form--wide">
+                <div className="card">
+                    <h1 className="heading-primary u-margin-top-small">
+                        Ask A Question
+                    </h1>
+                    <form className="form" onSubmit={this.handleSubmit}>
+                        {this.state.nonFieldErrors && (
+                            <div className="form__error">
+                                <h3 className="form__error--title">Error</h3>
+                                <p className="form__error--text">
+                                    {this.props.errorMessage}
+                                </p>
+                            </div>
+                        )}
+                        <div className="form__group">
                             <label>Title</label>
-                            <Input
+                            <input
                                 placeholder="Title"
                                 type="text"
                                 name="title_problem"
                                 onChange={this.handleChange}
                             />
-                        </FormItem>
-
-                        <FormItem>
+                        </div>
+                        <div className="form__group">
                             <label>Description</label>
-                            <TextArea
+                            <textarea
                                 placeholder="Description"
                                 name="description"
-                                autosize
+                                className="form__description"
                                 onChange={this.handleChange}
                             />
-                        </FormItem>
-
-                        <FormItem>
+                        </div>
+                        <div className="form__group">
                             <label>Related</label>
                             <br />
                             <Select
@@ -166,46 +157,44 @@ class QueryCreateComponent extends React.Component {
                                 <Option value="E">ent</Option>
                                 <Option value="P">Physician</Option>
                             </Select>
-                        </FormItem>
-                        <h3>Patient Stats</h3>
-
-                        <FormItem>
+                            <h3>Patient Stats</h3>
+                        </div>
+                        <div className="form__group">
                             <label>Name of Patient</label>
-                            <Input
+                            <input
                                 placeholder="Name of Patient"
                                 name="name_of_patient"
                                 onChange={this.handleChange}
                             />
-                        </FormItem>
-
-                        <FormItem>
+                        </div>
+                        <div className="form__group">
                             <label>Age Of Patient</label>
-                            <Input
+                            <input
                                 placeholder="Age of Patient"
                                 name="age_of_patient"
                                 type="number"
                                 onChange={this.handleChange}
                             />
-                        </FormItem>
-                        <FormItem>
+                        </div>
+                        <div className="form__group">
                             <label>Weight of Patient</label>
-                            <Input
+                            <input
                                 placeholder="Weight of Patient"
                                 name="weight_of_patient"
                                 type="number"
                                 onChange={this.handleChange}
                             />
-                        </FormItem>
-                        <FormItem>
+                        </div>
+                        <div className="form__group">
                             <label>Height of Patient</label>
-                            <Input
+                            <input
                                 placeholder="Height of Patient"
                                 name="height_of_patient"
                                 type="number"
                                 onChange={this.handleChange}
                             />
-                        </FormItem>
-                        <FormItem>
+                        </div>
+                        <div className="form__group">
                             <label>Attach a photo</label>
                             <div className="clearfix">
                                 <Upload
@@ -227,15 +216,11 @@ class QueryCreateComponent extends React.Component {
                                     />
                                 </Modal>
                             </div>{' '}
-                        </FormItem>
-
-                        <Button
-                            type="primary"
-                            htmlType="submit"
-                            className="login-form-button">
-                            Submit
-                        </Button>
-                    </Form>
+                        </div>
+                    </form>
+                    <button type="primary" htmlType="submit" className="btn">
+                        Submit
+                    </button>
                 </div>
             </div>
         );

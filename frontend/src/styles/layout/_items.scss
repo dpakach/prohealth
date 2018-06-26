@@ -1,55 +1,53 @@
-.section{
-        display: grid;
-        margin-bottom: 5rem;
-        font-size: 1.5rem;
+.section {
+    display: grid;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
 }
 
-.section--cards{
-        grid-gap: 10rem;
-        justify-content: space-around;
-        grid-template-columns: repeat(auto-fit, 30rem);
-        font-size: 1.5rem;
-        padding: 0 10rem;
-        @include respond(tab-port){
-                padding: 0 ;
-        }
+.section--cards {
+    grid-gap: 10rem;
+    justify-content: space-around;
+    grid-template-columns: repeat(auto-fit, 30rem);
+    padding: 0 10rem;
+    @include respond(tab-port) {
+        padding: 0;
+    }
 }
 
-.section--form{
-        grid-gap: 5rem;
-        justify-content: space-around;
-        min-height: 0;
-        min-width: 0;
-        font-size: 1.5rem;
-        &--login {
-               grid-template-columns: repeat(auto-fit, 40rem);
-
-        }
-        &--signup {
-               grid-template-columns: repeat(auto-fit, minmax(20rem, 50rem));
-        }
+.section--form {
+    grid-gap: 5rem;
+    justify-content: space-around;
+    min-height: 0;
+    min-width: 0;
+    &--login {
+        grid-template-columns: repeat(auto-fit, 20rem);
+    }
+    &--signup {
+        grid-template-columns: repeat(auto-fit, minmax(20rem, 30rem));
+    }
+    &--wide {
+        grid-template-columns: repeat(auto-fit, minmax(40rem, 50rem));
+    }
 }
 
-.section--detail{
-        grid-template-columns: repeat(auto-fit, minmax(40rem, 120rem));
-        justify-content: center;
-        padding: 0 3rem;
-        font-size: 1.5rem;
+.section--detail {
+    grid-template-columns: repeat(auto-fit, minmax(40rem, 120rem));
+    justify-content: center;
+    padding: 0 3rem;
 }
-.section--profile{
-        grid-template-columns: repeat(auto-fit, minmax(40rem, 120rem));
-        justify-content: center;
-        padding: 0 3rem;
-        font-size: 1.5rem;
+.section--profile {
+    grid-template-columns: repeat(auto-fit, minmax(40rem, 120rem));
+    justify-content: center;
+    padding: 0 3rem;
 }
 
-.section--steps{
-        grid-template-columns: repeat(3, minmax(20rem, 40rem));
-        grid-gap: 10rem;
-        justify-content: space-around;
-        padding: 0 5rem;
-        font-size: 1.5rem;
-        @include respond(tab-port){
-                grid-template-columns: minmax(20rem, 40rem);
-        }
+.section--steps {
+    grid-template-columns: repeat(3, minmax(20rem, 40rem));
+    grid-gap: 10rem;
+    justify-content: space-around;
+    padding: 0 5rem;
+    @include respond(tab-port) {
+        grid-template-columns: minmax(20rem, 40rem);
+    }
 }

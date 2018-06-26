@@ -86,82 +86,68 @@ class LoginComponent extends Component {
 
     render() {
         return (
-            <div className="section section--form">
-                <h1 className="heading-primary u-margin-top-small">Login</h1>
-                {this.props.errorMessage && (
-                    <div className="s">
-                        <Alert
-                            message="error"
-                            type="error"
-                            showIcon
-                            description={this.props.errorMessage}
-                        />
-                    </div>
-                )}
-                <div>
-                    <Form className="login-form" onSubmit={this.handleSubmit}>
-                        <FormItem
-                            validateStatus={
-                                !this.state.formErrors.email
-                                    ? 'success'
-                                    : 'error'
-                            }>
-                            <label htmlFor="email">email</label>
-                            <Input
+            <div className="section section--form section--form--login">
+                <div className="card">
+                    <h1 className="heading-primary u-margin-top-small">
+                        Login
+                    </h1>
+                    <form
+                        className="form login-form"
+                        onSubmit={this.handleSubmit}>
+                        {this.props.errorMessage && (
+                            <div className="form__error">
+                                <h3 className="form__error--title">Error</h3>
+                                <p className="form__error--text">
+                                    {this.props.errorMessage}
+                                </p>
+                            </div>
+                        )}
+                        <div className="form__group">
+                            <input
                                 prefix={<Icon type="user" />}
                                 placeholder="email"
                                 type="email"
                                 name="email"
                                 onChange={this.handleChange}
                             />
-                        </FormItem>
-                        <FormItem
-                            validateStatus={
-                                !this.state.formErrors.password
-                                    ? 'success'
-                                    : 'error'
-                            }>
-                            <label htmlFor="password">password</label>
-                            <Input
+                        </div>
+                        <div className="form__group">
+                            <input
                                 prefix={<Icon type="lock" />}
                                 placeholder="password"
                                 type="password"
                                 name="password"
                                 onChange={this.handleChange}
                             />
-                        </FormItem>
-                        <FormItem>
-                            <Button
-                                type="primary"
-                                htmlType="submit"
-                                disabled={!this.state.formValid}
-                                className="login-form-button u-margin-bottom-small">
-                                Log In
-                            </Button>
-                            <div>
-                                Or <Link to="/signup"> register now!</Link>
-                                <p>
-                                    <Link
-                                        to="/reset-password">
-                                        Forgot password
-                                    </Link>
-                                </p>
-                            </div>
-                        </FormItem>
-                    </Form>
+                        </div>
+                    </form>
+                    <button
+                        type="primary"
+                        htmltype="submit"
+                        disabled={!this.state.formValid}
+                        onClick={this.handleSubmit}
+                        className="btn u-margin-bottom-small">
+                        Log In
+                    </button>
+                    <div>
+                        Or <Link to="/user/signup"> register now!</Link>
+                        <p>
+                            <Link to="/reset-password">Forgot password</Link>
+                        </p>
+                    </div>
                 </div>
             </div>
         );
     }
 }
 
-const mapStateToProps = (state) => {
-    const {auth} = state
-    const {isAuthenticated, errorMessage} = auth
+const mapStateToProps = state => {
+    const {auth} = state;
+    const {isAuthenticated, errorMessage} = auth;
     return {
         isAuthenticated,
-        errorMessage
-    }
-}
+        errorMessage,
+    };
+};
 
 export default withRouter(connect(mapStateToProps)(LoginComponent));
