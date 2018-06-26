@@ -21,14 +21,20 @@ class Header extends React.Component {
 
     renderLinkItem = (to, name, icon, onClick = null) => {
         return (
-            <div className="nav__item">
-                <NavLink to={to} onClick={onClick}>
-                    <div className="nav__item--icon">
-                        <Icon type={icon} />
-                    </div>
+            <NavLink
+                key={name}
+                className={`nav__item ${
+                    window.location.pathname.split('/')[1] ===
+                    name.toLowerCase()
+                        ? 'nav__item--active'
+                        : ''
+                }`}
+                to={to}
+                onClick={onClick}>
+                <div>
                     <div className="nav__item--text">{name}</div>
-                </NavLink>
-            </div>
+                </div>
+            </NavLink>
         );
     };
 
@@ -36,9 +42,9 @@ class Header extends React.Component {
         if (this.props.isAuthenticated) {
             return [
                 this.renderLinkItem('/feature', 'Feature', 'mail'),
-                this.renderLinkItem('/query', 'Feature', 'message'),
+                this.renderLinkItem('/query', 'Query', 'message'),
                 this.renderLinkItem('/profile/user', 'Profile', 'profile'),
-                this.renderLinkItem('/logout', 'Logout', 'logout'),
+                this.renderLinkItem('/', 'Logout', 'Logout', this.logout),
             ];
         } else {
             return [
@@ -49,6 +55,7 @@ class Header extends React.Component {
     };
 
     render() {
+        console.log(window.location.pathname.split('/')[1]);
         return (
             <nav className="nav">
                 <div className="nav__logo-box">

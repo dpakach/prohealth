@@ -17,12 +17,12 @@ import MyQueriesComponent from '../components/query/MyQueriesComponent';
 import UpdatePassword from '../components/auth/UpdatePassword';
 import ResetPassword from '../components/auth/ResetPassword';
 import Profile from '../components/auth/Profile';
+import Sidebar from '../components/Sidebar';
 
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 const PrivateRoute = ({component: Component, auth, ...rest}) => {
-
     if (!auth) message.error('you must be logged in');
     return (
         <Route
@@ -41,14 +41,17 @@ class AppRouter extends React.Component {
             <BrowserRouter>
                 <div>
                     <Header dispatch={dispatch} />
-                    <Switch>
-                        <Route
-                            path="/"
-                            component={DashboardPage}
-                            exact={true}
-                        />
+                    <div className="container">
+                        <Sidebar />
+                        <div className="main-content">
+                            <Switch>
+                                <Route
+                                    path="/"
+                                    component={DashboardPage}
+                                    exact={true}
+                                />
 
-                        {/*
+                                {/*
                         <Route
                             path="/user/:action"
                             render={(props) => {
@@ -62,85 +65,90 @@ class AppRouter extends React.Component {
                         />
                     */}
 
-                        <Route
-                            path="/user/login"
-                            render={props => {
-                                return (
-                                    <LoginComponent
-                                        {...props}
-                                        dispatch={dispatch}
-                                    />
-                                );
-                            }}
-                        />
+                                <Route
+                                    path="/user/login"
+                                    render={props => {
+                                        return (
+                                            <LoginComponent
+                                                {...props}
+                                                dispatch={dispatch}
+                                            />
+                                        );
+                                    }}
+                                />
 
-                        <Route
-                            path="/user/signup"
-                            render={props => {
-                                return (
-                                    <SignupComponent
-                                        {...props}
-                                        dispatch={dispatch}
-                                    />
-                                );
-                            }}
-                        />
+                                <Route
+                                    path="/user/signup"
+                                    render={props => {
+                                        return (
+                                            <SignupComponent
+                                                {...props}
+                                                dispatch={dispatch}
+                                            />
+                                        );
+                                    }}
+                                />
 
-                        {/*
+                                {/*
                         <PrivateRoute
                             path="/profile/update"
                             auth={this.props.isAuthenticated}
                             component={UpdateProfile}
                         />
                             */}
-                        <PrivateRoute
-                            path="/update-password"
-                            auth={this.props.isAuthenticated}
-                            component={UpdatePassword}
-                        />
-                        <PrivateRoute
-                            path="/reset-password"
-                            auth={this.props.isAuthenticated}
-                            component={ResetPassword}
-                        />
-                        <PrivateRoute
-                            path="/query"
-                            auth={this.props.isAuthenticated}
-                            component={MyQueriesComponent}
-                            exact={true}
-                        />
-                        <PrivateRoute
-                            path="/query/create"
-                            auth={this.props.isAuthenticated}
-                            component={QueryCreateComponent}
-                        />
-                        <PrivateRoute
-                            path="/query/:id/update"
-                            auth={this.props.isAuthenticated}
-                            component={QueryUpdateComponent}
-                        />
-                        <PrivateRoute
-                            path="/query/:id"
-                            auth={this.props.isAuthenticated}
-                            component={QueryDetailComponent}
-                            exact={true}
-                        />
+                                <PrivateRoute
+                                    path="/update-password"
+                                    auth={this.props.isAuthenticated}
+                                    component={UpdatePassword}
+                                />
+                                <PrivateRoute
+                                    path="/reset-password"
+                                    auth={this.props.isAuthenticated}
+                                    component={ResetPassword}
+                                />
+                                <PrivateRoute
+                                    path="/query"
+                                    auth={this.props.isAuthenticated}
+                                    component={MyQueriesComponent}
+                                    exact={true}
+                                />
+                                <PrivateRoute
+                                    path="/query/create"
+                                    auth={this.props.isAuthenticated}
+                                    component={QueryCreateComponent}
+                                />
+                                <PrivateRoute
+                                    path="/query/:id/update"
+                                    auth={this.props.isAuthenticated}
+                                    component={QueryUpdateComponent}
+                                />
+                                <PrivateRoute
+                                    path="/query/:id"
+                                    auth={this.props.isAuthenticated}
+                                    component={QueryDetailComponent}
+                                    exact={true}
+                                />
 
-                        <PrivateRoute
-                            path="/query/:id/edit"
-                            auth={this.props.isAuthenticated}
-                            component={QueryCreateComponent}
-                        />
+                                <PrivateRoute
+                                    path="/query/:id/edit"
+                                    auth={this.props.isAuthenticated}
+                                    component={QueryCreateComponent}
+                                />
 
-                        <PrivateRoute
-                            path="/profile/:action"
-                            auth={this.props.isAuthenticated}
-                            component={Profile}
-                        />
+                                <PrivateRoute
+                                    path="/profile/:action"
+                                    auth={this.props.isAuthenticated}
+                                    component={Profile}
+                                />
 
-                        <Route path="/feature" component={FeaturePage} />
-                        <Route component={NotFoundPage} />
-                    </Switch>
+                                <Route
+                                    path="/feature"
+                                    component={FeaturePage}
+                                />
+                                <Route component={NotFoundPage} />
+                            </Switch>
+                        </div>
+                    </div>
                 </div>
             </BrowserRouter>
         );

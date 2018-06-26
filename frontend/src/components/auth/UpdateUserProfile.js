@@ -110,7 +110,7 @@ class UpdateUserProfile extends Component {
 
     componentDidMount() {
         const user = JSON.parse(localStorage.getItem('user'));
-        this.setState({user, ...user,});
+        this.setState({user, ...user});
     }
 
     render() {
@@ -119,49 +119,42 @@ class UpdateUserProfile extends Component {
                 {this.props.phase === 'starting' && (
                     <p>update your profile before you start!!</p>
                 )}
-                <Card
-                    title="Update User Profile"
-                    className="u-margin-bottom-small"
-                    bordered={false}
-                    style={{width: 400}}>
-                    <div>
-                        {!true && (
-                            <div className="u-margin-bottom-small">
-                                <Alert
-                                    message="error"
-                                    type="error"
-                                    showIcon
-                                    description={'error message'}
+                <div>
+                    {!true && (
+                        <div className="form__error">
+                            <h3 className="form__error--title">Error</h3>
+                            <p className="form__error--text">
+                                There was a error and it can't be resolved
+                            </p>
+                        </div>
+                    )}
+                    <div className="section section--form">
+                        <form className="form" onSubmit={this.handleSubmit}>
+                            <div className="form__group">
+                                <label>First Name</label>
+
+                                <Input
+                                    prefix={<Icon type="user" />}
+                                    placeholder="First Name"
+                                    type="text"
+                                    name="first_name"
+                                    onChange={this.handleChange}
+                                    value={this.state.first_name}
                                 />
                             </div>
-                        )}
-                        <div className="section section--form">
-                            <Form
-                                className="login-form"
-                                onSubmit={this.handleSubmit}>
-                                <FormItem>
-                                    <label>First Name</label>
-                                    <Input
-                                        prefix={<Icon type="user" />}
-                                        placeholder="First Name"
-                                        type="text"
-                                        name="first_name"
-                                        onChange={this.handleChange}
-                                        value={this.state.first_name}
-                                    />
-                                </FormItem>
-                                <FormItem>
-                                    <label>Last Name</label>
-                                    <Input
-                                        prefix={<Icon type="user" />}
-                                        placeholder="Last Name"
-                                        type="text"
-                                        name="last_name"
-                                        onChange={this.handleChange}
-                                        value={this.state.last_name}
-                                    />
-                                </FormItem>
+                            <div className="form__group">
+                                <label>Last Name</label>
+                                <Input
+                                    prefix={<Icon type="user" />}
+                                    placeholder="Last Name"
+                                    type="text"
+                                    name="last_name"
+                                    onChange={this.handleChange}
+                                    value={this.state.last_name}
+                                />
+                            </div>
 
+                            <div className="form__group">
                                 {this.state.formErrors.date_of_birth && (
                                     <ul>
                                         {this.state.formErrors.date_of_birth.map(
@@ -171,34 +164,36 @@ class UpdateUserProfile extends Component {
                                         )}
                                     </ul>
                                 )}
-                                <FormItem>
-                                    <label>Date Of Birth</label>
-                                    <br />
-                                    <DatePicker
-                                        defaultValue={moment(
-                                            moment(this.state.date_of_birth),
-                                            dateFormat,
-                                        )}
-                                        onChange={this.onDateChange}
-                                        format={dateFormat}
-                                    />
-                                </FormItem>
+                                <label>Date Of Birth</label>
+                                <DatePicker
+                                    defaultValue={moment(
+                                        moment(this.state.date_of_birth),
+                                        dateFormat,
+                                    )}
+                                    onChange={this.onDateChange}
+                                    format={dateFormat}
+                                />
+                            </div>
 
-                                <FormItem>
-                                    <label>Gender</label>
-                                    <br />
-                                    <Select
-                                        showSearch
-                                        style={{width: 200}}
-                                        placeholder="Gender"
-                                        name="gender"
-                                        value={this.state.gender}
-                                        onChange={this.handleSelectChange}>
-                                        <Option value="M">Male</Option>
-                                        <Option value="F">Female</Option>
-                                    </Select>
-                                </FormItem>
+                            <div className="form__group">
+                                <label>Gender</label>
+                                <select
+                                    placeholder="Gender"
+                                    name="gender"
+                                    type="select"
+                                    className="form__input"
+                                    value={this.state.gender}
+                                    onChange={this.handleSelectChange}>
+                                    <option className="select__item" value="M">
+                                        Male
+                                    </option>
+                                    <option className="select__item" value="F">
+                                        Female
+                                    </option>
+                                </select>
+                            </div>
 
+                            <div className="form__group">
                                 <Button
                                     type="primary"
                                     htmlType="submit"
@@ -206,10 +201,10 @@ class UpdateUserProfile extends Component {
                                     className="login-form-button">
                                     Update
                                 </Button>
-                            </Form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
-                </Card>
+                </div>
             </div>
         );
     }

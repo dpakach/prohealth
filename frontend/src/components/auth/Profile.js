@@ -37,7 +37,6 @@ class Profile extends React.Component {
     };
 
     render() {
-        // console.log(this.props.match.params.action);
         if (!this.state.valid) {
             return <NotFoundPage />;
         }
@@ -48,7 +47,7 @@ class Profile extends React.Component {
                     style={{width: '100%', height: '80vh', overflowY: 'scroll'}}
                     tabList={tabList}
                     activeTabKey={this.state.key}
-                    className="u-box-shadow-small"
+                    className="card"
                     onTabChange={key => {
                         this.tabChange(key);
                     }}>
