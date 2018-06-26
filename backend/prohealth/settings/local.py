@@ -48,7 +48,7 @@ CACHES = {
 # ------------------------------------------------------------------------------
 THIRD_PARTY_APPS += [
     'debug_toolbar',
-]
+    ]
 
 THIRD_PARTY_MIDDLEWARE += [
     'debug_toolbar.middleware.DebugToolbarMiddleware',

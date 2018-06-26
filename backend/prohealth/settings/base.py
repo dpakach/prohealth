@@ -59,12 +59,14 @@ THIRD_PARTY_APPS = [
     # 'allauth.account',
     # 'rest_auth.registration',
     'corsheaders',
+    'channels',
 ]
 
 # Apps specific for this project go here.
 LOCAL_APPS = [
     'user_profile.apps.UserProfileConfig',
     'users_query.apps.UsersQueryConfig',
+    'chat.apps.ChatConfig',
 ]
 
 # MIDDLEWARE CONFIGURATION
@@ -256,6 +258,13 @@ REST_FRAMEWORK = {
 
 }
 
+MESSAGES_TO_LOAD = 15
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgiref.inmemory.ChannelLayer",
+        "ROUTING": "chat.routing.channel_routing",
+    },
+}
 APPEND_SLASH = True
 
 AUTH_USER_MODEL = 'user_profile.User'

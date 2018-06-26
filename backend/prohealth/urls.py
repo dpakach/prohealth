@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^api/', include('user_profile.urls')),
     url(r'^docs/', include_docs_urls(title='API')),
     url(r'^api/', include('users_query.urls')),
+    url(r'^api/', include('chat.urls')),
     url(r'^(?!(api\/)).*', TemplateView.as_view(template_name="index.html")),
 ]
 
