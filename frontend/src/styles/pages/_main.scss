@@ -11,13 +11,13 @@
 }
 
 .main-content {
-    height: calc(100vh - 8rem);
+    height: calc(100vh - 5rem);
     overflow-y: scroll;
     background: '#ECECEC';
 }
 
 .sidebar {
-    height: calc(100vh - 8rem);
+    height: calc(100vh - 5rem);
     color: white;
     border-right: 1px solid $color-grey-light-3;
     padding: 0 1rem 0 0;
@@ -109,6 +109,7 @@
     background: #fcfcfc;
     color: $color-grey-dark;
     text-align: left;
+    z-index: 100;
 
     &__head {
         display: grid;

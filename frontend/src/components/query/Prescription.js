@@ -5,17 +5,20 @@ import {deleteMedicine} from '../../actions/queryActions';
 
 const Prescription = props => {
     const deleteButton = id => {
+        // TODO: change content based on doctor status
         if (true) {
             return (
-                <Button
+                <a
                     type="danger"
                     onClick={e => {
                         deleteMedicine(props.id, id).then(() => {
                             props.updatePescription();
                         });
                     }}>
-                    delete
-                </Button>
+                    <i onClick className=" material-icons">
+                        delete
+                    </i>
+                </a>
             );
         } else {
             return;
@@ -25,38 +28,44 @@ const Prescription = props => {
     return (
         <div>
             {props.prescription && (
-                <Card bordered={false} style={{width: '100%'}}>
-                    {props.loading && (
-                        <div style={{width: '100%', textAlign: 'center'}}>
-                            <Icon style={{fontSize: '3rem'}} type="loading" />
-                        </div>
-                    )}
+                <div>
+                    <h3>Prescriptions</h3>
+                    <div className="prescription">
+                        {props.loading && (
+                            <div style={{width: '100%', textAlign: 'center'}}>
+                                <Icon
+                                    style={{fontSize: '3rem'}}
+                                    type="loading"
+                                />
+                            </div>
+                        )}
 
-                    {!props.loading && (
-                        <Card
-                            title="Prescription"
-                            bordered={false}
-                            style={{width: '100%'}}>
-                            <List
-                                itemLayout="horizontal"
-                                dataSource={props.prescription}
-                                renderItem={item => (
-                                    <List.Item
-                                        actions={[deleteButton(item.id)]}>
-                                        <List.Item.Meta
-                                            title={item.name_of_medicine}
-                                            description={`take ${
-                                                item.quantity
-                                            }, ${item.times_a_day} times a day`}
-                                        />
-                                    </List.Item>
-                                )}
-                            />
-                        </Card>
-                    )}
-                </Card>
+                        {!props.loading &&
+                            props.prescription.map(item => (
+                                <div className="prescription__item">
+                                    <div class="list-item user-stats-list__item">
+                                        <div class="list-item__title">
+                                            {item.name_of_medicine}
+                                        </div>
+
+                                        <div class="list-item__content prescription__item">
+                                            <div class="prescription__item__text">
+                                                {`take ${item.quantity}, ${
+                                                    item.times_a_day
+                                                } times a day`}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="prescription__item__button">
+                                        {deleteButton(item.id)}
+                                    </div>
+                                </div>
+                            ))}
+                    </div>
+                </div>
             )}
         </div>
     );
 };
+
 export default Prescription;

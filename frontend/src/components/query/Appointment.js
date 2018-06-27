@@ -33,46 +33,87 @@ class Appointment extends React.Component {
 
     render() {
         return (
-            <Card bordered={false} style={{width: '100%'}}>
-                {this.state.loading && (
-                    <div style={{width: '100%', textAlign: 'center'}}>
-                        <Icon style={{fontSize: '3rem'}} type="loading" />
+            <div>
+                {this.state.appointment && (
+                    <div>
+                        <h3>Appointment</h3>
+                        <div className="prescription">
+                            {this.state.loading && (
+                                <div
+                                    style={{
+                                        width: '100%',
+                                        textAlign: 'center',
+                                    }}>
+                                    <Icon
+                                        style={{fontSize: '3rem'}}
+                                        type="loading"
+                                    />
+                                </div>
+                            )}
+
+                            {!this.state.loading && (
+                                <div>
+                                    <div className="list-item user-stats-list__item">
+                                        <div className="list-item__title">
+                                            Hospital
+                                        </div>
+                                        <div className="list-item__content prescription__item">
+                                            {this.state.appointment.hospital}
+                                        </div>
+                                    </div>
+                                    <div className="list-item user-stats-list__item">
+                                        <div className="list-item__title">
+                                            Doctor
+                                        </div>
+                                        <div className="list-item__content prescription__item">
+                                            {
+                                                this.state.appointment
+                                                    .appointed_doc
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className="list-item user-stats-list__item">
+                                        <div className="list-item__title">
+                                            Venue
+                                        </div>
+                                        <div className="list-item__content prescription__item">
+                                            {this.state.appointment.venue}
+                                        </div>
+                                    </div>
+                                    <div className="list-item user-stats-list__item">
+                                        <div className="list-item__title">
+                                            Time
+                                        </div>
+                                        <div className="list-item__content prescription__item">
+                                            {
+                                                this.state.appointment
+                                                    .appoint_time
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className="list-item user-stats-list__item">
+                                        <div className="list-item__title">
+                                            Date
+                                        </div>
+                                        <div className="list-item__content prescription__item">
+                                            {
+                                                this.state.appointment
+                                                    .appointed_date
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 )}
-                {!this.state.loading &&
-                    this.state.appointment && (
-                        <Card
-                            title="Appointment"
-                            bordered={false}
-                            style={{width: '100%'}}>
-                            {this.state.loading && <Icon type="loading" />}
-
-                            <div>
-                                <p>
-                                    Hospital: {this.state.appointment.hospital}
-                                </p>
-                                <p>Venue: {this.state.appointment.venue}</p>
-                                <p>
-                                    Doctor:{' '}
-                                    {this.state.appointment.appointed_doc}
-                                </p>
-                                <p>
-                                    Time: {this.state.appointment.appoint_time}
-                                </p>
-                                <p>
-                                    Date:{' '}
-                                    {this.state.appointment.appointed_date}
-                                </p>
-                            </div>
-                        </Card>
-                    )}
                 {!this.state.appointment && (
                     <AppointmentForm
                         update={this.updateAppointment}
                         {...this.props}
                     />
                 )}
-            </Card>
+            </div>
         );
     }
 }

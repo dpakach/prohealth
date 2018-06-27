@@ -6,7 +6,9 @@ import Appointment from './Appointment';
 import Actions from './Actions';
 import {getPescription} from '../../actions/queryActions';
 
-const is_doctor = true;
+// TODO: doctor status from localstorage
+//
+const is_doctor = false;
 class QueryCta extends React.Component {
     state = {
         prescription: null,

@@ -67,12 +67,11 @@ class PrescriptionForm extends React.Component {
             <div>
                 <div>
                     <div>
-                        <Button
-                            type="primary"
-                            className="action__button"
+                        <button
+                            className="action__button btn btn--small"
                             onClick={this.showModal}>
                             Add Prescription
-                        </Button>
+                        </button>
                         <Modal
                             visible={this.state.visible}
                             title="Give Prescription"
