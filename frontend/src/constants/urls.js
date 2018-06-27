@@ -15,3 +15,9 @@ export const QueryUrls = {
     PESCRIPTION: (id) => `${ROOT_URL}/api/query/${id}/prescribe`,
     MEDICINE: (id, med_id) => `${ROOT_URL}/api/query/${id}/prescribe/${med_id}`,
 }
+
+export const NotificationUrls = {
+    NOTIFICATIONS: `${ROOT_URL}/api/notifications`,
+    READ_ALL_NOTIFICATIONOS: `${ROOT_URL}/api/notifications/readall`,
+
+}

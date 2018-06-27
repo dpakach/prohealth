@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {NavLink} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {Menu, Icon} from 'antd';
+import {Menu, Icon, Badge} from 'antd';
 import {logoutUser} from '../actions/authActions';
 import {withRouter} from 'react-router';
 
@@ -43,6 +43,18 @@ class Header extends React.Component {
                     <NavLink onClick={this.logout} to="/">
                         <Icon type="logout" />Logout
                     </NavLink>
+                </Menu.Item>,
+                <Menu.Item key="notifications">
+                    <Badge count={5}>
+                    <NavLink  to="/notifications">
+                        <Icon type="bell" />
+                    </NavLink>
+                    </Badge>
+                </Menu.Item>,
+                <Menu.Item key="message">
+                    <Badge count={3}>
+                        <Icon type="message" />
+                    </Badge>
                 </Menu.Item>,
             ];
         } else {
