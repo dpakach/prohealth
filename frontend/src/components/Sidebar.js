@@ -1,8 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-import FaBeer from 'react-icons/lib/fa/beer';
-
 const QuickLinks = props => {
     return (
         <div className="sidebar">
@@ -18,32 +16,32 @@ const QuickLinks = props => {
                                 Notifications
                             </div>
                             <div className="window__head--button">
-                                <a href="#">Clear all</a>
+                                <a>Clear all</a>
                             </div>
                         </div>
 
-                        <div class="window__list">
-                            <div class="list-item">
-                                <div class="list-item__title">Notification</div>
+                        <div className="window__list">
+                            <div className="list-item">
+                                <div className="list-item__title">Notification</div>
 
-                                <div class="list-item__content">
+                                <div className="list-item__content">
                                     Ipsum dolor laboriosam reiciendis corporis
                                     nostrum. Omnis iure quas rem dolorem
                                     voluptas Iusto deleni
                                 </div>
 
-                                <div class="list-item__action">
-                                    <div class="list-item__action--icon">
+                                <div className="list-item__action">
+                                    <div className="list-item__action--icon">
                                         <i className=" material-icons">
                                             notifications
                                         </i>
                                     </div>
-                                    <div class="list-item__action--icon">
+                                    <div className="list-item__action--icon">
                                         <i className=" material-icons">
                                             thumb_up
                                         </i>
                                     </div>
-                                    <div class="list-item__action--icon">
+                                    <div className="list-item__action--icon">
                                         <i className=" material-icons">
                                             delete
                                         </i>

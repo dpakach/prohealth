@@ -1,8 +1,7 @@
 import React from 'react';
 import {AuthUrls} from '../../constants/urls';
 
-import {Alert, Card, Form, Icon, Input, Button, message} from 'antd';
-const FormItem = Form.Item;
+import {Alert, Icon, message} from 'antd';
 
 class FeaturePage extends React.Component {
     constructor(props) {

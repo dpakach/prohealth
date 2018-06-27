@@ -1,16 +1,12 @@
 import React from 'react';
 
-import {Icon} from 'antd';
 import moment from 'moment';
 
-import {ROOT_URL} from '../../constants/urls';
 import DoctorProfile from './DoctorProfile';
-import {IoMap} from 'react-icons/lib/io';
 
 const UserProfile = props => {
     const user = JSON.parse(localStorage.getItem('user'));
     const is_doctor = localStorage.getItem('is_doctor') === 'true';
-    const {doctor_profile} = user;
 
     return (
         <div className="profile">
@@ -79,8 +75,6 @@ const UserProfile = props => {
 };
 
 export default UserProfile;
-{
-    /*
-                                src={ROOT_URL + user.user_profile.profile_photo}
-                                        * */
-}
+/*
+src={ROOT_URL + user.user_profile.profile_photo}
+* */

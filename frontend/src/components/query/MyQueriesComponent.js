@@ -1,9 +1,8 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 
 import QueryListItemComponent from './QueryListItemComponent';
 
-import {List, Icon} from 'antd';
+import {Icon} from 'antd';
 
 import {getQueries} from '../../actions/queryActions';
 
@@ -56,7 +55,7 @@ class MyQueriesComponent extends React.Component {
                 )}
                 {!this.state.loading && (
 
-                    <div class="query-list">
+                    <div className="query-list">
                         {this.state.query_list.map(item => (
                             <QueryListItemComponent
                                 updateQueries={this.updateQueries}

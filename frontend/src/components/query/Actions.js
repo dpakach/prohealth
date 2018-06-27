@@ -1,6 +1,5 @@
 import React from 'react';
 
-import {Button} from 'antd';
 import {deleteQueryItem} from '../../actions/queryActions';
 import {withRouter} from 'react-router-dom';
 

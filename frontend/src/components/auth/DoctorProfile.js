@@ -1,7 +1,5 @@
 import React from 'react';
 
-import {Icon} from 'antd';
-
 const DoctorProfile = props => {
     const {user} = props;
     const {doctor_profile} = user;
