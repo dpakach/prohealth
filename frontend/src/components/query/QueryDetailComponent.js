@@ -51,6 +51,7 @@ class QueryDetailComponent extends React.Component {
             <Card
                 style={{
                     width: '100%',
+                    height: '100%'
                 }}
                 className="u-box-shadow-small">
                 <Row gutter={16}>
@@ -60,6 +61,7 @@ class QueryDetailComponent extends React.Component {
                                 <QueryHeader
                                     user={this.state.user}
                                     query={this.state.query}
+                                    updateQuery={this.updateQuery}
                                     loading={this.state.loading}
                                 />
                             </Col>

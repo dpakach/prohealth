@@ -1,53 +1,54 @@
 import React from 'react';
 import {Card, Icon, Row, Col} from 'antd';
 
+import QueryListItemComponent from './QueryListItemComponent';
+
 const QueryHeader = props => {
     // console.log(props);
+    const user_stats = [
+        {title: 'Name', value: props.query.name_of_patient},
+        {title: 'Age', value: props.query.age_of_patient},
+        {title: 'Height', value: props.query.height_of_patient},
+        {title: 'Weight', value: props.query.weight_of_patient},
+    ];
     return (
         <div>
-            <Card
-                bordered={false}
-                style={{
-                    width: '100%',
-                    height: '30vh',
-                    overflowY: 'scroll',
-                    marginBottom: 20,
-                }}>
-                {props.loading && (
-                    <div style={{width: "100%", textAlign: 'center'}}>
-                        <Icon
-                            style={{fontSize: '5rem' }}
-                            type="loading"
+            {props.loading && (
+                <div style={{width: '100%', textAlign: 'center'}}>
+                    <Icon style={{fontSize: '5rem'}} type="loading" />
+                </div>
+            )}
+            {!props.loading && (
+                <div class="query-header">
+                    <div className="query-header__main">
+                        <QueryListItemComponent
+                            updateQueries={props.updateQueries}
+                            key={props.query.id}
+                            item={props.query}
+                            loading={props.loading}
                         />
                     </div>
-                )}
-                {!props.loading && (
-                    <Row>
-                        <Col span={18}>
-                            <h2>{props.query.title_problem}</h2>
-                            <p>{props.query.description}</p>
 
-                            <h4>
-                                created by: {props.user.first_name}{' '}
-                                {props.user.last_name}
-                                <br />
-                                <small>({props.user.email})</small>
-                                <br />
-                                <br />
-                                Created At: {props.query.date_of_submission}
-                            </h4>
-                        </Col>
+                    <div className="query-header__stats">
+                        <h2 className="query-header__stats--title">User Stats</h2>
+                        <div className="user-stats-list">
+                            {user_stats.map(s => {
+                                return (
+                                    <div class="list-item user-stats-list__item">
+                                        <div class="list-item__title">
+                                            {s.title}
+                                        </div>
 
-                        <Col span={6}>
-                            <h2>User Stats</h2>
-                            <p>Name: {props.query.name_of_patient}</p>
-                            <p>Age: {props.query.age_of_patient}</p>
-                            <p>Height:{props.query.height_of_patient}</p>
-                            <p>Weight:{props.query.weight_of_patient}</p>
-                        </Col>
-                    </Row>
-                )}
-            </Card>
+                                        <div class="list-item__content">
+                                            {s.value}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

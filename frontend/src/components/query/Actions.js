@@ -6,27 +6,32 @@ import {withRouter} from 'react-router-dom';
 
 const Actions = props => {
     const deleteQuery = () => {
-            deleteQueryItem(props.id) 
-                .then(() => {
-                    props.history.push('/query')
-                })
-    }
+        deleteQueryItem(props.id).then(() => {
+            props.history.push('/query');
+        });
+    };
 
     const editQuery = () => {
         props.history.push(`/query/${props.id}/update`);
-    }
+    };
 
     return (
         <div>
-            <Button type="primary" className="action__button" onClick={props.resolve}>
+            <button
+                className="action__button btn btn--small"
+                onClick={props.resolve}>
                 Resolve
-            </Button>
-            <Button type="default" className="action__button" onClick={editQuery}>
+            </button>
+            <button
+                className="action__button btn btn--default btn--small"
+                onClick={editQuery}>
                 Edit
-            </Button>
-            <Button type="danger" className="action__button" onClick={deleteQuery}>
+            </button>
+            <button
+                className="action__button btn btn--danger btn--small"
+                onClick={deleteQuery}>
                 Delete
-            </Button>
+            </button>
         </div>
     );
 };
