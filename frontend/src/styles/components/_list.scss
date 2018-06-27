@@ -1,0 +1,47 @@
+
+
+.list-item {
+    &:not(:last-child) {
+        border-bottom: 2px solid $color-grey-light-3;
+    }
+    padding: 0.5rem 0;
+    transition: all 0.3s;
+    // background-color: orangered;
+
+    &__title {
+        font-weight: 700;
+    }
+    &__description {
+    }
+    &__action {
+        border-top: 1px solid $color-grey-light-3;
+        display: grid;
+        justify-content: space-around;
+        align-items: center;
+        grid-template-columns: auto auto auto;
+        padding-top: 0.5rem;
+        margin-top: 0.5rem;
+
+        &--icon {
+            transition: all 0.3s;
+            cursor: pointer;
+            &:hover {
+                color: $color-tertiary-light;
+            }
+        }
+    }
+
+    &:hover {
+        background-color: rgba($color-grey-light-3, 0.3);
+    }
+}
+
+.query-list {
+
+    margin-top: 2rem;
+
+    &__item{
+        padding: 0.5rem 2rem;
+        margin-bottom: 2rem;
+    }
+}

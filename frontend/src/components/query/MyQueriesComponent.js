@@ -45,31 +45,27 @@ class MyQueriesComponent extends React.Component {
 
     render() {
         return (
-            <div className="section section--profile">
-                <h1 className="heading heading--primary">
-                    Questions you Asked
-                </h1>
-                <p>
-                    <Link to="query/create"> Ask New Question</Link>
-                </p>
+            <div>
+                <h1 className="heading heading-primary">Questions you Asked</h1>
                 {this.state.loading && (
-                    <div style={{width: '100%', textAlign: 'center'}} className="u-margin-top-small">
-                        <Icon style={{fontSize: '10rem'}} type="loading" />
+                    <div
+                        style={{width: '100%', textAlign: 'center'}}
+                        className="u-margin-top-small loading-icon">
+                        <Icon style={{fontSize: '5rem'}} type="loading" />
                     </div>
                 )}
                 {!this.state.loading && (
-                    <List
-                        itemLayout="horizontal"
-                        dataSource={this.state.query_list}
-                        renderItem={item => (
+
+                    <div class="query-list">
+                        {this.state.query_list.map(item => (
                             <QueryListItemComponent
                                 updateQueries={this.updateQueries}
                                 key={item.id}
                                 item={item}
                                 loading={this.state.loading}
                             />
-                        )}
-                    />
+                        ))}
+                    </div>
                 )}
             </div>
         );

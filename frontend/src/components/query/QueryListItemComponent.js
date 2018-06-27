@@ -6,44 +6,61 @@ import {deleteQueryItem} from '../../actions/queryActions';
 
 const QueryListItemComponent = props => {
     const deleteButton = (
-        <Button
-            type="danger"
+        <div
+            class="list-item__action--icon"
             onClick={e => {
                 deleteQueryItem(props.item.id).then(data => {
                     props.updateQueries();
                 });
             }}>
-            delete
-        </Button>
+            <i className=" material-icons">delete</i>
+        </div>
     );
 
     const editButton = (
-        <Button
-            type="primary"
+        <div
+            class="list-item__action--icon"
             onClick={e => {
                 props.history.push(`/query/${props.item.id}/update`);
             }}>
-            edit
-        </Button>
+            <i className=" material-icons">edit</i>
+        </div>
     );
+
+    const detailsButton = (
+        <div
+            class="list-item__action--icon">
+                        <Link to={`/query/${props.item.id}`}>
+            <i className=" material-icons">more</i>
+                        </Link>
+        </div>
+    );
+
+
     return (
-        <div>
-            <List.Item actions={[deleteButton, editButton]}>
-                <List.Item.Meta
-                    avatar={<Avatar src="#" />}
-                    title={
+            <div class="list-item query-list__item">
+                <div class="list-item__title">
                         <Link to={`/query/${props.item.id}`}>
                             {props.item.title_problem}
                         </Link>
-                    }
-                    description={props.item.description}
-                />
-                <div>
+                    </div>
+
+                <div class="list-item__content">
+                    {props.item.description}
+                    <div>
+                        Adipisicing voluptatibus maxime praesentium eum sequi. Voluptatibus sunt cum provident nisi iure Amet autem ut nulla enim iste? Iste perspiciatis quod ipsum et amet Aliquid numquam id dolorem recusandae expedita?
+                    </div>
+                    
                     <h4>Created Date</h4>
                     <p>{props.item.date_of_submission}</p>
                 </div>
-            </List.Item>
-        </div>
+
+                <div class="list-item__action">
+                    {detailsButton}
+                    {editButton}
+                    {deleteButton}
+                </div>
+            </div>
     );
 };
 
