@@ -4,14 +4,12 @@ import _ from 'lodash';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {loginUser} from '../../actions/authActions';
-import {Form, Icon, Input, Button, Alert} from 'antd';
+import {Icon} from 'antd';
 
 // import store from '../../store/configureStore';
 // import {loginAction} from '../../actions/authActions';
 // import {AuthUrls} from '../../constants/urls';
 // import store from '../../store/configureStore';
-
-const FormItem = Form.Item;
 
 class LoginComponent extends Component {
     constructor(props) {

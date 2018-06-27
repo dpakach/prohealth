@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Icon, Row, Col} from 'antd';
+import {Icon} from 'antd';
 
 import QueryListItemComponent from './QueryListItemComponent';
 
@@ -19,7 +19,7 @@ const QueryHeader = props => {
                 </div>
             )}
             {!props.loading && (
-                <div class="query-header">
+                <div className="query-header">
                     <div className="query-header__main">
                         <QueryListItemComponent
                             updateQueries={props.updateQueries}
@@ -34,12 +34,12 @@ const QueryHeader = props => {
                         <div className="user-stats-list">
                             {user_stats.map(s => {
                                 return (
-                                    <div class="list-item user-stats-list__item">
-                                        <div class="list-item__title">
+                                    <div key={s.title} className="list-item user-stats-list__item">
+                                        <div className="list-item__title">
                                             {s.title}
                                         </div>
 
-                                        <div class="list-item__content">
+                                        <div className="list-item__content">
                                             {s.value}
                                         </div>
                                     </div>

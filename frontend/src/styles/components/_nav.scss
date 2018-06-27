@@ -70,7 +70,7 @@
             letter-spacing: 1px;
             font-size: 1.2rem;
             line-height: 1;
-            padding: 0.5rem 1.5rem 0 1rem;
+            padding: 0rem 1.5rem 0 1rem;
             background: rgba($color-white, 0.3);
             border: none;
             font-weight: 400;
@@ -130,7 +130,6 @@
         }
         &--text {
             letter-spacing: 1px;
-            font-weight: 300;
         }
         &--active,
         &:hover {

@@ -46,6 +46,9 @@
 
 .user-stats-list {
     &__item {
+        &:not(:last-child) {
+            border-bottom: 1px solid $color-grey-light-3;
+        }
         padding-left: 1rem;
         padding-right: 1rem;
     }

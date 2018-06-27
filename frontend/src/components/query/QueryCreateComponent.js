@@ -4,22 +4,16 @@ import _ from 'lodash';
 import {createQuery} from '../../actions/queryActions';
 
 import {
-    Form,
     message,
     Icon,
-    Input,
-    Button,
     Select,
     Upload,
     Modal,
-    Alert,
 } from 'antd';
 
 // import validate from '../../utils/validate';
 
-const FormItem = Form.Item;
 const Option = Select.Option;
-const {TextArea} = Input;
 
 class QueryCreateComponent extends React.Component {
     // constructor and state initialization
@@ -218,7 +212,7 @@ class QueryCreateComponent extends React.Component {
                             </div>{' '}
                         </div>
                     </form>
-                    <button type="primary" htmlType="submit" className="btn">
+                    <button type="primary" className="btn">
                         Submit
                     </button>
                 </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import {List, Avatar, Button} from 'antd';
 import {Link, withRouter} from 'react-router-dom';
 
 import {deleteQueryItem} from '../../actions/queryActions';
@@ -7,7 +6,7 @@ import {deleteQueryItem} from '../../actions/queryActions';
 const QueryListItemComponent = props => {
     const deleteButton = (
         <div
-            class="list-item__action--icon"
+            className="list-item__action--icon"
             onClick={e => {
                 deleteQueryItem(props.item.id).then(data => {
                     props.updateQueries();
@@ -19,7 +18,7 @@ const QueryListItemComponent = props => {
 
     const editButton = (
         <div
-            class="list-item__action--icon"
+            className="list-item__action--icon"
             onClick={e => {
                 props.history.push(`/query/${props.item.id}/update`);
             }}>
@@ -29,7 +28,7 @@ const QueryListItemComponent = props => {
 
     const detailsButton = (
         <div
-            class="list-item__action--icon">
+            className="list-item__action--icon">
                         <Link to={`/query/${props.item.id}`}>
             <i className=" material-icons">more</i>
                         </Link>
@@ -38,14 +37,14 @@ const QueryListItemComponent = props => {
 
 
     return (
-            <div class="list-item query-list__item">
-                <div class="list-item__title">
+            <div className="list-item query-list__item">
+                <div className="list-item__title">
                         <Link to={`/query/${props.item.id}`}>
                             {props.item.title_problem}
                         </Link>
                     </div>
 
-                <div class="list-item__content">
+                <div className="list-item__content">
                     {props.item.description}
                     <div>
                         Adipisicing voluptatibus maxime praesentium eum sequi. Voluptatibus sunt cum provident nisi iure Amet autem ut nulla enim iste? Iste perspiciatis quod ipsum et amet Aliquid numquam id dolorem recusandae expedita?
@@ -55,7 +54,7 @@ const QueryListItemComponent = props => {
                     <p>{props.item.date_of_submission}</p>
                 </div>
 
-                <div class="list-item__action">
+                <div className="list-item__action">
                     {detailsButton}
                     {editButton}
                     {deleteButton}

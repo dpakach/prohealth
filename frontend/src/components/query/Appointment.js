@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Icon, Card} from 'antd';
+import {Icon} from 'antd';
 import {getAppointment} from '../../actions/queryActions';
 import AppointmentForm from './AppointmentForm';
 
@@ -32,6 +32,9 @@ class Appointment extends React.Component {
     }
 
     render() {
+        // TODO: doctor status form localstorage
+        const is_doctor = false;
+        console.log(this.state.appointment);
         return (
             <div>
                 {this.state.appointment && (
@@ -107,7 +110,7 @@ class Appointment extends React.Component {
                         </div>
                     </div>
                 )}
-                {!this.state.appointment && (
+                {!this.state.appointment && is_doctor && (
                     <AppointmentForm
                         update={this.updateAppointment}
                         {...this.props}

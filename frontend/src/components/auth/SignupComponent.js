@@ -7,18 +7,11 @@ import Beer from 'react-icons/lib/fa/beer';
 
 
 import {
-    Form,
-    Icon,
-    Input,
-    Button,
     DatePicker,
     Select,
-    Alert,
-    Checkbox,
     message,
 } from 'antd';
 
-const FormItem = Form.Item;
 const Option = Select.Option;
 
 class SignupComponent extends Component {

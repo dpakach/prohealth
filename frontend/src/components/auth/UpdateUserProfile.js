@@ -4,22 +4,16 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
 import {
-    Card,
     message,
-    Form,
     Icon,
     Input,
     Button,
     DatePicker,
-    Select,
-    Alert,
 } from 'antd';
 
 //import store from '../../store/configureStore';
 // import validate from '../../utils/validate';
 
-const FormItem = Form.Item;
-const Option = Select.Option;
 const dateFormat = 'YYYY-MM-DD';
 
 class UpdateUserProfile extends Component {

@@ -1,3 +1,16 @@
+.query-layout {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 2rem;
+    &__header {
+        padding-right: 2rem;
+        border-right: 1px solid $color-grey-light-3;
+    }
+
+    &__cta {
+    }
+}
+
 .query-header {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -5,10 +18,7 @@
     align-items: center;
     border-bottom: 1px solid $color-grey-light-3;
 
-
-
     &__main {
-
     }
 
     &__stats {

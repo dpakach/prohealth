@@ -6,7 +6,7 @@ import QueryCta from './QueryCta';
 import {getUserInfo} from '../../utils/authUtils';
 import {getQueryItem} from '../../actions/queryActions';
 
-import {Row, Col, Card, message} from 'antd';
+import {message} from 'antd';
 
 class QueryDetailComponent extends React.Component {
     constructor(props) {
@@ -48,39 +48,25 @@ class QueryDetailComponent extends React.Component {
 
     render() {
         return (
-            <Card
-                style={{
-                    width: '100%',
-                    height: '100%'
-                }}
-                className="u-box-shadow-small">
-                <Row gutter={16}>
-                    <Col span={18}>
-                        <Row gutter={16}>
-                            <Col span={24}>
-                                <QueryHeader
-                                    user={this.state.user}
-                                    query={this.state.query}
-                                    updateQuery={this.updateQuery}
-                                    loading={this.state.loading}
-                                />
-                            </Col>
-                            <Col span={24}>
-                                <Chat />
-                            </Col>
-                        </Row>
-                    </Col>
-
-                    <Col span={6}>
-                        <QueryCta
-                            {...this.props}
-                            query={this.state.query}
-                            updateQuery={this.updateQuery}
-                            id={this.state.id}
-                        />
-                    </Col>
-                </Row>
-            </Card>
+            <div className="query-layout">
+                <div className="query-layout__header">
+                    <QueryHeader
+                        user={this.state.user}
+                        query={this.state.query}
+                        updateQuery={this.updateQuery}
+                        loading={this.state.loading}
+                    />
+                    <Chat />
+                </div>
+                <div className="query-layout__cta">
+                    <QueryCta
+                        {...this.props}
+                        query={this.state.query}
+                        updateQuery={this.updateQuery}
+                        id={this.state.id}
+                    />
+                </div>
+            </div>
         );
     }
 }
