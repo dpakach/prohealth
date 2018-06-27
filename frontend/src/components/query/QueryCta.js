@@ -8,7 +8,7 @@ import {getPescription} from '../../actions/queryActions';
 
 // TODO: doctor status from localstorage
 //
-const is_doctor = false;
+// const is_doctor = false;
 class QueryCta extends React.Component {
     state = {
         prescription: null,
@@ -34,6 +34,7 @@ class QueryCta extends React.Component {
         this.updatePescription();
     }
     render() {
+        const is_doctor = localStorage.getItem('is_doctor') === 'true';
         return (
             <div style={{height: '80vh', overflowY: 'scroll'}}>
                 {!is_doctor && <Actions {...this.props} />}

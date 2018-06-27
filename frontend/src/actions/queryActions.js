@@ -16,13 +16,20 @@ export const apiConfig = (type = 'get', data = null) => {
 // API request for creating new query
 //
 export const createQuery = form_data => {
-    return fetch(QueryUrls.USER_QUERY, apiConfig('post', form_data))
+    return fetch(QueryUrls.USER_QUERY, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${localStorage.getItem('token')}`,
+        },
+        body: form_data,
+    })
         .then(response => {
-            console.log(response)
             if (response.ok) {
                 return response.json();
             } else {
                 Promise.reject(Error('Unable to Create Query'));
+                console.log(response.json())
             }
         })
         .catch(e => {
@@ -35,7 +42,7 @@ export const createQuery = form_data => {
 export const getQueries = () => {
     return fetch(QueryUrls.USER_QUERY, apiConfig())
         .then(response => {
-            console.log(response)
+            console.log(response);
             if (response.ok) {
                 return response.json();
             } else {
@@ -64,8 +71,6 @@ export const getQueryItem = id => {
             Promise.reject(Error('failed to load resource'));
         });
 };
-
-
 
 // API request for updating one query item
 //
@@ -153,7 +158,6 @@ export const pescribe = (form_data, id) => {
         });
 };
 
-
 // API request for fetching prescription of a query
 //
 
@@ -185,4 +189,4 @@ export const deleteMedicine = (id, med_id) => {
         .catch(e => {
             Promise.reject(Error(e.message));
         });
-}
+};
