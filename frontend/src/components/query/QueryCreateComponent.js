@@ -1,14 +1,10 @@
 import React from 'react';
-import _ from 'lodash';
 
 import {createQuery} from '../../actions/queryActions';
 
 import {
     message,
-    Icon,
     Select,
-    Upload,
-    Modal,
 } from 'antd';
 
 // import validate from '../../utils/validate';
@@ -30,11 +26,7 @@ class QueryCreateComponent extends React.Component {
             weight_of_patient: '',
             height_of_patient: '',
             tag: '',
-
-            // image-upload stuff
-            previewVisible: false,
-            previewImage: '',
-            fileList: [],
+            file_related: null,
 
             formErrors: {},
             nonFieldErrors: '',
@@ -60,7 +52,10 @@ class QueryCreateComponent extends React.Component {
         this.setState({[name]: value});
     };
 
-    handleFileChange = ({fileList}) => this.setState({fileList});
+    handleFileChange = event => {
+        console.log(event.target.files[0]);
+        this.setState({file_related: event.target.files[0]});
+    };
 
     handleCheckbox = e => {
         console.log(e);
@@ -75,15 +70,16 @@ class QueryCreateComponent extends React.Component {
     //
     handleSubmit = event => {
         event.preventDefault();
-        const form_data = _.pick(this.state, [
-            'title_problem',
-            'description',
-            'name_of_patient',
-            'age_of_patient',
-            'weight_of_patient',
-            'height_of_patient',
-            'tag',
-        ]);
+        const form_data = new FormData();
+        form_data.append('file_related', this.state.file_related, this.state.file_related.name);
+        form_data.append('title_problem', this.state.title_problem);
+        form_data.append('description', this.state.description);
+        form_data.append('name_of_patient', this.state.name_of_patient);
+        form_data.append('age_of_patient', this.state.age_of_patient);
+        form_data.append('weight_of_patient', this.state.weight_of_patient);
+        form_data.append('height_of_patient', this.state.height_of_patient);
+        form_data.append('tag', this.state.tag);
+        console.log(form_data.entries());
         createQuery(form_data)
             .then(data => {
                 const id = data.id;
@@ -99,13 +95,6 @@ class QueryCreateComponent extends React.Component {
     }
 
     render() {
-        const {previewVisible, previewImage, fileList} = this.state;
-        const uploadButton = (
-            <div>
-                <Icon type="plus" />
-                <div className="ant-upload-text">Upload</div>
-            </div>
-        );
         return (
             <div className="section section--form section--form--wide">
                 <div className="card">
@@ -190,9 +179,15 @@ class QueryCreateComponent extends React.Component {
                         </div>
                         <div className="form__group">
                             <label>Attach a photo</label>
+
+                            <input
+                                type="file"
+                                onChange={this.handleFileChange}
+                            />
+
+                            {/*
                             <div className="clearfix">
                                 <Upload
-                                    action="//jsonplaceholder.typicode.com/posts/"
                                     listType="picture-card"
                                     fileList={fileList}
                                     onPreview={this.handlePreview}
@@ -210,6 +205,7 @@ class QueryCreateComponent extends React.Component {
                                     />
                                 </Modal>
                             </div>{' '}
+                                    */}
                         </div>
                     </form>
                     <button type="primary" className="btn">
