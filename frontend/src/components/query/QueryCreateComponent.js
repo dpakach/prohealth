@@ -36,6 +36,7 @@ class QueryCreateComponent extends React.Component {
             weight_of_patient: '',
             height_of_patient: '',
             tag: '',
+            file_related: null,
 
             // image-upload stuff
             previewVisible: false,
@@ -66,7 +67,10 @@ class QueryCreateComponent extends React.Component {
         this.setState({[name]: value});
     };
 
-    handleFileChange = ({fileList}) => this.setState({fileList});
+    handleFileChange = event => {
+        console.log(event.target.files[0]);
+        this.setState({file_related: event.target.files[0]});
+    };
 
     handleCheckbox = e => {
         console.log(e);
@@ -81,15 +85,16 @@ class QueryCreateComponent extends React.Component {
     //
     handleSubmit = event => {
         event.preventDefault();
-        const form_data = _.pick(this.state, [
-            'title_problem',
-            'description',
-            'name_of_patient',
-            'age_of_patient',
-            'weight_of_patient',
-            'height_of_patient',
-            'tag',
-        ]);
+        const form_data = new FormData();
+        form_data.append('file_related', this.state.file_related, this.state.file_related.name);
+        form_data.append('title_problem', this.state.title_problem);
+        form_data.append('description', this.state.description);
+        form_data.append('name_of_patient', this.state.name_of_patient);
+        form_data.append('age_of_patient', this.state.age_of_patient);
+        form_data.append('weight_of_patient', this.state.weight_of_patient);
+        form_data.append('height_of_patient', this.state.height_of_patient);
+        form_data.append('tag', this.state.tag);
+        console.log(form_data.entries());
         createQuery(form_data)
             .then(data => {
                 const id = data.id;
@@ -114,7 +119,7 @@ class QueryCreateComponent extends React.Component {
         );
         return (
             <div className="section section--form u-margin-top-small">
-                    <h1>Ask A Question</h1>
+                <h1>Ask A Question</h1>
                 {/*
                 <h1 className="heading-secondary u-margin-top-small">
                     {this.props.type == 'create' && <p>Ask A Question</p>}
@@ -207,9 +212,15 @@ class QueryCreateComponent extends React.Component {
                         </FormItem>
                         <FormItem>
                             <label>Attach a photo</label>
+
+                            <input
+                                type="file"
+                                onChange={this.handleFileChange}
+                            />
+
+                            {/*
                             <div className="clearfix">
                                 <Upload
-                                    action="//jsonplaceholder.typicode.com/posts/"
                                     listType="picture-card"
                                     fileList={fileList}
                                     onPreview={this.handlePreview}
@@ -227,6 +238,7 @@ class QueryCreateComponent extends React.Component {
                                     />
                                 </Modal>
                             </div>{' '}
+                                    */}
                         </FormItem>
 
                         <Button
