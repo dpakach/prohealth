@@ -13,6 +13,7 @@ import QueryCreateComponent from '../components/query/QueryCreateComponent';
 import QueryUpdateComponent from '../components/query/QueryUpdateComponent';
 import QueryDetailComponent from '../components/query/QueryDetailComponent';
 import MyQueriesComponent from '../components/query/MyQueriesComponent';
+import Notifications from '../components/Notifications';
 
 import UpdatePassword from '../components/auth/UpdatePassword';
 import ResetPassword from '../components/auth/ResetPassword';
@@ -98,9 +99,8 @@ class AppRouter extends React.Component {
                             auth={this.props.isAuthenticated}
                             component={UpdatePassword}
                         />
-                        <PrivateRoute
+                        <Route
                             path="/reset-password"
-                            auth={this.props.isAuthenticated}
                             component={ResetPassword}
                         />
                         <PrivateRoute
@@ -126,6 +126,11 @@ class AppRouter extends React.Component {
                             exact={true}
                         />
 
+                        <PrivateRoute
+                            path="/notifications"
+                            auth={this.props.isAuthenticated}
+                            component={Notifications}
+                        />
                         <PrivateRoute
                             path="/query/:id/edit"
                             auth={this.props.isAuthenticated}
