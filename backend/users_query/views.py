@@ -4,18 +4,23 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes
 
 from . models import UserQuery, Medicine, Appointment
 from . serializer import UserQuerySerializer, AppointmentSerializer, MedicineSerializer
-from . import permissions
+from . permissions import IsDoctorUser, UpdateOwnUserQuery
 from user_profile.models import User
 
 
 class UserQueryView(APIView):
 
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, UpdateOwnUserQuery,)
     @staticmethod
     def get(request):
-        queries = UserQuery.objects.all()
+        user = request.user
+        queries = UserQuery.objects.filter(user=user)
         if type(queries) == Response:
             return queries
         return Response(UserQuerySerializer(queries, many=True).data)
@@ -31,6 +36,9 @@ class UserQueryView(APIView):
 
 
 class UserQueryDetailView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, UpdateOwnUserQuery,)
+
     @staticmethod
     def get(request, query_id):
         queri = get_object_or_404(UserQuery, pk=query_id)
@@ -55,7 +63,7 @@ class UserQueryDetailView(APIView):
 
 
 class AppointmentView(APIView):
-
+    permission_classes = (IsAuthenticated, IsDoctorUser, )
     @staticmethod
     def get(request, query_id,**kwargs):
 
@@ -65,7 +73,6 @@ class AppointmentView(APIView):
     
     @staticmethod
     def post(request, query_id):
-
         query = get_object_or_404(UserQuery,pk=query_id)
         serializer = AppointmentSerializer(data=request.data, context = {'request':request})
         if serializer.is_valid():
@@ -102,7 +109,8 @@ class AppointmentDetailView(APIView):
         
 
 class PrescribeView(APIView):
-
+    authentication_classes = (TokenAuthentication,)
+    # permission_classes = (IsAuthenticated, IsDoctorUser,)
     @staticmethod
     def get(request, query_id):
 
@@ -111,13 +119,16 @@ class PrescribeView(APIView):
         return Response(MedicineSerializer(prescribe, many=True).data)
 
     @staticmethod
+    @permission_classes((IsAuthenticated, IsDoctorUser, ))
     def post(request, query_id):
+        user = request.user
         query = get_object_or_404(UserQuery,pk=query_id)
         serializer = MedicineSerializer(data=request.data, context = {'request':request})
-        if serializer.is_valid():
+        if serializer.is_valid() and user== user.is_doctor:
             serializer.save(query=query)
             return Response(MedicineSerializer(serializer.instance).data, status=201)
         return Response(serializer.errors, status=400)
+        
 
 
 class PrescribeDetailView(APIView):
