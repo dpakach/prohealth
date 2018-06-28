@@ -7,8 +7,8 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
 
-from . models import UserQuery, Medicine, Appointment
-from . serializer import UserQuerySerializer, AppointmentSerializer, MedicineSerializer
+from . models import UserQuery, Medicine, Appointment, Picture
+from . serializer import UserQuerySerializer, AppointmentSerializer, MedicineSerializer, PictureSerializer
 from . permissions import IsDoctorUser, UpdateOwnUserQuery
 from user_profile.models import User
 
@@ -145,3 +145,37 @@ class PrescribeDetailView(APIView):
         #     return Response(status=401)#unauthorized
         prescribe.delete()
         return Response(status=204)#no content
+
+
+class PictureView(APIView):
+
+    @staticmethod
+    def get(request,query_id):
+        query = get_object_or_404(UserQuery, pk=query_id)
+        files = get_object_or_404(Picture, query=query)
+        return Response(PictureSerializer(files, many=True).data)
+    
+    @staticmethod
+    def post(request, query_id):
+        query = get_object_or_404(UserQuery, pk = query_id)
+        serializer = PictureSerializer(data = request.data, context={'request':request})
+        if serializer.is_valid():
+            serializer.save(query=query)
+            return Response(PictureSerializer(serializer.instance).data, status=201)
+        return Response(serializer.errors, status=400)
+
+class PictureDetailView(APIView):
+
+    @staticmethod
+    def get(request, query_id, files_id):
+        files = get_object_or_404(Picture, pk=fiels_id)
+        return Response(PictureSerializer(files).data)
+    
+    @staticmethod
+    def delete(request, query_id, files_id):
+        query = get_object_or_404(UserQuery, pk = query_id)
+        files = Picture.objects.filter(pk=files_id)
+        if query.user != request.user:
+            return Response(status=401)
+        files.delete()
+        return Response(status=204)
