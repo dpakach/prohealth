@@ -65,6 +65,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     'user_profile.apps.UserProfileConfig',
     'users_query.apps.UsersQueryConfig',
+    'notifications.apps.NotificationsConfig',
 ]
 
 # MIDDLEWARE CONFIGURATION
