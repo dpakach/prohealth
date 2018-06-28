@@ -67,7 +67,7 @@ class Medicine(models.Model):
         return self.name_of_medicine
 
 
-class Picture(models.Model):
+class File(models.Model):
     file_related  = models.FileField(upload_to=get_file_path)
     date_uploaded = models.DateTimeField(auto_now_add=True)
     query = models.ForeignKey(UserQuery, on_delete=models.CASCADE)

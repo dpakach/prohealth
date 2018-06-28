@@ -6,9 +6,10 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
+from rest_framework.parsers import MultiPartParser, FormParser
 
-from . models import UserQuery, Medicine, Appointment, Picture
-from . serializer import UserQuerySerializer, AppointmentSerializer, MedicineSerializer, PictureSerializer
+from . models import UserQuery, Medicine, Appointment, File
+from . serializer import UserQuerySerializer, AppointmentSerializer, MedicineSerializer, FileSerializer
 from . permissions import IsDoctorUser, UpdateOwnUserQuery
 from user_profile.models import User
 
@@ -113,7 +114,6 @@ class PrescribeView(APIView):
     # permission_classes = (IsAuthenticated, IsDoctorUser,)
     @staticmethod
     def get(request, query_id):
-
         query = get_object_or_404(UserQuery,pk=query_id)
         prescribe =Medicine.objects.filter(query=query)
         return Response(MedicineSerializer(prescribe, many=True).data)
@@ -147,34 +147,35 @@ class PrescribeDetailView(APIView):
         return Response(status=204)#no content
 
 
-class PictureView(APIView):
+class FileView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
 
     @staticmethod
     def get(request,query_id):
         query = get_object_or_404(UserQuery, pk=query_id)
-        files = get_object_or_404(Picture, query=query)
-        return Response(PictureSerializer(files, many=True).data)
+        files = File.objects.filter(query=query)
+        return Response(FileSerializer(files, many=True).data)
     
     @staticmethod
     def post(request, query_id):
         query = get_object_or_404(UserQuery, pk = query_id)
-        serializer = PictureSerializer(data = request.data, context={'request':request})
+        serializer = FileSerializer(data = request.data, context={'request':request})
         if serializer.is_valid():
             serializer.save(query=query)
-            return Response(PictureSerializer(serializer.instance).data, status=201)
+            return Response(FileSerializer(serializer.instance).data, status=201)
         return Response(serializer.errors, status=400)
 
-class PictureDetailView(APIView):
+class FileDetailView(APIView):
 
     @staticmethod
     def get(request, query_id, files_id):
-        files = get_object_or_404(Picture, pk=fiels_id)
-        return Response(PictureSerializer(files).data)
+        files = get_object_or_404(File, pk=files_id)
+        return Response(FileSerializer(files).data)
     
     @staticmethod
     def delete(request, query_id, files_id):
         query = get_object_or_404(UserQuery, pk = query_id)
-        files = Picture.objects.filter(pk=files_id)
+        files = File.objects.filter(pk=files_id)
         if query.user != request.user:
             return Response(status=401)
         files.delete()
