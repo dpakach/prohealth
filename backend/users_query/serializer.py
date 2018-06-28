@@ -1,7 +1,7 @@
 from rest_framework import serializers, fields
 from rest_framework.serializers import PrimaryKeyRelatedField
 
-from . models import UserQuery, Medicine, Appointment, Picture
+from . models import UserQuery, Medicine, Appointment, File
 
 class UserQuerySerializer(serializers.ModelSerializer):
     """ helps to serialize the data realted to UserQuery Model"""
@@ -35,9 +35,9 @@ class AppointmentSerializer(serializers.ModelSerializer):
         read_only_fields = ('query',)
 
 
-class PictureSerializer(serializers.ModelSerializer):
+class FileSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = Picture
+        model = File
         fields = '__all__'
         read_only_fields = ('query',)
