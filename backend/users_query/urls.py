@@ -16,4 +16,3 @@ urlpatterns = [
     url(r'^query/(?P<query_id>[\d]+)/files/(?P<files_id>[\d]+)$',views.FileDetailView.as_view()),
 
 ]
-

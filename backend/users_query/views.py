@@ -10,21 +10,22 @@ from rest_framework.parsers import MultiPartParser, FormParser
 
 from . models import UserQuery, Medicine, Appointment, File
 from . serializer import UserQuerySerializer, AppointmentSerializer, MedicineSerializer, FileSerializer
-from . permissions import IsDoctorUser, UpdateOwnUserQuery
+from . permissions import IsDoctorUser, UpdateOwnUserQuery, IsResolved
 from user_profile.models import User
 
 
 class UserQueryView(APIView):
 
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated, UpdateOwnUserQuery,)
+    permission_classes = (IsAuthenticated, UpdateOwnUserQuery, IsResolved,)
     @staticmethod
-    def get(request):
+    def get(self,request, **kwargs):
         user = request.user
         queries = UserQuery.objects.filter(user=user)
         if type(queries) == Response:
             return queries
         return Response(UserQuerySerializer(queries, many=True).data)
+        
 
     @staticmethod
     def post(request):
