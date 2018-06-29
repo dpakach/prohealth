@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Notification
@@ -27,10 +27,26 @@ class NotificationView(APIView):
         notification.save()
         return Response('Notification Added.')
 
-@api_view(['GET', 'POST'])
+class NotificationDetailView(APIView):
+
+    @staticmethod
+    def get(request, notification_id):
+        notification = get_object_or_404(Notification, id=notification_id, user=request.user)
+        print(notification)
+        return Response(NotificationSerializer(notification).data)
+    
+
+@api_view(['GET'])
 def NotificationsReadView(request):
     notifications = Notification.objects.filter(user=request.user)
     for notification in notifications:
         notification.read_notification()
         notification.save()
     return Response('All notifications read.')
+
+@api_view(['GET'])
+def SingleNotificationsReadView(request, notification_id):
+    notification = get_object_or_404(Notification, id=notification_id, user=request.user)
+    notification.read_notification()
+    notification.save()
+    return Response('Notification read.')
