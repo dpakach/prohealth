@@ -6,6 +6,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.authentication import TokenAuthentication
 
 from . models import UserQuery, Medicine, Appointment, File
 from . serializer import UserQuerySerializer, AppointmentSerializer, MedicineSerializer, FileSerializer
