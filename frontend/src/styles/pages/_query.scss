@@ -1,6 +1,6 @@
 .query-layout {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto 20rem;
     grid-gap: 2rem;
     &__header {
         padding-right: 2rem;

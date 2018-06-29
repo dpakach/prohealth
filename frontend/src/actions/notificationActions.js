@@ -15,9 +15,8 @@ export const apiConfig = (type = 'get', data = null) => {
 
 
 export const getNotifications = () => {
-    return fetch(NotificationUrls.USER_QUERY, apiConfig())
+    return fetch(NotificationUrls.NOTIFICATIONS, apiConfig())
         .then(response => {
-            console.log(response);
             if (response.ok) {
                 return response.json();
             } else {
@@ -32,12 +31,14 @@ export const getNotifications = () => {
 };
 
 export const readAllNotifications = () => {
+    console.log(NotificationUrls)
     return fetch(NotificationUrls.READ_ALL_NOTIFICATIONS, apiConfig())
         .then(response => {
+            console.log(response)
             if (response.ok) {
                 return;
             } else {
-                Promise.reject(Error('Unable to Create Query'));
+                Promise.reject(Error('cannot read notifications'));
             }
         })
         .catch(e => {

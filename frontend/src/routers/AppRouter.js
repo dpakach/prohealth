@@ -20,7 +20,10 @@ import Profile from '../components/auth/Profile';
 import Sidebar from '../components/Sidebar';
 
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+import proptypes from 'prop-types';
+
+import RequireAuth from './RequireAuth';
+import RequireNoAuth from './RequireNoAuth';
 
 const PrivateRoute = ({component: Component, auth, ...rest}) => {
     if (!auth) message.error('you must be logged in');
@@ -79,14 +82,20 @@ class AppRouter extends React.Component {
 
                                 <Route
                                     path="/user/signup"
-                                    render={props => {
+                                    component={RequireNoAuth(props => {
                                         return (
                                             <SignupComponent
                                                 {...props}
                                                 dispatch={dispatch}
                                             />
                                         );
-                                    }}
+                                    })}
+                                />
+
+                                <Route
+                                    path="/reset-password"
+                                    auth={this.props.isAuthenticated}
+                                    component={ResetPassword}
                                 />
 
                                 {/*
@@ -102,14 +111,9 @@ class AppRouter extends React.Component {
                                     component={UpdatePassword}
                                 />
                                 <PrivateRoute
-                                    path="/reset-password"
-                                    auth={this.props.isAuthenticated}
-                                    component={ResetPassword}
-                                />
-                                <PrivateRoute
                                     path="/query"
                                     auth={this.props.isAuthenticated}
-                                    component={MyQueriesComponent}
+                                    component={RequireAuth(MyQueriesComponent)}
                                     exact={true}
                                 />
                                 <PrivateRoute
