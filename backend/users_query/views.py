@@ -17,15 +17,14 @@ from user_profile.models import User
 class UserQueryView(APIView):
 
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated, UpdateOwnUserQuery, IsResolved,)
+    permission_classes = (IsAuthenticated, UpdateOwnUserQuery, )
     @staticmethod
-    def get(self,request, **kwargs):
+    def get(request):
         user = request.user
         queries = UserQuery.objects.filter(user=user)
         if type(queries) == Response:
             return queries
         return Response(UserQuerySerializer(queries, many=True).data)
-        
 
     @staticmethod
     def post(request):
