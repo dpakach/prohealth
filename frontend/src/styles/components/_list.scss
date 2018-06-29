@@ -1,16 +1,23 @@
 .list-item {
     &:not(:last-child) {
-        border-bottom: 1px solid $color-grey-light-3;
     }
     padding: 0.5rem 0;
     transition: all 0.3s;
     // background-color: orangered;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem auto;
 
     &__title {
         font-weight: 700;
+        color: rgba($color-tertiary-light, 0.7);
     }
+
     &__description {
+        color: $color-grey-light-3;
     }
+
     &__action {
         border-top: 1px solid $color-grey-light-3;
         display: grid;
@@ -23,14 +30,28 @@
         &--icon {
             transition: all 0.3s;
             cursor: pointer;
+            padding: .7rem .5rem .2rem .5rem;
+            border-radius: 2px;
             &:hover {
                 color: $color-tertiary-light;
+                background: $color-grey-light-3;
             }
         }
     }
 
-    &:hover {
-        background-color: rgba($color-grey-light-3, 0.3);
+    &--notification{
+        padding: .5rem;
+        transition: all .3s;
+
+        &:hover {
+            border: 1px solid rgba($color-tertiary-light, .5);
+            background: rgba($color-tertiary-light, .05)
+        }
+    }
+
+    &--selected {
+        padding: .5rem;
+        background: rgba($color-tertiary-light, 0.1);
     }
 }
 
@@ -52,4 +73,21 @@
         padding-left: 1rem;
         padding-right: 1rem;
     }
+}
+
+.icon{
+    &--badge{
+    }
+}
+
+.badge {
+    display: inline;
+    position: relative;
+    background: orangered;
+    color: white;
+    font-weight: 700;
+    padding: .1rem .3rem .2rem .3rem;
+    border-radius: 5rem;
+    top: 0;
+    right: 0;
 }

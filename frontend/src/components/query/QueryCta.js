@@ -44,6 +44,7 @@ class QueryCta extends React.Component {
                     updatePescription={this.updatePescription}
                     loading={this.state.loading}
                     id={this.props.id}
+                    is_doctor={is_doctor}
                 />
                 {is_doctor && (
                     <PrescriptionForm

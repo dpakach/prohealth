@@ -6,7 +6,7 @@ import {deleteMedicine} from '../../actions/queryActions';
 const Prescription = props => {
     const deleteButton = id => {
         // TODO: change content based on doctor status
-        if (false) {
+        if (props.is_doctor) {
             return (
                 <a
                     type="danger"

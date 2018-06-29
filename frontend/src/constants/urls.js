@@ -17,7 +17,6 @@ export const QueryUrls = {
 }
 
 export const NotificationUrls = {
-    NOTIFICATIONS: `${ROOT_URL}/api/notifications`,
-    READ_ALL_NOTIFICATIONOS: `${ROOT_URL}/api/notifications/readall`,
-
+    NOTIFICATIONS: `${ROOT_URL}/api/notifications/`,
+    READ_ALL_NOTIFICATIONS: `${ROOT_URL}/api/notifications/read_all/`,
 }

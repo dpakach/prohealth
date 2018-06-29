@@ -34,7 +34,6 @@ class Appointment extends React.Component {
     render() {
         // TODO: doctor status form localstorage
         const is_doctor = false;
-        console.log(this.state.appointment);
         return (
             <div>
                 {this.state.appointment && (
