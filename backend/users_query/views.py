@@ -77,12 +77,8 @@ class UserQueryDetailView(APIView):
 
 
 class AppointmentView(APIView):
-<<<<<<< HEAD
-    permission_classes = (IsAuthenticated, IsDoctorUser, )
-=======
     serializer_class = AppointmentSerializer
 
->>>>>>> origin
     @staticmethod
     def get(request, query_id,**kwargs):
 
@@ -137,13 +133,8 @@ class AppointmentDetailView(APIView):
         
 
 class PrescribeView(APIView):
-<<<<<<< HEAD
-    authentication_classes = (TokenAuthentication,)
-    # permission_classes = (IsAuthenticated, IsDoctorUser,)
-=======
     serializer_class = MedicineSerializer
 
->>>>>>> origin
     @staticmethod
     def get(request, query_id):
         query = get_object_or_404(UserQuery,pk=query_id)
