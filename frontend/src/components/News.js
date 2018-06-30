@@ -63,7 +63,7 @@ class News extends React.Component {
                                     </p>
                                     <p>{item.source.name}</p>
                                     <p>{item.publishedAt}</p>
-                                    <a herf={item.url}>Read More</a>
+                                    <a target="_blank" href={item.url}>Read More</a>
                                 </div>
                             </div>
                         ))}
