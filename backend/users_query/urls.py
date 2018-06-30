@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django.conf.urls import include
 from rest_framework.routers import DefaultRouter
 
-from . import views
+from users_query import views
 
 
 urlpatterns = [
@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^query/(?P<query_id>[\d]+)/prescribe/(?P<prescribe_id>[\d]+)$',views.PrescribeDetailView.as_view()),
     url(r'^query/(?P<query_id>[\d]+)/appoint$',views.AppointmentView.as_view()),
     url(r'^query/(?P<query_id>[\d]+)/appoint/1$',views.AppointmentDetailView.as_view()),
+    url(r'^query/(?P<query_id>[\d]+)/files$',views.FileView.as_view()),
+    url(r'^query/(?P<query_id>[\d]+)/files/(?P<files_id>[\d]+)$',views.FileDetailView.as_view()),
 
 ]
-

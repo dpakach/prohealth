@@ -11,6 +11,7 @@ def get_file_path(instance, filename):
     return os.path.join('user_query', filename)
 
 
+
 class UserQuery(models.Model):
     """ class used to create users health related queries"""
 
@@ -26,7 +27,7 @@ class UserQuery(models.Model):
     weight_of_patient = models.SmallIntegerField(blank = True, null=True)
     title_problem = models.CharField(max_length = 510)
     description  = models.TextField()
-    file_related = models.FileField(blank=True, upload_to=get_file_path, null=True)
+    # file_related = models.FileField(blank=True, upload_to=get_file_path, null=True)
     tag = models.CharField(max_length = 1, choices = TAG_CHOICES)
     date_of_submission = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -64,3 +65,9 @@ class Medicine(models.Model):
 
     def __str__(self):
         return self.name_of_medicine
+
+
+class File(models.Model):
+    file_related  = models.FileField(upload_to=get_file_path)
+    date_uploaded = models.DateTimeField(auto_now_add=True)
+    query = models.ForeignKey(UserQuery, on_delete=models.CASCADE)

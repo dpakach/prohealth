@@ -75,3 +75,11 @@ class IsPatientUser(permissions.BasePermission):
     """
     def has_permission(self, request, view):
         return request.user and request.user.is_patient
+
+class IsResolved(permissions.BasePermission):
+
+    def has_permission(self, request, view):
+        user = request.user
+        userquery = UserQuery.objects.filter(user=user)
+        if userquery.resolved == True:
+            return False
