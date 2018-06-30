@@ -8,6 +8,8 @@ import {
     getNotifications,
     readAllNotifications,
 } from './../actions/notificationActions';
+import {logoutUser} from '../actions/authActions';
+import history from '../utils/historyUtils';
 
 class QuickLinks extends React.Component {
     constructor(props) {
@@ -39,14 +41,18 @@ class QuickLinks extends React.Component {
             : 'list-item list-item--notification list-item--selected';
     };
 
+    logout = () => {
+        this.props.dispatch(logoutUser(history));
+    };
+
     componentDidMount() {
         this.listNotifications();
     }
 
     render() {
+        console.log(this.props);
         return (
             <div className="sidebar">
-
                 {/* Show Sidebar icons only if user is Authenticated */}
 
                 {this.props.isAuthenticated && (
@@ -54,7 +60,9 @@ class QuickLinks extends React.Component {
                         <div className="sidebar__head--icon sidebar__head--icon--notification">
                             <span className="icon--badge">
                                 <Link to="/notifications">
-                                <i className=" material-icons">notifications</i>
+                                    <i className=" material-icons">
+                                        notifications
+                                    </i>
                                 </Link>
 
                                 <span className="badge">
@@ -83,11 +91,8 @@ class QuickLinks extends React.Component {
                                     {this.state.notifications &&
                                         this.state.notifications.map(n => (
                                             <div
-                                                className={this.getClassName(
-                                                    n,
-                                                )}
-                                                key={n.id}
-                                            >
+                                                className={this.getClassName(n)}
+                                                key={n.id}>
                                                 <div className="list-item__title">
                                                     {n.title}
                                                 </div>
@@ -109,11 +114,16 @@ class QuickLinks extends React.Component {
                     </div>
                 )}
 
-
                 <div className="sidebar__links">
                     <Link to="/query/create" className="sidebar__link">
                         <i className="sidebar__icon icon ion-md-quote" />
                         <div className="sidebar__text">Ask A Question</div>
+                    </Link>
+                    <Link className="sidebar__link" to="/news">
+                        <i className="sidebar__icon material-icons">
+                            live_tv
+                        </i>
+                        <div className="sidebar__text">News</div>
                     </Link>
                     <div className="sidebar__link">
                         <i className="sidebar__icon material-icons">
@@ -129,8 +139,16 @@ class QuickLinks extends React.Component {
                         <i className="sidebar__icon icon ion-ios-paper-plane" />
                         <div className="sidebar__text">Contact</div>
                     </div>
+                    {this.props.isAuthenticated && (
+                        <Link
+                            className="sidebar__link"
+                            to="/"
+                            onClick={this.logout}>
+                            <i className="sidebar__icon icon ion-md-log-out" />
+                            <div className="sidebar__text">Logout</div>
+                        </Link>
+                    )}
                 </div>
-
             </div>
         );
     }

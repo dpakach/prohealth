@@ -43,7 +43,6 @@ class Header extends React.Component {
                 this.renderLinkItem('/feature', 'Feature', 'mail'),
                 this.renderLinkItem('/query', 'Query', 'message'),
                 this.renderLinkItem('/profile/user', 'Profile', 'profile'),
-                this.renderLinkItem('/', 'Logout', 'Logout', this.logout),
             ];
         } else {
             return [
