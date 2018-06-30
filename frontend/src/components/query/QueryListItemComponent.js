@@ -45,14 +45,16 @@ const QueryListItemComponent = props => {
 
                 <div className="list-item__content">
                     {props.item.description}
-                    <div>
-                        Adipisicing voluptatibus maxime praesentium eum sequi.
-                        Voluptatibus sunt cum provident nisi iure Amet autem ut
-                        nulla enim iste? Iste perspiciatis quod ipsum et amet
-                        Aliquid numquam id dolorem recusandae expedita?
-                    </div>
-                    <h4>Posted by</h4>
-
+                    {props.header && (
+                        <div>
+                            <h4>Posted by</h4>
+                            <p>
+                                {props.user.first_name +
+                                    ' ' +
+                                    props.user.last_name}
+                            </p>
+                        </div>
+                    )}
                     <h4>Created Date</h4>
                     <p>{props.item.date_of_submission}</p>
                 </div>

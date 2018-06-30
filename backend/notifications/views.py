@@ -50,3 +50,4 @@ def SingleNotificationsReadView(request, notification_id):
     notification.read_notification()
     notification.save()
     return Response('Notification read.')
+

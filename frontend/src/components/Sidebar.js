@@ -22,7 +22,7 @@ class QuickLinks extends React.Component {
         readAllNotifications().then(data => {
             console.log(data);
         });
-        this.forceUpdate();
+        this.listNotifications();
     };
 
     listNotifications = () => {
@@ -53,7 +53,9 @@ class QuickLinks extends React.Component {
                     <div className="sidebar__head">
                         <div className="sidebar__head--icon sidebar__head--icon--notification">
                             <span className="icon--badge">
+                                <Link to="/notifications">
                                 <i className=" material-icons">notifications</i>
+                                </Link>
 
                                 <span className="badge">
                                     {this.state.notifications &&

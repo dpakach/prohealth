@@ -48,7 +48,6 @@ class QueryDetailComponent extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <div className="query-layout">
                 <div className="query-layout__header">
@@ -66,6 +65,7 @@ class QueryDetailComponent extends React.Component {
                         query={this.state.query}
                         updateQuery={this.updateQuery}
                         id={this.state.id}
+                        user={this.state.user}
                     />
                 </div>
             </div>
