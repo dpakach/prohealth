@@ -32,13 +32,16 @@ class Appointment extends React.Component {
     }
 
     render() {
-        // TODO: doctor status form localstorage
-        const is_doctor = false;
+        const is_doctor = localStorage.getItem('is_doctor') === 'true';
+        const user_id = localStorage.getItem('user_id');
+
+        console.log(this.props.user.id);
+        console.log(user_id);
         return (
             <div>
+                <h3>Appointment</h3>
                 {this.state.appointment && (
                     <div>
-                        <h3>Appointment</h3>
                         <div className="prescription">
                             {this.state.loading && (
                                 <div
@@ -109,12 +112,19 @@ class Appointment extends React.Component {
                         </div>
                     </div>
                 )}
-                {!this.state.appointment && is_doctor && (
-                    <AppointmentForm
-                        update={this.updateAppointment}
-                        {...this.props}
-                    />
+                {!this.state.appointment && (
+                    <div className="prescription">
+                        <p style={{textAlign: 'center'}}>No Appointment yet</p>
+                    </div>
                 )}
+                {!this.state.appointment &&
+                    !(user_id === this.props.user.id) &&
+                    is_doctor && (
+                        <AppointmentForm
+                            update={this.updateAppointment}
+                            {...this.props}
+                        />
+                    )}
             </div>
         );
     }

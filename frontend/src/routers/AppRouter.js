@@ -19,6 +19,7 @@ import UpdatePassword from '../components/auth/UpdatePassword';
 import ResetPassword from '../components/auth/ResetPassword';
 import Profile from '../components/auth/Profile';
 import Sidebar from '../components/Sidebar';
+import NotificationsPage from '../components/notifications/NotificationsPage';
 
 import {connect} from 'react-redux';
 import proptypes from 'prop-types';
@@ -150,7 +151,13 @@ class AppRouter extends React.Component {
                                     path="/feature"
                                     component={FeaturePage}
                                 />
-                                <Route component={NotFoundPage} />
+
+                                <PrivateRoute
+                                    path="/notifications"
+                                    auth={this.props.isAuthenticated}
+                                    component={NotificationsPage}
+                                />
+
                             </Switch>
                         </div>
                     </div>

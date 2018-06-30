@@ -45,7 +45,6 @@ const QueryHeader = props => {
                                         <div className="list-item__title">
                                             {s.title}
                                         </div>
-
                                         <div className="list-item__content">
                                             {s.value}
                                         </div>

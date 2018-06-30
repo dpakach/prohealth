@@ -61,6 +61,7 @@ class MyQueriesComponent extends React.Component {
                                 updateQueries={this.updateQueries}
                                 key={item.id}
                                 item={item}
+                                header={false}
                                 loading={this.state.loading}
                             />
                         ))}

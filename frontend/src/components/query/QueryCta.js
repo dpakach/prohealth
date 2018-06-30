@@ -35,6 +35,7 @@ class QueryCta extends React.Component {
     }
     render() {
         const is_doctor = localStorage.getItem('is_doctor') === 'true';
+        const user_id = localStorage.getItem('user_id');
         return (
             <div style={{height: '80vh', overflowY: 'scroll'}}>
                 {!is_doctor && <Actions {...this.props} />}
@@ -43,16 +44,14 @@ class QueryCta extends React.Component {
                     prescription={this.state.prescription}
                     updatePescription={this.updatePescription}
                     loading={this.state.loading}
-                    id={this.props.id}
                     is_doctor={is_doctor}
                 />
-                {is_doctor && (
+                {is_doctor &&  !(this.props.user.id == user_id) && (
                     <PrescriptionForm
                         {...this.props}
                         prescription={this.state.prescription}
                         updatePescription={this.updatePescription}
                         loading={this.state.loading}
-                        id={this.props.id}
                     />
                 )}
                 <Appointment {...this.props} id={this.props.id} />
