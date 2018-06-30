@@ -2,6 +2,7 @@ import React from 'react';
 import {Icon} from 'antd';
 
 import QueryListItemComponent from './QueryListItemComponent';
+import Photos from './Photos';
 
 const QueryHeader = props => {
     // console.log(props);
@@ -26,15 +27,21 @@ const QueryHeader = props => {
                             key={props.query.id}
                             item={props.query}
                             loading={props.loading}
+                            header={true}
+                            user={props.user}
                         />
                     </div>
 
                     <div className="query-header__stats">
-                        <h2 className="query-header__stats--title">User Stats</h2>
+                        <h2 className="query-header__stats--title">
+                            User Stats
+                        </h2>
                         <div className="user-stats-list">
                             {user_stats.map(s => {
                                 return (
-                                    <div key={s.title} className="list-item user-stats-list__item">
+                                    <div
+                                        key={s.title}
+                                        className="list-item user-stats-list__item">
                                         <div className="list-item__title">
                                             {s.title}
                                         </div>
@@ -47,6 +54,7 @@ const QueryHeader = props => {
                             })}
                         </div>
                     </div>
+                    <Photos id={props.query.id} />
                 </div>
             )}
         </div>

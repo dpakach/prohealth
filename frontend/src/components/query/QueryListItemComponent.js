@@ -27,39 +27,45 @@ const QueryListItemComponent = props => {
     );
 
     const detailsButton = (
-        <div
-            className="list-item__action--icon">
-                        <Link to={`/query/${props.item.id}`}>
-            <i className=" material-icons">more</i>
-                        </Link>
+        <div className="list-item__action--icon">
+            <Link to={`/query/${props.item.id}`}>
+                <i className=" material-icons">more</i>
+            </Link>
         </div>
     );
 
-
     return (
+        <div>
             <div className="list-item query-list__item">
                 <div className="list-item__title">
-                        <Link to={`/query/${props.item.id}`}>
-                            {props.item.title_problem}
-                        </Link>
-                    </div>
+                    <Link to={`/query/${props.item.id}`}>
+                        {props.item.title_problem}
+                    </Link>
+                </div>
 
                 <div className="list-item__content">
                     {props.item.description}
                     <div>
-                        Adipisicing voluptatibus maxime praesentium eum sequi. Voluptatibus sunt cum provident nisi iure Amet autem ut nulla enim iste? Iste perspiciatis quod ipsum et amet Aliquid numquam id dolorem recusandae expedita?
+                        Adipisicing voluptatibus maxime praesentium eum sequi.
+                        Voluptatibus sunt cum provident nisi iure Amet autem ut
+                        nulla enim iste? Iste perspiciatis quod ipsum et amet
+                        Aliquid numquam id dolorem recusandae expedita?
                     </div>
-                    
+                    <h4>Posted by</h4>
+
                     <h4>Created Date</h4>
                     <p>{props.item.date_of_submission}</p>
                 </div>
 
-                <div className="list-item__action">
-                    {detailsButton}
-                    {editButton}
-                    {deleteButton}
-                </div>
+                {!props.header && (
+                    <div className="list-item__action">
+                        {detailsButton}
+                        {editButton}
+                        {deleteButton}
+                    </div>
+                )}
             </div>
+        </div>
     );
 };
 

@@ -16,14 +16,7 @@ export const apiConfig = (type = 'get', data = null) => {
 // API request for creating new query
 //
 export const createQuery = form_data => {
-    return fetch(QueryUrls.USER_QUERY, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Token ${localStorage.getItem('token')}`,
-        },
-        body: form_data,
-    })
+    return fetch(QueryUrls.USER_QUERY, apiConfig('post', form_data))
         .then(response => {
             if (response.ok) {
                 return response.json();
@@ -42,7 +35,6 @@ export const createQuery = form_data => {
 export const getQueries = () => {
     return fetch(QueryUrls.USER_QUERY, apiConfig())
         .then(response => {
-            console.log(response);
             if (response.ok) {
                 return response.json();
             } else {
@@ -190,3 +182,41 @@ export const deleteMedicine = (id, med_id) => {
             Promise.reject(Error(e.message));
         });
 };
+
+
+export const uploadFile = (id, form_data) => {
+    return fetch(QueryUrls.FILES(id), {
+        method: 'POST',
+        headers: {
+            Authorization: `Token ${localStorage.getItem('token')}`,
+        },
+        body: form_data,
+    })
+        .then(response => {
+            if (response.ok) {
+                return;
+            } else {
+                Promise.reject(Error('unable to upload file'));
+            }
+        })
+        .catch(e => {
+            Promise.reject(Error(e.message));
+        });
+}
+
+export const getFile = (id) => {
+    return fetch(QueryUrls.FILES(id), apiConfig())
+        .then(response => {
+            console.log(response);
+            if (response.ok) {
+                return;
+            } else {
+                Promise.reject(Error('unable to upload file'));
+            }
+        })
+        .catch(e => {
+            Promise.reject(Error(e.message));
+        });
+
+
+}

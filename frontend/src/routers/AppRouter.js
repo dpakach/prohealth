@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 import {message} from 'antd';

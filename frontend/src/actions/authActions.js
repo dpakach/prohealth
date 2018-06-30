@@ -192,3 +192,21 @@ export function logoutUser(history) {
         });
     };
 }
+
+export const getUserById = (id) => {
+    return fetch(AuthUrls.USER + id, {
+        method: 'GET',
+        headers: {
+            Authorization: `Token ${localStorage.getItem('token')}`
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json('Cannot get User with id ' + id)
+            }
+        })
+        .catch(e => {
+            throw Promise.reject(e.message)
+        }) 
+
+}
