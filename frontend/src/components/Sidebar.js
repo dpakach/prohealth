@@ -27,7 +27,6 @@ class QuickLinks extends React.Component {
 
     listNotifications = () => {
         getNotifications().then(data => {
-            console.log(data);
             this.setState({
                 notifications: data,
             });
@@ -45,7 +44,6 @@ class QuickLinks extends React.Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <div className="sidebar">
 
@@ -85,7 +83,9 @@ class QuickLinks extends React.Component {
                                             <div
                                                 className={this.getClassName(
                                                     n,
-                                                )}>
+                                                )}
+                                                key={n.id}
+                                            >
                                                 <div className="list-item__title">
                                                     {n.title}
                                                 </div>

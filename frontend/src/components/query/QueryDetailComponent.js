@@ -8,6 +8,7 @@ import {getQueryItem} from '../../actions/queryActions';
 
 import {message} from 'antd';
 
+
 class QueryDetailComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -47,6 +48,7 @@ class QueryDetailComponent extends React.Component {
     }
 
     render() {
+        console.log(this.state)
         return (
             <div className="query-layout">
                 <div className="query-layout__header">

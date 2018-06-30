@@ -54,7 +54,6 @@ class Header extends React.Component {
     };
 
     render() {
-        console.log(window.location.pathname.split('/')[1]);
         return (
             <nav className="nav">
                 <div className="nav__logo-box">
