@@ -34,7 +34,7 @@
             border-radius: 2px;
             &:hover {
                 color: $color-tertiary-light;
-                background: $color-grey-light-3;
+                background: rgba($color-grey-light-3, .5);
             }
         }
     }
@@ -90,4 +90,48 @@
     border-radius: 5rem;
     top: 0;
     right: 0;
+}
+
+
+.news {
+    display: grid;
+    grid-template-columns: minmax(20rem, auto) 1fr;
+    padding: 0;
+    border: 1px solid $color-grey-light-3;
+
+    &__header {
+        height: 20rem;
+        &__image {
+            height: 20rem;
+
+        }
+    }
+
+    &__body {
+
+        padding: 1rem;
+
+
+    }
+
+    &__action {
+        border-top: 1px solid $color-grey-light-3;
+        display: grid;
+        justify-content: space-around;
+        align-items: center;
+        grid-template-columns: auto auto auto;
+        padding-top: 0.5rem;
+        margin-top: 0.5rem;
+
+        &--icon {
+            transition: all 0.3s;
+            cursor: pointer;
+            padding: .7rem .5rem .2rem .5rem;
+            border-radius: 2px;
+            &:hover {
+                color: $color-tertiary-light;
+                background: $color-grey-light-3;
+            }
+        }
+    }
 }
