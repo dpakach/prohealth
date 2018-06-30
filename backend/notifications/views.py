@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from .models import Notification
 from rest_framework import permissions
 from .serializers import NotificationSerializer
+from users_query.models import UserQuery
 from rest_framework.decorators import api_view
 
 class NotificationView(APIView):
@@ -51,3 +52,10 @@ def SingleNotificationsReadView(request, notification_id):
     notification.save()
     return Response('Notification read.')
 
+@api_view(['GET'])
+def QueryNotificationsReadView(request, query_id):
+    notifications = Notification.objects.filter(query=get_object_or_404(UserQuery, id=query_id))
+    for notification in notifications:
+        notification.read_notification()
+        notification.save()
+    return Response('Notifications for given query read.')
