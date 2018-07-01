@@ -5,6 +5,7 @@ import QueryCta from './QueryCta';
 
 import {getUserInfo} from '../../utils/authUtils';
 import {getQueryItem} from '../../actions/queryActions';
+import {readNotificationsByQuery} from '../../actions/notificationActions';
 
 import {message} from 'antd';
 
@@ -45,6 +46,7 @@ class QueryDetailComponent extends React.Component {
 
     componentDidMount() {
         this.updateQuery();
+        readNotificationsByQuery(this.state.id);
     }
 
     render() {

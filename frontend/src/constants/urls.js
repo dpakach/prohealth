@@ -20,5 +20,6 @@ export const QueryUrls = {
 export const NotificationUrls = {
     NOTIFICATIONS: `${ROOT_URL}/api/notifications/`,
     READ_ALL_NOTIFICATIONS: `${ROOT_URL}/api/notifications/read_all/`,
+    READ_BY_QUERY: (id) =>  `${ROOT_URL}/api/notifications/read_all/${id}`,
 }
 

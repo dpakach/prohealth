@@ -46,5 +46,20 @@ export const readAllNotifications = () => {
                 Error('An error occured while fetching the queries'),
             );
         });
+}
 
+export const readNotificationsByQuery = (id) => {
+    fetch(NotificationUrls.READ_BY_QUERY(id), apiConfig())
+        .then(response =>{
+            if (response.ok) {
+                return;
+            } else {
+                Promise.reject(Error('cannot read notifications'));
+            }
+        })
+        .catch(e => {
+            Promise.reject(
+                Error('An error occured while fetching the queries'),
+            );
+        });
 }
