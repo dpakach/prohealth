@@ -1,4 +1,4 @@
-import {QueryUrls} from '../constants/urls';
+import {QueryUrls, NotificationUrls} from '../constants/urls';
 
 // return configuration for api according to data and type of request
 //
