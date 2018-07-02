@@ -1,11 +1,10 @@
 import React from 'react';
-import {Icon} from 'antd';
+import {GridLoader} from 'react-spinners';
 
 import QueryListItemComponent from './QueryListItemComponent';
 import Photos from './Photos';
 
 const QueryHeader = props => {
-    // console.log(props);
     const user_stats = [
         {title: 'Name', value: props.query.name_of_patient},
         {title: 'Age', value: props.query.age_of_patient},
@@ -14,11 +13,13 @@ const QueryHeader = props => {
     ];
     return (
         <div>
-            {props.loading && (
-                <div style={{width: '100%', textAlign: 'center'}}>
-                    <Icon style={{fontSize: '5rem'}} type="loading" />
-                </div>
-            )}
+            <div style={{width: '100%', textAlign: 'center'}}>
+                <GridLoader
+                    style={{display: 'inline-block'}}
+                    color={'#3772ff'}
+                    loading={props.loading}
+                />
+            </div>
             {!props.loading && (
                 <div className="query-header">
                     <div className="query-header__main">
@@ -53,7 +54,7 @@ const QueryHeader = props => {
                             })}
                         </div>
                     </div>
-                    <Photos id={props.query.id} />
+                    {props.query.id && <Photos id={props.query.id} />}
                 </div>
             )}
         </div>
