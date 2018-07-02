@@ -10,17 +10,17 @@ from .serializers import NotificationSerializer
 from users_query.models import UserQuery
 from rest_framework.decorators import api_view
 
-def notification_age(created_date):
-    now = datetime.now(timezone.utc)
-    difference = now - created_date
-    try:
-        difference = now - created_date
-    except:
-        return created_date
+# def notification_age(created_date):
+#     now = datetime.now(timezone.utc)
+#     difference = now - created_date
+#     try:
+#         difference = now - created_date
+#     except:
+#         return created_date
 
-    if difference <= timedelta(minutes=1):
-        return 'just now'
-    return '%(time)s ago' % {'time': timesince(created_date).split(', ')[0]}
+#     if difference <= timedelta(minutes=1):
+#         return 'just now'
+#     return '%(time)s ago' % {'time': timesince(created_date).split(', ')[0]}
 
 class NotificationView(APIView):
     serializer_class = NotificationSerializer
@@ -80,4 +80,5 @@ def QueryNotificationsReadView(request, query_id):
 def get_notification_age(request, notification_id):
     notification = get_object_or_404(Notification, id=notification_id)
     created_date = notification.created
-    return Response('{}'.format(notification_age(created_date)))
+    # return Response('{}'.format(notification_age(created_date)))
+    return Response(created_date)
