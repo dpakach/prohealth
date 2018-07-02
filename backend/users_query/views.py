@@ -28,7 +28,7 @@ class UserQueryView(APIView):
         if type(queries) == Response:
             return queries
         return Response(UserQuerySerializer(queries, many=True).data)
-
+        
     @staticmethod
     def post(request):
         serializer = UserQuerySerializer(data=request.data, context = {'request':request})
@@ -212,3 +212,31 @@ class FileDetailView(APIView):
             return Response(status=401)
         files.delete()
         return Response(status=204)
+
+
+class TakenView(APIView):
+
+    @staticmethod
+    def post(request, query_id):
+        query = UserQuery.objects.get(pk=query_id)
+        user = request.user
+        if user.is_doctor and query.taken==False:
+            query.taken = True
+            query.taken_by = user
+            query.save()
+            return Response(status=200)
+        else:
+            return Response(status=503)
+
+class ResolveView(APIView):
+
+    @staticmethod
+    def post(request, query_id):
+        query = UserQuery.objects.get(pk=query_id)
+        user = request.user
+        if user==query.user and query.resolved==False:
+            query.resolved = True
+            query.save()
+            return Response(status=200)
+        else:
+            return Response(status=503)
