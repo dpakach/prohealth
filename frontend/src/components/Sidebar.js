@@ -50,6 +50,7 @@ class QuickLinks extends React.Component {
     }
 
     render() {
+        console.log(this.state.notifications)
         return (
             <div className="sidebar">
                 {/* Show Sidebar icons only if user is Authenticated */}
@@ -102,6 +103,7 @@ class QuickLinks extends React.Component {
                                                 <Link to={`/query/${n.query}`}>
                                                     view details
                                                 </Link>
+                                                <span style={{float:'right'}}>{n.created_at}</span>
                                             </div>
                                         ))}
                                 </div>

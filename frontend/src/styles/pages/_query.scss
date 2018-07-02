@@ -1,13 +1,15 @@
 .query-layout {
     display: grid;
     grid-template-columns: auto 20rem;
-    grid-gap: 2rem;
+    grid-gap: 1rem;
     &__header {
-        padding-right: 2rem;
+        padding-right: 1rem;
         border-right: 1px solid $color-grey-light-3;
     }
 
     &__cta {
+        padding-right: 1rem;
+        padding-top: 1rem;
     }
 }
 
@@ -22,7 +24,7 @@
     }
 
     &__stats {
-        margin: 0 .5rem;
+        margin: 0 0.5rem;
 
         &--title {
             margin-bottom: 0;
@@ -30,24 +32,43 @@
     }
 }
 
-
 .prescription {
     border: 1px solid $color-grey-light-3;
-    padding: .5rem;
-    margin-bottom: 1rem;
     border-radius: 3px;
 
     &__item {
         display: grid;
         grid-template-columns: 1fr auto;
         justify-content: space-between;
-        grid-gap: 2rem;
+        grid-gap: 1rem;
         align-items: center;
         &__button {
-
         }
         &__text {
+        }
+    }
+}
 
+.photos {
+    display: grid;
+    grid-gap: .5rem;
+    grid-template-columns: auto 1fr;
+    margin-bottom: .5rem;
+
+    &__input {
+        padding-right: .5rem;
+        border-right: 1px solid $color-grey-light-3;
+        &__field {
+            width: 15rem;
+            margin-bottom: .5rem;
+        }
+    }
+
+    &__list {
+
+        &__item {
+            margin: .5rem .2rem .5rem 0;
+            height: 5rem;
         }
     }
 }
