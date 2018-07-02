@@ -50,7 +50,6 @@ class QuickLinks extends React.Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <div className="sidebar">
                 {/* Show Sidebar icons only if user is Authenticated */}

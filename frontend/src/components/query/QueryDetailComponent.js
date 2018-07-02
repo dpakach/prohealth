@@ -15,7 +15,6 @@ class QueryDetailComponent extends React.Component {
         super(props);
 
         this.state = {
-            id: this.props.match.params.id,
             loading: false,
             query: {},
             user: {},
@@ -26,7 +25,7 @@ class QueryDetailComponent extends React.Component {
 
     updateQuery() {
         this.setState({loading: true});
-        getQueryItem(this.state.id)
+        getQueryItem(this.props.match.params.id)
             .then(data => {
                 getUserInfo(data.user).then(user => {
                     this.setState({
@@ -46,14 +45,16 @@ class QueryDetailComponent extends React.Component {
 
     componentDidMount() {
         this.updateQuery();
-        readNotificationsByQuery(this.state.id);
+        readNotificationsByQuery(this.props.match.params.id);
     }
 
     render() {
+        // console.log(this.props)
         return (
             <div className="query-layout">
                 <div className="query-layout__header">
                     <QueryHeader
+                        {...this.props}
                         user={this.state.user}
                         query={this.state.query}
                         updateQuery={this.updateQuery}
@@ -66,8 +67,8 @@ class QueryDetailComponent extends React.Component {
                         {...this.props}
                         query={this.state.query}
                         updateQuery={this.updateQuery}
-                        id={this.state.id}
                         user={this.state.user}
+                        loading={this.state.loading}
                     />
                 </div>
             </div>

@@ -6,6 +6,8 @@ import {Icon} from 'antd';
 
 import {getQueries} from '../../actions/queryActions';
 
+import {GridLoader} from 'react-spinners';
+
 class MyQueriesComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -46,15 +48,13 @@ class MyQueriesComponent extends React.Component {
         return (
             <div>
                 <h1 className="heading heading-primary">Questions you Asked</h1>
-                {this.state.loading && (
-                    <div
-                        style={{width: '100%', textAlign: 'center'}}
-                        className="u-margin-top-small loading-icon">
-                        <Icon style={{fontSize: '5rem'}} type="loading" />
-                    </div>
-                )}
+                <div className="loading-icon">
+                    <GridLoader
+                        color={'#3772ff'}
+                        loading={this.state.loading}
+                    />
+                </div>
                 {!this.state.loading && (
-
                     <div className="query-list">
                         {this.state.query_list.map(item => (
                             <QueryListItemComponent

@@ -69,7 +69,9 @@ class Photos extends Component {
     };
 
     componentDidMount() {
-        this.updateFiles();
+        if (this.props.id) {
+            this.updateFiles();
+        }
     }
 
     render() {
@@ -86,7 +88,11 @@ class Photos extends Component {
         return (
             <div className="photos">
                 <div className="photos__input">
-                    <input type="file" onChange={this.handleChange} className="photos__input__field"/>
+                    <input
+                        type="file"
+                        onChange={this.handleChange}
+                        className="photos__input__field"
+                    />
                     <Button
                         className="photos__input__button"
                         type="primary"

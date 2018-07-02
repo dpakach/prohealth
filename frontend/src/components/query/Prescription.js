@@ -10,14 +10,12 @@ const Prescription = props => {
             return (
                 <a
                     type="danger"
-                    onClick={(e) => {
+                    onClick={e => {
                         deleteMedicine(props.id, id).then(() => {
                             props.updatePescription();
                         });
                     }}>
-                    <i className=" material-icons">
-                        delete
-                    </i>
+                    <i className=" material-icons">delete</i>
                 </a>
             );
         } else {
@@ -42,7 +40,9 @@ const Prescription = props => {
 
                         {!props.loading &&
                             props.prescription.map(item => (
-                                <div key={item.name_of_medicine} className="prescription__item">
+                                <div
+                                    key={item.name_of_medicine}
+                                    className="prescription__item">
                                     <div className="list-item user-stats-list__item">
                                         <div className="list-item__title">
                                             {item.name_of_medicine}
@@ -56,17 +56,22 @@ const Prescription = props => {
                                         </div>
                                     </div>
                                     <div className="prescription__item__button">
-
                                         {deleteButton(item.id)}
                                     </div>
                                 </div>
                             ))}
-                            {!props.loading && props.prescription.length === 0 && (
-                                <p style={{textAlign:"center"}}>No Prescription</p>
-                            )}
                     </div>
                 </div>
             )}
+            {!props.loading &&
+                !props.prescription && (
+                    <div>
+                        <h3>Prescriptions</h3>
+                        <div className="prescription">
+                            <p style={{textAlign: 'center'}}>No Prescription</p>
+                        </div>
+                    </div>
+                )}
         </div>
     );
 };

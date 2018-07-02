@@ -28,15 +28,15 @@ class Appointment extends React.Component {
     };
 
     componentDidMount() {
-        this.updateAppointment();
+        if (this.props.id) {
+            this.updateAppointment();
+        }
     }
 
     render() {
         const is_doctor = localStorage.getItem('is_doctor') === 'true';
-        const user_id = localStorage.getItem('user_id');
+        const user_id = parseInt(localStorage.getItem('user_id'));
 
-        console.log(this.props.user.id);
-        console.log(user_id);
         return (
             <div>
                 <h3>Appointment</h3>
@@ -113,18 +113,21 @@ class Appointment extends React.Component {
                     </div>
                 )}
                 {!this.state.appointment && (
-                    <div className="prescription">
-                        <p style={{textAlign: 'center'}}>No Appointment yet</p>
+                    <div>
+                        <div className="prescription">
+                            <p style={{textAlign: 'center'}}>
+                                No Appointment yet
+                            </p>
+                        </div>
+                        {(user_id !== this.props.user.id) &&
+                            is_doctor && (
+                                <AppointmentForm
+                                    update={this.updateAppointment}
+                                    {...this.props}
+                                />
+                            )}
                     </div>
                 )}
-                {!this.state.appointment &&
-                    !(user_id === this.props.user.id) &&
-                    is_doctor && (
-                        <AppointmentForm
-                            update={this.updateAppointment}
-                            {...this.props}
-                        />
-                    )}
             </div>
         );
     }
