@@ -32,6 +32,7 @@ class UserQuery(models.Model):
     date_of_submission = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     taken = models.BooleanField(default=False)
+    taken_by = models.ForeignKey(User, related_name='doctor', on_delete=models.CASCADE, blank=True, null=True)
     resolved = models.BooleanField(default=False)
    
     def __str__(self):
