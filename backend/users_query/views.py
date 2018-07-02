@@ -226,7 +226,7 @@ class TakenView(APIView):
             query.save()
             return Response(status=200)
         else:
-            return Response(status=503)
+            return Response(status=401)
 
 class ResolveView(APIView):
 
@@ -239,4 +239,4 @@ class ResolveView(APIView):
             query.save()
             return Response(status=200)
         else:
-            return Response(status=503)
+            return Response(status=401)
