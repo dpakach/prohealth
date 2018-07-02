@@ -17,6 +17,7 @@ class UserQuerySerializer(serializers.ModelSerializer):
         model = UserQuery
         fields = '__all__'
         read_only_fields = ('user', )
+        # exclude = ('taken', 'taken_by',)
     
     
 class MedicineSerializer(serializers.ModelSerializer):
@@ -41,3 +42,4 @@ class FileSerializer(serializers.ModelSerializer):
         model = File
         fields = '__all__'
         read_only_fields = ('query',)
+
