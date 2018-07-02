@@ -68,6 +68,12 @@ class Photos extends Component {
             .then(data => this.setState({uploaded_files: data}));
     };
 
+    getUploadClass = () => {
+        return this.state.photo === null ? 
+            "photos__input__button btn btn--default btn--small btn--disabled":
+            "photos__input__button btn btn--default btn--small"
+    }
+
     componentDidMount() {
         if (this.props.id) {
             this.updateFiles();
@@ -91,16 +97,15 @@ class Photos extends Component {
                     <input
                         type="file"
                         onChange={this.handleChange}
-                        className="photos__input__field"
+                        className="photos__input__field btn btn--small"
                     />
-                    <Button
-                        className="photos__input__button"
+                    <button
+                        className={this.getUploadClass()}
                         type="primary"
                         onClick={this.handleUpload}
-                        disabled={this.state.photo === null}
                         loading={uploading}>
-                        {uploading ? 'Uploading' : 'Start Upload'}
-                    </Button>
+                        upload
+                    </button>
                 </div>
 
                 <div className="photos__list">
@@ -109,8 +114,8 @@ class Photos extends Component {
                             key={f.id}
                             src={ROOT_URL + f.file_related}
                             alt="user's file"
+                            className="photos__list__item"
                             data-lightbox="user-photos"
-                            style={{height: '5rem'}}
                         />
                     ))}
                 </div>

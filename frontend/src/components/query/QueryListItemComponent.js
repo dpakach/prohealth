@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import {Link, withRouter} from 'react-router-dom';
 
 import {deleteQueryItem} from '../../actions/queryActions';
@@ -56,7 +57,7 @@ const QueryListItemComponent = props => {
                         </div>
                     )}
                     <h4>Created Date</h4>
-                    <p>{props.item.date_of_submission}</p>
+                    <p>{moment(props.item.date_of_submission).fromNow()}</p>
                 </div>
 
                 {!props.header && (
