@@ -112,17 +112,18 @@ class Appointment extends React.Component {
                         </div>
                     </div>
                 )}
-                {!this.state.appointment && (
-                    <div>
-                        {user_id !== this.props.user.id &&
-                            is_doctor && (
-                                <AppointmentForm
-                                    update={this.updateAppointment}
-                                    {...this.props}
-                                />
-                            )}
-                    </div>
-                )}
+                {!this.state.appointment &&
+                    this.props.query.taken_by === user_id && (
+                        <div>
+                            {user_id !== this.props.user.id &&
+                                is_doctor && (
+                                    <AppointmentForm
+                                        update={this.updateAppointment}
+                                        {...this.props}
+                                    />
+                                )}
+                        </div>
+                    )}
             </div>
         );
     }

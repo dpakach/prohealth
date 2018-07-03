@@ -17,19 +17,25 @@ class QueryCta extends React.Component {
         loading: false,
         doctor: null,
     };
+
     updatePescription = () => {
         this.setState({loading: true});
         getPescription(this.props.id)
             .then(data => {
                 if (data) {
-                    this.setState({prescription: data, loading: false});
+                    this.setState({prescription: data});
+                }
+                if (this.props.query.taken && this.props.query.taken_by) {
+                    getUserById(this.props.query.taken_by).then(data => {
+                        this.setState({doctor: data, loading: false});
+                    });
                 }
             })
             .catch(e => {});
     };
 
     componentDidMount() {
-        if (this.props.query) {
+        if (this.props.id) {
             this.updatePescription();
         }
     }
@@ -57,6 +63,9 @@ class QueryCta extends React.Component {
                             is_doctor={is_doctor}
                         />
                         {is_doctor &&
+                            this.props.query &&
+                            !this.props.query.resolved &&
+                            this.props.query.taken_by === user_id &&
                             !(this.props.user.id === user_id) && (
                                 <PrescriptionForm
                                     {...this.props}

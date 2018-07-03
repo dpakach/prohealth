@@ -36,14 +36,23 @@ const Actions = props => {
 
     return (
         <div>
-            {props.query.resolved && <p>this query is already resolved</p>}
+            {props.query.resolved && (
+                <div style={{paddingLeft: '.5rem'}} className="prescription">
+                    <p>this query is already resolved</p>
+                </div>
+            )}
+
             {props.query.taken &&
                 !props.query.resolved &&
                 props.doctor && (
-                    <p>
-                        Your case is being reviewed by {props.doctor.first_name}{' '}
-                        {props.doctor.last_name}
-                    </p>
+                    <div
+                        style={{paddingLeft: '.5rem'}}
+                        className="prescription">
+                        <p>
+                            Your case is being reviewed by Dr.{' '}
+                            {props.doctor.first_name} {props.doctor.last_name}
+                        </p>
+                    </div>
                 )}
             {!props.query.resolved &&
                 user_id === props.user.id && (
