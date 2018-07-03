@@ -39,9 +39,9 @@ class Appointment extends React.Component {
 
         return (
             <div>
-                <h3>Appointment</h3>
                 {this.state.appointment && (
                     <div>
+                        <h3>Appointment</h3>
                         <div className="prescription">
                             {this.state.loading && (
                                 <div
@@ -114,12 +114,7 @@ class Appointment extends React.Component {
                 )}
                 {!this.state.appointment && (
                     <div>
-                        <div className="prescription">
-                            <p style={{textAlign: 'center'}}>
-                                No Appointment yet
-                            </p>
-                        </div>
-                        {(user_id !== this.props.user.id) &&
+                        {user_id !== this.props.user.id &&
                             is_doctor && (
                                 <AppointmentForm
                                     update={this.updateAppointment}

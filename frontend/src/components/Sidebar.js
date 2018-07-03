@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router';
 
 import {
     getNotifications,
@@ -50,7 +51,6 @@ class QuickLinks extends React.Component {
     }
 
     render() {
-        console.log(this.state.notifications)
         return (
             <div className="sidebar">
                 {/* Show Sidebar icons only if user is Authenticated */}
@@ -169,4 +169,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(QuickLinks);
+export default withRouter(connect(mapStateToProps)(QuickLinks));

@@ -25,19 +25,12 @@ const Prescription = props => {
 
     return (
         <div>
-            {props.prescription && (
+            {
+                props.prescription &&
+                props.prescription.length !== 0 && (
                 <div>
                     <h3>Prescriptions</h3>
                     <div className="prescription">
-                        {props.loading && (
-                            <div style={{width: '100%', textAlign: 'center'}}>
-                                <Icon
-                                    style={{fontSize: '3rem'}}
-                                    type="loading"
-                                />
-                            </div>
-                        )}
-
                         {!props.loading &&
                             props.prescription.map(item => (
                                 <div
@@ -63,15 +56,6 @@ const Prescription = props => {
                     </div>
                 </div>
             )}
-            {!props.loading &&
-                !props.prescription && (
-                    <div>
-                        <h3>Prescriptions</h3>
-                        <div className="prescription">
-                            <p style={{textAlign: 'center'}}>No Prescription</p>
-                        </div>
-                    </div>
-                )}
         </div>
     );
 };

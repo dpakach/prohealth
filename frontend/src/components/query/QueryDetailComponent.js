@@ -2,13 +2,13 @@ import React from 'react';
 import QueryHeader from './QueryHeader';
 import Chat from './Chat';
 import QueryCta from './QueryCta';
+import {GridLoader} from 'react-spinners';
 
 import {getUserInfo} from '../../utils/authUtils';
 import {getQueryItem} from '../../actions/queryActions';
 import {readNotificationsByQuery} from '../../actions/notificationActions';
 
 import {message} from 'antd';
-
 
 class QueryDetailComponent extends React.Component {
     constructor(props) {
@@ -32,10 +32,8 @@ class QueryDetailComponent extends React.Component {
                         user,
                         nonFieldErrors: '',
                         query: data,
+                        loading: false,
                     });
-                    setTimeout(() => {
-                        this.setState({loading: false});
-                    }, 1000);
                 });
             })
             .catch(e => {
@@ -49,28 +47,41 @@ class QueryDetailComponent extends React.Component {
     }
 
     render() {
-        // console.log(this.props)
         return (
-            <div className="query-layout">
-                <div className="query-layout__header">
-                    <QueryHeader
-                        {...this.props}
-                        user={this.state.user}
-                        query={this.state.query}
-                        updateQuery={this.updateQuery}
-                        loading={this.state.loading}
-                    />
-                    <Chat />
-                </div>
-                <div className="query-layout__cta">
-                    <QueryCta
-                        {...this.props}
-                        query={this.state.query}
-                        updateQuery={this.updateQuery}
-                        user={this.state.user}
+            <div>
+                <div style={{width: '100%', textAlign: 'center'}}>
+                    <GridLoader
+                        style={{display: 'inline-block'}}
+                        color={'#3772ff'}
                         loading={this.state.loading}
                     />
                 </div>
+                {!this.state.loading && (
+                    <div>
+                        <div className="query-layout">
+                            <div className="query-layout__header">
+                                <QueryHeader
+                                    {...this.props}
+                                    user={this.state.user}
+                                    query={this.state.query}
+                                    updateQuery={this.updateQuery}
+                                    loading={this.state.loading}
+                                />
+                                <Chat />
+                            </div>
+                            <div className="query-layout__cta">
+                                <QueryCta
+                                    {...this.props}
+                                    query={this.state.query}
+                                    updateQuery={this.updateQuery}
+                                    user={this.state.user}
+                                    loading={this.state.loading}
+                                    id={this.state.query.id}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         );
     }

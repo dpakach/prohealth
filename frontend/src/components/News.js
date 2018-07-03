@@ -1,6 +1,7 @@
 import React from 'react';
 import {Icon} from 'antd';
 import {Link} from 'react-router-dom';
+import moment from 'moment';
 
 class News extends React.Component {
     constructor(props) {
@@ -35,6 +36,7 @@ class News extends React.Component {
     }
 
     render() {
+        console.log(this.state)
         return (
             <div>
                 <h1 className="heading heading-primary">News</h1>
@@ -62,7 +64,7 @@ class News extends React.Component {
                                         {item.description}
                                     </p>
                                     <p>{item.source.name}</p>
-                                    <p>{item.publishedAt}</p>
+                                    <p>{moment(item.publishedAt).fromNow()}</p>
                                     <a target="_blank" href={item.url}>Read More</a>
                                 </div>
                             </div>

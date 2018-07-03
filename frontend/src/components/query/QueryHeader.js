@@ -21,37 +21,39 @@ const QueryHeader = props => {
                 />
             </div>
             {!props.loading && (
-                <div className="query-header">
-                    <div className="query-header__main">
-                        <QueryListItemComponent
-                            updateQueries={props.updateQueries}
-                            key={props.query.id}
-                            item={props.query}
-                            loading={props.loading}
-                            header={true}
-                            user={props.user}
-                        />
-                    </div>
+                <div>
+                    <div className="query-header">
+                        <div className="query-header__main">
+                            <QueryListItemComponent
+                                updateQueries={props.updateQueries}
+                                key={props.query.id}
+                                item={props.query}
+                                loading={props.loading}
+                                header={true}
+                                user={props.user}
+                            />
+                        </div>
 
-                    <div className="query-header__stats">
-                        <h2 className="query-header__stats--title">
-                            User Stats
-                        </h2>
-                        <div className="user-stats-list">
-                            {user_stats.map(s => {
-                                return (
-                                    <div
-                                        key={s.title}
-                                        className="list-item user-stats-list__item">
-                                        <div className="list-item__title">
-                                            {s.title}
+                        <div className="query-header__stats">
+                            <h2 className="query-header__stats--title">
+                                User Stats
+                            </h2>
+                            <div className="user-stats-list">
+                                {user_stats.map(s => {
+                                    return (
+                                        <div
+                                            key={s.title}
+                                            className="list-item user-stats-list__item">
+                                            <div className="list-item__title">
+                                                {s.title}
+                                            </div>
+                                            <div className="list-item__content">
+                                                {s.value}
+                                            </div>
                                         </div>
-                                        <div className="list-item__content">
-                                            {s.value}
-                                        </div>
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })}
+                            </div>
                         </div>
                     </div>
                     {props.query.id && <Photos id={props.query.id} />}
