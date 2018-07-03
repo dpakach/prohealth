@@ -22,18 +22,7 @@ class MyQueriesComponent extends React.Component {
         this.setState({loading: true});
         getQueries()
             .then(data => {
-                const queries = data.map(d => {
-                    const query = d;
-                    query.date_of_submission = d.date_of_submission.substr(
-                        0,
-                        10,
-                    );
-                    return query;
-                });
-                setTimeout(() => {
-                    this.setState({nonFieldErrors: '', loading: false});
-                    this.setState({query_list: queries});
-                }, 1000);
+                    this.setState({nonFieldErrors: '', loading: false, query_list: data});
             })
             .catch(error => {
                 this.setState({nonFieldErrors: error.message});
