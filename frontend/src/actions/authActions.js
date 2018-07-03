@@ -91,7 +91,6 @@ export function loginUser(creds, history) {
                 if (!response.ok) {
                     // If there was a problem, we want to
                     // dispatch the error condition
-                    console.log(response);
                     switch (response.status) {
                         case 404:
                             dispatch(
@@ -178,7 +177,6 @@ export function logoutUser(history) {
     return dispatch => {
         dispatch(requestLogout());
         return fetch(AuthUrls.LOGOUT, config).then(response => {
-            console.log(response);
             if (response.ok) {
                 localStorage.removeItem('token');
                 localStorage.removeItem('user');

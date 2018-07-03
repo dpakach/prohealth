@@ -22,7 +22,6 @@ export const createQuery = form_data => {
                 return response.json();
             } else {
                 Promise.reject(Error('Unable to Create Query'));
-                console.log(response.json())
             }
         })
         .catch(e => {
@@ -92,7 +91,6 @@ export const deleteQueryItem = id => {
             }
         })
         .catch(e => {
-            console.log(e);
             Promise.reject(
                 Error('An error occured while performing the action'),
             );
@@ -102,7 +100,6 @@ export const deleteQueryItem = id => {
 // Api request for creating new appointment item for a query
 //
 export const setAppointment = (form_data, id) => {
-    console.log(form_data);
     return fetch(QueryUrls.APPOINTMENT(id), apiConfig('post', form_data))
         .then(response => {
             if (response.ok) {
@@ -135,7 +132,6 @@ export const getAppointment = id => {
 // API request for creating pescription for a query item
 //
 export const pescribe = (form_data, id) => {
-    console.log(id)
     return fetch(QueryUrls.PESCRIPTION(id), apiConfig('post', form_data))
         .then(response => {
             if (response.ok) {
@@ -206,7 +202,6 @@ export const uploadFile = (id, form_data) => {
 export const getFile = (id) => {
     return fetch(QueryUrls.FILES(id), apiConfig())
         .then(response => {
-            console.log(response);
             if (response.ok) {
                 return;
             } else {
@@ -222,7 +217,6 @@ export const getFile = (id) => {
 export const resolveQuery = (id) => {
     return fetch(QueryUrls.RESOLVE(id), apiConfig('post'))
         .then(response => {
-            console.log(response);
             if (response.ok) {
                 return;
             } else {
@@ -238,7 +232,6 @@ export const resolveQuery = (id) => {
 export const takeQuery = (id) => {
     return fetch(QueryUrls.TAKE(id), apiConfig('post'))
         .then(response => {
-            console.log(response);
             if (response.ok) {
                 return;
             } else {

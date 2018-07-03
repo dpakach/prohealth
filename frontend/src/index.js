@@ -6,14 +6,14 @@ import store from './store/configureStore';
 
 import AppRouter from './routers/AppRouter';
 import {receiveLogin} from './actions/authActions';
+import dotenv from 'dotenv';
 
 import './styles/style.css';
 import './styles/main.scss';
 
 import './style.less';
 
-
-//import {getUserToken} from './utils/authUtils';
+require('dotenv').config()
 
 const user = JSON.parse(localStorage.getItem('user'));
 
