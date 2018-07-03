@@ -47,17 +47,24 @@ const QueryListItemComponent = props => {
                 <div className="list-item__content">
                     {props.item.description}
                     {props.header && (
-                        <div>
-                            <h4>Posted by</h4>
-                            <p>
-                                {props.user.first_name +
-                                    ' ' +
-                                    props.user.last_name}
-                            </p>
+                        <div style={{marginTop: '1rem'}}>
+                            <h4 style={{margin: 0}}>
+                                Posted by
+                                {'  '}
+                                <small>
+                                    {props.user.first_name +
+                                        ' ' +
+                                        props.user.last_name}
+                                </small>
+                            </h4>
                         </div>
                     )}
-                    <h4>Created Date</h4>
-                    <p>{moment(props.item.date_of_submission).fromNow()}</p>
+                    <h4>
+                        Created{'   '}
+                        <small>
+                            {moment(props.item.date_of_submission).fromNow()}
+                        </small>
+                    </h4>
                 </div>
 
                 {!props.header && (
