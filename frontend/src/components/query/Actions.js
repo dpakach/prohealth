@@ -67,13 +67,16 @@ const Actions = props => {
                             onClick={editQuery}>
                             Edit
                         </button>
-                        <button
-                            className="action__button btn btn--danger btn--small"
-                            onClick={deleteQuery}>
-                            Delete
-                        </button>
                     </div>
                 )}
+
+            {user_id === props.user.id && (
+                <button
+                    className="action__button btn btn--danger btn--small"
+                    onClick={deleteQuery}>
+                    Delete
+                </button>
+            )}
 
             {!props.query.taken &&
                 user_id !== props.user.id &&

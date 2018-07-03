@@ -202,7 +202,6 @@ export const getUserById = (id) => {
         }
     })
         .then(response => {
-            console.log(response)
             if (response.ok) {
                 return response.json()
             }else{
