@@ -3,7 +3,7 @@ import {Icon} from 'antd';
 import {Link} from 'react-router-dom';
 import moment from 'moment';
 
-require('dotenv').config()
+require('dotenv').config();
 
 class News extends React.Component {
     constructor(props) {
@@ -37,7 +37,7 @@ class News extends React.Component {
     }
 
     render() {
-        console.log(process.env)
+        console.log(process.env);
         return (
             <div>
                 <h1 className="heading heading-primary">News</h1>
@@ -60,13 +60,15 @@ class News extends React.Component {
                                     />
                                 </div>
                                 <div className="news__body">
-                                    <h3 className="heading-tertiary">{item.title}</h3>
-                                    <p>
-                                        {item.description}
-                                    </p>
+                                    <h3 className="heading-tertiary">
+                                        {item.title}
+                                    </h3>
+                                    <p>{item.description}</p>
                                     <p>{item.source.name}</p>
                                     <p>{moment(item.publishedAt).fromNow()}</p>
-                                    <a target="_blank" href={item.url}>Read More</a>
+                                    <a target="_blank" href={item.url}>
+                                        Read More
+                                    </a>
                                 </div>
                             </div>
                         ))}
