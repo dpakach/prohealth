@@ -57,8 +57,13 @@
     margin-bottom: .5rem;
 
     &__input {
-        padding-right: .5rem;
+        padding: .5rem;
         border-right: 1px solid $color-grey-light-3;
+        display: grid;
+        grid-template-columns: auto auto;
+        justify-content: space-around;
+        align-items: center;
+
         &__field {
             width: 15rem;
             margin-bottom: .5rem;

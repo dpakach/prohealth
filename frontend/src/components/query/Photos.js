@@ -34,7 +34,6 @@ class Photos extends Component {
             data: formData,
         })
             .then(response => {
-                console.log(response);
                 if (response.statusText === 'OK') {
                     message.success('upload successfully.');
                 }
@@ -82,6 +81,7 @@ class Photos extends Component {
 
     render() {
         const {uploading} = this.state;
+        const user_id = parseInt(localStorage.getItem('user_id'));
         const props = {
             beforeUpload: file => {
                 this.setState(() => ({
@@ -92,21 +92,33 @@ class Photos extends Component {
         };
         return (
             <div className="photos">
-                <div className="photos__input">
-                    <div className="upload-btn-wrapper">
-                        <button className="btn btn--small">browse a file</button>
-                        <p style={{fontSize: '.7rem', width: '15rem'}}>{this.state.photo && this.state.photo.name}</p>
-                        <input
-                            type="file"
-                            onChange={this.handleChange}
-                            className="photos__input__field btn btn--default btn--small"
-                        />
-                    </div>
-                    <button
-                        className={this.getUploadClass()}
-                        onClick={this.handleUpload}>
-                        upload
-                    </button>
+                <div>
+                    {user_id === this.props.user.id && (
+                        <div>
+                            <div className="photos__input">
+                                <div className="upload-btn-wrapper">
+                                    <button className="btn btn--small">
+                                        browse a file
+                                    </button>
+                                    <input
+                                        type="file"
+                                        onChange={this.handleChange}
+                                        className="photos__input__field btn btn--default btn--small"
+                                    />
+                                </div>
+                                <button
+                                    className={this.getUploadClass()}
+                                    onClick={this.handleUpload}>
+                                    upload
+                                </button>
+                            </div>
+                            {this.state.photo && (
+                                <p style={{fontSize: '.7rem'}}>
+                                    {this.state.photo.name}
+                                </p>
+                            )}
+                        </div>
+                    )}
                 </div>
 
                 <div className="photos__list">

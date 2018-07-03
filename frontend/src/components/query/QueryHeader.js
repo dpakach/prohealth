@@ -56,7 +56,9 @@ const QueryHeader = props => {
                             </div>
                         </div>
                     </div>
-                    {props.query.id && <Photos id={props.query.id} />}
+                    {props.query.id && (
+                        <Photos user={props.user} id={props.query.id} />
+                    )}
                 </div>
             )}
         </div>
