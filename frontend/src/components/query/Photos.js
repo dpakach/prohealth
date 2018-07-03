@@ -69,10 +69,10 @@ class Photos extends Component {
     };
 
     getUploadClass = () => {
-        return this.state.photo === null ? 
-            "photos__input__button btn btn--default btn--small btn--disabled":
-            "photos__input__button btn btn--default btn--small"
-    }
+        return this.state.photo === null
+            ? 'photos__input__button btn btn--default btn--small btn--disabled'
+            : 'photos__input__button btn btn--default btn--small';
+    };
 
     componentDidMount() {
         if (this.props.id) {
@@ -90,20 +90,21 @@ class Photos extends Component {
                 return false;
             },
         };
-
         return (
             <div className="photos">
                 <div className="photos__input">
-                    <input
-                        type="file"
-                        onChange={this.handleChange}
-                        className="photos__input__field btn btn--small"
-                    />
+                    <div className="upload-btn-wrapper">
+                        <button className="btn btn--small">browse a file</button>
+                        <p style={{fontSize: '.7rem', width: '15rem'}}>{this.state.photo && this.state.photo.name}</p>
+                        <input
+                            type="file"
+                            onChange={this.handleChange}
+                            className="photos__input__field btn btn--default btn--small"
+                        />
+                    </div>
                     <button
                         className={this.getUploadClass()}
-                        type="primary"
-                        onClick={this.handleUpload}
-                        loading={uploading}>
+                        onClick={this.handleUpload}>
                         upload
                     </button>
                 </div>

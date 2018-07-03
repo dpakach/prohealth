@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {NavLink} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {logoutUser} from '../actions/authActions';
 import {withRouter} from 'react-router';
 
 class Header extends React.Component {
@@ -10,13 +9,8 @@ class Header extends React.Component {
         super(props);
         this.state = {
             authenticated: localStorage.getItem('authenticated'),
-            logoutError: '',
         };
     }
-
-    logout = () => {
-        this.props.dispatch(logoutUser(this.props.history));
-    };
 
     renderLinkItem = (to, name, icon, onClick = null) => {
         return (

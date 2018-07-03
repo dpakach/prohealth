@@ -1,25 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 import {message} from 'antd';
 
-import Header from '../components/Header';
-import DashboardPage from '../components/DashboardPage';
-import FeaturePage from '../components/FeaturePage';
-import NotFoundPage from '../components/NotFoundPage';
 import LoginComponent from '../components/auth/LoginComponent';
 import SignupComponent from '../components/auth/SignupComponent';
+import UpdatePassword from '../components/auth/UpdatePassword';
+import ResetPassword from '../components/auth/ResetPassword';
+import Profile from '../components/auth/Profile';
+
 import QueryCreateComponent from '../components/query/QueryCreateComponent';
 import QueryUpdateComponent from '../components/query/QueryUpdateComponent';
 import QueryDetailComponent from '../components/query/QueryDetailComponent';
 import MyQueriesComponent from '../components/query/MyQueriesComponent';
 
-import UpdatePassword from '../components/auth/UpdatePassword';
-import ResetPassword from '../components/auth/ResetPassword';
-import Profile from '../components/auth/Profile';
 import Sidebar from '../components/Sidebar';
+import Header from '../components/Header';
+import DashboardPage from '../components/DashboardPage';
+import FeaturePage from '../components/FeaturePage';
+import NotFoundPage from '../components/NotFoundPage';
+
 import NotificationsPage from '../components/notifications/NotificationsPage';
+
 import News from '../components/News';
 
 import {connect} from 'react-redux';
@@ -57,20 +59,6 @@ class AppRouter extends React.Component {
                                     exact={true}
                                 />
 
-                                {/*
-                        <Route
-                            path="/user/:action"
-                            render={(props) => {
-                                return (
-                                    <LoginSignupComponent
-                                        {...props}
-                                        dispatch={dispatch}
-                                    />
-                                );
-                            }}
-                        />
-                    */}
-
                                 <Route
                                     path="/user/login"
                                     render={props => {
@@ -101,13 +89,6 @@ class AppRouter extends React.Component {
                                     component={ResetPassword}
                                 />
 
-                                {/*
-                        <PrivateRoute
-                            path="/profile/update"
-                            auth={this.props.isAuthenticated}
-                            component={UpdateProfile}
-                        />
-                            */}
                                 <PrivateRoute
                                     path="/update-password"
                                     auth={this.props.isAuthenticated}

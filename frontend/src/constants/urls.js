@@ -14,7 +14,9 @@ export const QueryUrls = {
     APPOINTMENT: (id) => `${ROOT_URL}/api/query/${id}/appoint`,
     PESCRIPTION: (id) => `${ROOT_URL}/api/query/${id}/prescribe`,
     MEDICINE: (id, med_id) => `${ROOT_URL}/api/query/${id}/prescribe/${med_id}`,
-    FILES: (id) => `${ROOT_URL}/api/query/${id}/files`
+    FILES: (id) => `${ROOT_URL}/api/query/${id}/files`,
+    RESOLVE: (id) => `${ROOT_URL}/api/query/${id}/resolve`,
+    TAKE: (id) => `${ROOT_URL}/api/query/${id}/take`,
 }
 
 export const NotificationUrls = {

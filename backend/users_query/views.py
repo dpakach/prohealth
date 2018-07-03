@@ -148,7 +148,7 @@ class PrescribeView(APIView):
         user = request.user
         query = get_object_or_404(UserQuery,pk=query_id)
         serializer = MedicineSerializer(data=request.data, context = {'request':request})
-        if serializer.is_valid() and user== user.is_doctor:
+        if serializer.is_valid():
             serializer.save(query=query)
 
             # for notification

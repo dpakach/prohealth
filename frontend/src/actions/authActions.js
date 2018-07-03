@@ -194,19 +194,22 @@ export function logoutUser(history) {
 }
 
 export const getUserById = (id) => {
-    return fetch(AuthUrls.USER + id, {
+    return fetch(AuthUrls.USERS + id, {
         method: 'GET',
         headers: {
+            'Content-Type': 'application/json',
             Authorization: `Token ${localStorage.getItem('token')}`
         }
     })
         .then(response => {
+            console.log(response)
             if (response.ok) {
-                return response.json('Cannot get User with id ' + id)
+                return response.json()
+            }else{
+                Promise.reject('Cannot get User with id ' + id)
             }
         })
         .catch(e => {
-            throw Promise.reject(e.message)
+            Promise.reject(e.message)
         }) 
-
 }

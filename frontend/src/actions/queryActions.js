@@ -135,18 +135,17 @@ export const getAppointment = id => {
 // API request for creating pescription for a query item
 //
 export const pescribe = (form_data, id) => {
-    console.log(form_data);
+    console.log(id)
     return fetch(QueryUrls.PESCRIPTION(id), apiConfig('post', form_data))
         .then(response => {
-            console.log(response);
             if (response.ok) {
                 return response.json();
             } else {
-                Promise.reject(Error('unable to post data'));
+                return Promise.reject('unable to post data');
             }
         })
         .catch(e => {
-            Promise.reject(Error('failed to post resources'));
+            console.log(e.message)
         });
 };
 
@@ -159,11 +158,11 @@ export const getPescription = id => {
             if (response.ok) {
                 return response.json();
             } else {
-                Promise.reject(Error('unable to load resources'));
+                return Promise.reject('unable to load resources');
             }
         })
         .catch(e => {
-            Promise.reject(Error(e.message));
+            Promise.reject(e.message);
         });
 };
 
@@ -175,11 +174,11 @@ export const deleteMedicine = (id, med_id) => {
             if (response.ok) {
                 return;
             } else {
-                Promise.reject(Error('unable to delete resources'));
+                return Promise.reject('unable to delete resources');
             }
         })
         .catch(e => {
-            Promise.reject(Error(e.message));
+            Promise.reject(e.message);
         });
 };
 
@@ -217,6 +216,36 @@ export const getFile = (id) => {
         .catch(e => {
             Promise.reject(Error(e.message));
         });
+}
 
 
+export const resolveQuery = (id) => {
+    return fetch(QueryUrls.RESOLVE(id), apiConfig('post'))
+        .then(response => {
+            console.log(response);
+            if (response.ok) {
+                return;
+            } else {
+                Promise.reject(Error('unable to resolve query'));
+            }
+        })
+        .catch(e => {
+            Promise.reject(Error(e.message));
+        });
+}
+
+
+export const takeQuery = (id) => {
+    return fetch(QueryUrls.TAKE(id), apiConfig('post'))
+        .then(response => {
+            console.log(response);
+            if (response.ok) {
+                return;
+            } else {
+                Promise.reject(Error('unable to take query'));
+            }
+        })
+        .catch(e => {
+            Promise.reject(Error(e.message));
+        });
 }
