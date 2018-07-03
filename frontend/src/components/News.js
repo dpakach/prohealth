@@ -3,6 +3,8 @@ import {Icon} from 'antd';
 import {Link} from 'react-router-dom';
 import moment from 'moment';
 
+require('dotenv').config()
+
 class News extends React.Component {
     constructor(props) {
         super(props);
@@ -20,7 +22,6 @@ class News extends React.Component {
         )
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 this.setState({
                     news_list: data.articles,
                     loading: false,
@@ -36,7 +37,7 @@ class News extends React.Component {
     }
 
     render() {
-        console.log(this.state)
+        console.log(process.env)
         return (
             <div>
                 <h1 className="heading heading-primary">News</h1>
@@ -50,7 +51,7 @@ class News extends React.Component {
                 {!this.state.loading && (
                     <div className="query-list">
                         {this.state.news_list.map(item => (
-                            <div className="list-item news">
+                            <div key={item.title} className="list-item news">
                                 <div className="news__header">
                                     <img
                                         className="news__header__image"
