@@ -172,7 +172,7 @@ class SignupComponent extends Component {
                             </div>
                         )}
                         <div className="form__group">
-                            {this.renderError('email')}
+                            {this.renderError('first_name')}
                             <input
                                 placeholder="First Name"
                                 type="text"
@@ -181,7 +181,7 @@ class SignupComponent extends Component {
                             />
                         </div>
                         <div className="form__group">
-                            {this.renderError('email')}
+                            {this.renderError('last_name')}
                             <input
                                 placeholder="Last Name"
                                 type="text"

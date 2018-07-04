@@ -3,73 +3,97 @@ import React from 'react';
 import moment from 'moment';
 
 import DoctorProfile from './DoctorProfile';
+import {GridLoader} from 'react-spinners';
 
 const UserProfile = props => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const is_doctor = localStorage.getItem('is_doctor') === 'true';
+    let loading = true;
+    let is_doctor = false;
+    loading = props.loading;
+    const {user} = props;
+    if (user) {
+        is_doctor = user;
+    }
 
     return (
-        <div className="profile">
-            <div className="profile__user">
-                <div className="profile__photo">
-                    <img
-                        style={{height: 200}}
-                        src="https://media.gettyimages.com/photos/portrait-of-beautiful-woman-without-makeup-picture-id641576958"
-                        alt="User"
-                    />
-                </div>
-                <h2 className="profile__user--name">
-                    {user.first_name} {user.last_name}
-                </h2>
-                <h3 className="profile__user--email">{user.email}</h3>
+        <div>
+            <div style={{width: '100%', textAlign: 'center'}}>
+                <GridLoader
+                    style={{display: 'inline-block'}}
+                    color={'#3772ff'}
+                    loading={loading}
+                />
+            </div>
+            {!loading &&
+                user && (
+                    <div>
+                        <div className="profile">
+                            <div className="profile__user">
+                                <div className="profile__photo">
+                                    <img
+                                        style={{height: 200}}
+                                        src={user.user_profile.profile_photo}
+                                        alt="User"
+                                    />
+                                </div>
+                                <h2 className="profile__user--name">
+                                    {user.first_name} {user.last_name}
+                                </h2>
+                                <h3 className="profile__user--email">
+                                    {user.email}
+                                </h3>
 
-                <div className="profile__items">
-                    <div className="profile__item">
-                        <div className="profile__item--icon">
-                            <i className="icon--normal material-icons">
-                                keyboard_arrow_right
-                            </i>
-                        </div>
-                        <div className="profile__item--text">
-                            Joined on 13th may 2013
-                        </div>
-                    </div>
+                                <div className="profile__items">
+                                    <div className="profile__item">
+                                        <div className="profile__item--icon">
+                                            <i className="icon--normal material-icons">
+                                                keyboard_arrow_right
+                                            </i>
+                                        </div>
+                                        <div className="profile__item--text">
+                                            Joined on 13th may 2013
+                                        </div>
+                                    </div>
 
-                    <div className="profile__item">
-                        <div className="profile__item--icon">
-                            <i className="icon--normal material-icons">
-                                keyboard_arrow_right
-                            </i>
-                        </div>
-                        <div className="profile__item--text">
-                            Born on{' '}
-                            {moment(user.date_of_birth, 'YYYY-MM-DD').format(
-                                'DD MMM, YYYY',
+                                    {user.date_of_birth && (
+                                        <div className="profile__item">
+                                            <div className="profile__item--icon">
+                                                <i className="icon--normal material-icons">
+                                                    keyboard_arrow_right
+                                                </i>
+                                            </div>
+                                            <div className="profile__item--text">
+                                                Born on{' '}
+                                                {moment(
+                                                    user.date_of_birth,
+                                                ).format('DD MMM, YYYY')}
+                                            </div>
+                                        </div>
+                                    )}
+                                    <div className="profile__item">
+                                        <div className="profile__item--icon">
+                                            <i className="icon--normal material-icons">
+                                                keyboard_arrow_right
+                                            </i>
+                                        </div>
+                                        <div className="profile__item--text">
+                                            Gender:{' '}
+                                            {user.gender === 'M'
+                                                ? 'Male'
+                                                : 'Female'}
+                                        </div>
+                                    </div>
+                                </div>
+                                <p />
+                            </div>
+
+                            {is_doctor && (
+                                <div className="profile__doctor">
+                                    <DoctorProfile user={user} />
+                                </div>
                             )}
                         </div>
                     </div>
-
-                    <div className="profile__item">
-                        <div className="profile__item--icon">
-                            <i className="icon--normal material-icons">
-                                keyboard_arrow_right
-                            </i>
-                        </div>
-                        <div className="profile__item--text">
-                            Gender: {user.gender === 'M' ? 'Male' : 'Female'}
-                        </div>
-                    </div>
-                </div>
-                <p />
-            </div>
-
-            {is_doctor && (
-                <div className="profile__doctor">
-                    <DoctorProfile
-                        user={user}
-                    />
-                </div>
-            )}
+                )}
         </div>
     );
 };

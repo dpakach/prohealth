@@ -7,6 +7,8 @@ import UpdateProfile from './UpdateProfile';
 import UpdatePassword from './UpdatePassword';
 import NotFoundPage from '../NotFoundPage';
 
+import {getUser} from '../../actions/authActions';
+
 const tabList = [
     {
         key: 'user',
@@ -30,11 +32,25 @@ class Profile extends React.Component {
         valid:
             this.props.match.params.action &&
             key_list.includes(this.props.match.params.action),
+        user: null,
+        loading: false
     };
 
     tabChange = key => {
         this.setState({key});
     };
+
+    updateUser = () => {
+        this.setState({loading: true})
+        return getUser().then(data => {
+            this.setState({user: data, loading: false});
+            return data;
+        });
+    }
+
+    componentDidMount() {
+        this.updateUser();
+    }
 
     render() {
         if (!this.state.valid) {
@@ -53,12 +69,27 @@ class Profile extends React.Component {
                     }}>
                     {
                         {
-                            user: <UserProfile />,
-                            updatepassword: <UpdatePassword />,
+                            user: (
+                                <UserProfile
+                                    user={this.state.user}
+                                    updateUser={this.updateUser}
+                                    loading={this.state.loading}
+                                />
+                            ),
+                            updatepassword: (
+                                <UpdatePassword
+                                    user={this.state.user}
+                                    updateUser={this.updateUser}
+                                    loading={this.state.loading}
+                                />
+                            ),
                             updateprofile: (
                                 <UpdateProfile
                                     {...this.props}
                                     tabChange={this.tabChange}
+                                    user={this.state.user}
+                                    updateUser={this.updateUser}
+                                    loading={this.state.loading}
                                 />
                             ),
                         }[this.state.key]

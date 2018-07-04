@@ -85,6 +85,14 @@ class LoginComponent extends Component {
     render() {
         return (
             <div className="section section--form section--form--login">
+                {this.props.errorMessage && (
+                    <div className="form__error">
+                        <h3 className="form__error--title">Error</h3>
+                        <p className="form__error--text">
+                            {this.props.errorMessage}
+                        </p>
+                    </div>
+                )}
                 <div className="card">
                     <h1 className="heading-primary u-margin-top-small">
                         Login
@@ -92,14 +100,6 @@ class LoginComponent extends Component {
                     <form
                         className="form login-form"
                         onSubmit={this.handleSubmit}>
-                        {this.props.errorMessage && (
-                            <div className="form__error">
-                                <h3 className="form__error--title">Error</h3>
-                                <p className="form__error--text">
-                                    {this.props.errorMessage}
-                                </p>
-                            </div>
-                        )}
                         <div className="form__group">
                             <input
                                 prefix={<Icon type="user" />}
@@ -118,16 +118,15 @@ class LoginComponent extends Component {
                                 onChange={this.handleChange}
                             />
                         </div>
+                        <button
+                            type="submit"
+                            disabled={!this.state.formValid}
+                            onClick={this.handleSubmit}
+                            className="btn u-margin-bottom-small">
+                            Log In
+                        </button>
                     </form>
-                    <button
-                        type="primary"
-                        htmltype="submit"
-                        disabled={!this.state.formValid}
-                        onClick={this.handleSubmit}
-                        className="btn u-margin-bottom-small">
-                        Log In
-                    </button>
-                    <div>
+                    <div style={{textAlign: 'center'}}>
                         Or <Link to="/user/signup"> register now!</Link>
                         <p>
                             <Link to="/reset-password">Forgot password</Link>

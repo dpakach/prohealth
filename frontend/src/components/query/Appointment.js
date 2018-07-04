@@ -16,9 +16,7 @@ class Appointment extends React.Component {
             .then(data => {
                 if (data) {
                     this.setState({appointment: data});
-                    setTimeout(() => {
-                        this.setState({loading: false});
-                    }, 1000);
+                    this.setState({loading: false});
                 }
                 this.setState({loading: false});
             })
