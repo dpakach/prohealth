@@ -2,8 +2,13 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from user_profile.models import UserProfile, User, DoctorProfile
-from user_profile.serializers import UserSerializer, UserSerializerCreate, UserSerializerLogin, UserSerializerUpdate
+from user_profile.models import UserProfile, User, DoctorProfile, ResetPasswordCode
+from user_profile.serializers import (
+    UserSerializer,
+    UserSerializerCreate,
+    UserSerializerLogin,
+    UserSerializerUpdate
+)
 
 # users
 class UserView(APIView):
@@ -30,6 +35,7 @@ class UserView(APIView):
             user.save()
             UserProfile(user=user).save()
             DoctorProfile(user=user).save()
+            ResetPasswordCode(user=user).save()
             return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
