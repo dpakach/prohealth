@@ -1,8 +1,11 @@
 from django.shortcuts import get_object_or_404
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from user_profile.models import UserProfile, User, DoctorProfile, ResetPasswordCode
+from user_profile.models import UserProfile, User, DoctorProfile, ResetPasswordCode, UserActivationCode
 from user_profile.serializers import (
     UserSerializer,
     UserSerializerCreate,
@@ -32,10 +35,26 @@ class UserView(APIView):
         if serializer.is_valid():
             user = serializer.save()
             user.set_password(serializer.validated_data['password'])
+            user.is_active = False
             user.save()
+            user = get_object_or_404(User, email=request.data.get('email'))
+            code_object = ResetPasswordCode.objects.create(user=user)
+            code = code_object.code
+            current_site = get_current_site(request)
+            mail_subject = 'Welcome To ProHealth.'
+            message = render_to_string('user_activation.html', {
+                'user': user.email,
+                'domain': current_site.domain,
+                'code': code,
+            })
+            to_email = user.email
+            email = EmailMessage(
+                mail_subject, message, to=[to_email]
+            )
+            email.send()
             UserProfile(user=user).save()
             DoctorProfile(user=user).save()
-            ResetPasswordCode(user=user).save()
+            UserActivationCode(user=user).save()
             return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
