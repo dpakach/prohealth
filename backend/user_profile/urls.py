@@ -6,6 +6,7 @@ from .views.login import LoginView
 from .views.logout import LogoutView
 from .views.profile import UserProfileView, UserProfileDetail, DoctorProfileView, DoctorProfileDetail
 from .views.reset_password import ResetPasswordView, ResetPasswordCodeget
+from .views.user_activation import UserActivationView
 from .views.update_password import UpdatePasswordView
 
 from . import views
@@ -32,4 +33,6 @@ urlpatterns = [
     # Users
     url(r'^users/$', UserView.as_view()),
     url(r'^users/(?P<user_id>[\d]+)$', UserDetail.as_view()),
+    url(r'^users/activate/(?P<code>[0-9A-Fa-f-]+)/$', UserActivationView.as_view(), name='activate_user'),
+
 ]
