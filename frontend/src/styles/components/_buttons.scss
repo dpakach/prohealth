@@ -4,16 +4,16 @@
     &:visited {
         text-transform: uppercase;
         text-decoration: none;
-        padding: 0.3rem 1rem;
+        padding: 0.3rem .7rem;
         border-radius: 3px;
         outline: none;
-        border: none;
+        border: 2px solid transparent;
         color: $color-white;
         transition: all 0.3s;
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         font-weight: 300;
         display: block;
-        margin: 0;
+        margin: 0 auto;
         background-color: $color-primary;
         box-shadow: 0 0 1rem transparent;
 
@@ -72,6 +72,7 @@
         }
     }
 
+    &:disabled,
     &--disabled {
         &,
         &:link,

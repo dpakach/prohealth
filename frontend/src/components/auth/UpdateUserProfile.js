@@ -3,13 +3,8 @@ import moment from 'moment';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
-import {
-    message,
-    Icon,
-    Input,
-    Button,
-    DatePicker,
-} from 'antd';
+import {updateUserProfile} from '../../actions/authActions';
+import {message, Icon, Input, Button, DatePicker} from 'antd';
 
 //import store from '../../store/configureStore';
 // import validate from '../../utils/validate';
@@ -41,8 +36,8 @@ class UpdateUserProfile extends Component {
 
     // state change and management
     //
-    handleSelectChange = value => {
-        this.setState({gender: value});
+    handleSelectChange = event => {
+        this.setState({gender: event.target.value});
     };
 
     handleChange = e => {
@@ -77,24 +72,13 @@ class UpdateUserProfile extends Component {
             'profile_photo',
             'photo_id',
         ]);
-        fetch(AuthUrls.USERS + this.state.user.id, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Token ${localStorage.getItem('token')}`,
-            },
-            body: JSON.stringify(form_data),
-        })
-            .then(response => response.json().then(data => ({data, response})))
-            .then(({data, response}) => {
-                if (response.ok) {
-                    this.setState({nonFieldErrors: '', formErrors: {}});
-                    localStorage.setItem('user', JSON.stringify(data));
+
+        updateUserProfile(this.state.user.id, form_data)
+            .then(data => {
+                this.setState({nonFieldErrors: '', formErrors: {}});
+                this.props.updateUser().then(() => {
                     this.props.tabChange('user');
-                    message.success('profile updated successfully');
-                } else {
-                    this.setState({formErrors: data});
-                }
+                })
             })
             .catch(error => {
                 console.log(error);
@@ -103,8 +87,9 @@ class UpdateUserProfile extends Component {
     };
 
     componentDidMount() {
-        const user = JSON.parse(localStorage.getItem('user'));
-        this.setState({user, ...user});
+        this.props.updateUser().then(data => {
+            this.setState({user: data, ...data});
+        });
     }
 
     render() {
@@ -127,7 +112,7 @@ class UpdateUserProfile extends Component {
                             <div className="form__group">
                                 <label>First Name</label>
 
-                                <Input
+                                <input
                                     prefix={<Icon type="user" />}
                                     placeholder="First Name"
                                     type="text"
@@ -138,7 +123,7 @@ class UpdateUserProfile extends Component {
                             </div>
                             <div className="form__group">
                                 <label>Last Name</label>
-                                <Input
+                                <input
                                     prefix={<Icon type="user" />}
                                     placeholder="Last Name"
                                     type="text"
@@ -176,7 +161,7 @@ class UpdateUserProfile extends Component {
                                     name="gender"
                                     type="select"
                                     className="form__input"
-                                    value={this.state.gender}
+                                    value={this.state.gender || ''}
                                     onChange={this.handleSelectChange}>
                                     <option className="select__item" value="M">
                                         Male
@@ -188,13 +173,13 @@ class UpdateUserProfile extends Component {
                             </div>
 
                             <div className="form__group">
-                                <Button
+                                <button
                                     type="primary"
-                                    htmlType="submit"
+                                    type="submit"
                                     disabled={!this.state.formValid}
-                                    className="login-form-button">
+                                    className="btn">
                                     Update
-                                </Button>
+                                </button>
                             </div>
                         </form>
                     </div>

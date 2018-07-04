@@ -8,6 +8,7 @@ const user = JSON.parse(localStorage.getItem('user'));
 const user_id = user ? user.user_profile.id : null;
 
 const url = AuthUrls.USER_PROFILE + user_id;
+console.log(url)
 
 class UploadProfilePic extends React.Component {
     state = {
@@ -28,7 +29,6 @@ class UploadProfilePic extends React.Component {
             this.state.profile_photo.name,
         );
 
-
         axios({
             method: 'patch',
             url,
@@ -38,7 +38,7 @@ class UploadProfilePic extends React.Component {
             data: formData,
         })
             .then(response => {
-                console.log(response)
+                console.log(response);
                 if (response.statusText === 'OK') {
                     message.success('upload successfully.');
                 }
@@ -54,6 +54,15 @@ class UploadProfilePic extends React.Component {
             });
     };
 
+    handleChange = e => {
+        this.setState({profile_photo: e.target.files[0]});
+    };
+    getUploadClass = () => {
+        return this.state.photo === null
+            ? 'photos__input__button btn btn--default btn--small btn--disabled'
+            : 'photos__input__button btn btn--default btn--small';
+    };
+
     render() {
         const {uploading} = this.state;
         const props = {
@@ -67,19 +76,28 @@ class UploadProfilePic extends React.Component {
 
         return (
             <div>
-                <Upload {...props}>
-                    <Button>
-                        <Icon type="upload" /> Select File
-                    </Button>
-                </Upload>
-                <Button
-                    className="upload-demo-start"
-                    type="primary"
-                    onClick={this.handleUpload}
-                    disabled={this.state.profile_photo === null}
-                    loading={uploading}>
-                    {uploading ? 'Uploading' : 'Start Upload'}
-                </Button>
+                <div className="photos__input">
+                    <div className="upload-btn-wrapper">
+                        <button className="btn btn--small">
+                            browse a file
+                        </button>
+                        <input
+                            type="file"
+                            onChange={this.handleChange}
+                            className="photos__input__field btn btn--default btn--small"
+                        />
+                    </div>
+                    <button
+                        className={this.getUploadClass()}
+                        onClick={this.handleUpload}>
+                        upload
+                    </button>
+                </div>
+                {this.state.profile_photo && (
+                    <p style={{fontSize: '.7rem'}}>
+                        {this.state.profile_photo.name}
+                    </p>
+                )}
             </div>
         );
     }
@@ -130,4 +148,23 @@ class UploadProfilePic extends React.Component {
 }
 
 export default UploadProfilePic;
+
+
+            <div>
+                <Upload {...props}>
+                    <Button>
+                        <Icon type="upload" /> Select File
+                    </Button>
+                </Upload>
+                <Button
+                    className="upload-demo-start"
+                    type="primary"
+                    onClick={this.handleUpload}
+                    disabled={this.state.profile_photo === null}
+                    loading={uploading}>
+                    {uploading ? 'Uploading' : 'Start Upload'}
+                </Button>
+            </div>
+
+
         */

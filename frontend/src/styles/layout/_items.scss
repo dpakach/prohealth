@@ -16,12 +16,12 @@
 }
 
 .section--form {
-    grid-gap: 5rem;
+    grid-gap: 1rem;
     justify-content: space-around;
     min-height: 0;
     min-width: 0;
     &--login {
-        grid-template-columns: repeat(auto-fit, 20rem);
+        grid-template-columns: 20rem;
     }
     &--signup {
         grid-template-columns: repeat(auto-fit, minmax(20rem, 30rem));

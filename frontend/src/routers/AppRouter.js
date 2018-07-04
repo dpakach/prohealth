@@ -129,10 +129,7 @@ class AppRouter extends React.Component {
                                     component={Profile}
                                 />
 
-                                <Route
-                                    path="/news"
-                                    component={News}
-                                />
+                                <Route path="/news" component={News} />
 
                                 <PrivateRoute
                                     path="/notifications"
@@ -145,6 +142,7 @@ class AppRouter extends React.Component {
                                     component={FeaturePage}
                                 />
 
+                                <Route component={NotFoundPage} />
                             </Switch>
                         </div>
                     </div>

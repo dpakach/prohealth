@@ -60,7 +60,9 @@ class FeaturePage extends React.Component {
 
     validateForm = () => {
         this.setState({
-            formValid: this.state.passwordValid && this.state.passwordValid,
+            formValid:
+                this.state.passwordValid &&
+                this.state.new_password1 === this.state.new_password2,
         });
     };
 

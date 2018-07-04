@@ -10,34 +10,26 @@
     &__error {
         display: block;
         padding: 1rem 1rem;
-        border-radius: 5px;
+        border-radius: 10px;
         text-align: center;
         width: 100%;
         margin: 0 auto 2rem auto;
+        border: 2px solid $color-error-red;
+        background: rgba($color-error-red, .05);
 
 
-        background-image: linear-gradient(
-            135deg,
-            rgba($color-secondary-dark, .4) 0%,
-            rgba($color-secondary-dark, .2) 25%,
-            rgba($color-secondary-dark, .4) 25%,
-            rgba($color-secondary-dark, .2) 75%,
-            rgba($color-secondary-dark, .3) 75%,
-            rgba($color-secondary-light, .4) 100%,
-        );
 
         &--title {
             font-size: 2rem;
             width: 100%;
             text-align: center;
             display: block;
-            border-bottom: 2px solid $color-white;
-            color: $color-grey-dark;
+            color: $color-error-red;
         }
 
         &--text {
             font-size: 1rem ;
-            color: $color-grey-dark;
+            color: $color-error-red;
         }
     }
 
@@ -47,7 +39,7 @@
         grid-template-columns: repeat(auto-fit, 1fr);
     }
     &__group:not(:last-child) {
-        margin-bottom: 1.5rem;
+        margin-bottom: .8rem;
     }
     &__group {
         display: grid;
@@ -88,8 +80,8 @@
         }
 
         &:focus:invalid {
-            border-bottom: 3px solid rgba($color-secondary-dark, 1);
-            background-color: rgba($color-secondary-dark, .1);
+            border-bottom: 2px solid rgba($color-error-red, 1);
+            background: rgba($color-error-red, .05);
         }
 
         &::-webkit-input-placeholder {
@@ -117,7 +109,7 @@
     &__label,
     label {
         font-weight: 300;
-        margin: 1rem 0 0.7rem 0;
+        margin: .7rem 0 0.2rem 0;
         display: block;
         transition: all 0.3s;
         color: $color-grey-dark;
