@@ -70,7 +70,7 @@ def SingleNotificationsReadView(request, notification_id):
 
 @api_view(['GET'])
 def QueryNotificationsReadView(request, query_id):
-    notifications = Notification.objects.filter(query=get_object_or_404(UserQuery, id=query_id))
+    notifications = Notification.objects.filter(query=get_object_or_404(UserQuery, id=query_id), user=request.user)
     for notification in notifications:
         notification.read_notification()
         notification.save()
