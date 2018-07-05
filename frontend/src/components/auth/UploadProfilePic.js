@@ -4,12 +4,6 @@ import axios from 'axios';
 
 import {AuthUrls} from '../../constants/urls';
 
-const user = JSON.parse(localStorage.getItem('user'));
-const user_id = user ? user.user_profile.id : null;
-
-const url = AuthUrls.USER_PROFILE + user_id;
-console.log(url)
-
 class UploadProfilePic extends React.Component {
     state = {
         uploading: false,
@@ -22,6 +16,11 @@ class UploadProfilePic extends React.Component {
         });
 
         const formData = new FormData();
+        const user_id = this.props.user
+            ? this.props.user.user_profile.id
+            : null;
+        const url = AuthUrls.USER_PROFILE + user_id;
+        console.log(url);
 
         formData.append(
             'profile_photo',
@@ -36,22 +35,24 @@ class UploadProfilePic extends React.Component {
                 Authorization: `Token ${localStorage.getItem('token')}`,
             },
             data: formData,
-        })
-            .then(response => {
-                console.log(response);
-                if (response.statusText === 'OK') {
-                    message.success('upload successfully.');
-                }
-                this.setState({
-                    uploading: false,
-                });
-            })
-            .catch(e => {
-                message.error('upload failed.');
-                this.setState({
-                    uploading: false,
-                });
+        }).then(response => {
+            console.log(response);
+            if (response.statusText === 'OK') {
+                message.success('upload successfully.');
+                this.props.updateUser();
+            }
+            this.setState({
+                uploading: false,
             });
+        });
+        then(() => {
+            this.props.tabChange('user');
+        }).catch(e => {
+            message.error('upload failed.');
+            this.setState({
+                uploading: false,
+            });
+        });
     };
 
     handleChange = e => {

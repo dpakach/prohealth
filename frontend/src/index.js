@@ -11,8 +11,6 @@ import dotenv from 'dotenv';
 import './styles/style.css';
 import './styles/main.scss';
 
-import './style.less';
-
 require('dotenv').config()
 
 const user = JSON.parse(localStorage.getItem('user'));

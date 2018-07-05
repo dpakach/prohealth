@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Modal, message, Form, Input, Button} from 'antd';
+import {Modal, message, Form, Input, Button} from 'antd';
 import {pescribe} from '../../actions/queryActions';
 import Prescription from './Prescription';
 
@@ -78,7 +78,9 @@ class PrescriptionForm extends React.Component {
                             onOk={this.handleOk}
                             onCancel={this.handleCancel}
                             footer={[
-                                <Button key="back" onClick={this.handleCancel}>
+                                <Button
+                                    key="back"
+                                    onClick={this.handleCancel}>
                                     Return
                                 </Button>,
                             ]}>
@@ -123,13 +125,15 @@ class PrescriptionForm extends React.Component {
                                     />
                                 </Form>
                                 <br />
-                                <Button
+                                <button
                                     key="submit"
                                     type="primary"
+                                    className="btn btn--small"
+                                    style={{margin: 0}}
                                     loading={this.state.loading}
                                     onClick={this.handleAdd}>
                                     Add
-                                </Button>,
+                                </button>,
                             </div>
                         </Modal>
                     </div>

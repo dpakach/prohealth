@@ -25,7 +25,7 @@ export const createQuery = form_data => {
             }
         })
         .catch(e => {
-            Promise.reject(Error('An error occured while creating the query'));
+            Promise.reject(e.message);
         });
 };
 
@@ -37,13 +37,11 @@ export const getQueries = () => {
             if (response.ok) {
                 return response.json();
             } else {
-                Promise.reject(Error('Unable to Create Query'));
+                Promise.reject(Error('Unable to get Queries'));
             }
         })
         .catch(e => {
-            Promise.reject(
-                Error('An error occured while fetching the queries'),
-            );
+            Promise.reject(e.message);
         });
 };
 
@@ -59,7 +57,7 @@ export const getQueryItem = id => {
             }
         })
         .catch(e => {
-            Promise.reject(Error('failed to load resource'));
+            Promise.reject(e.message);
         });
 };
 
@@ -71,11 +69,11 @@ export const updateQueryItem = (form_data, id) => {
             if (response.ok) {
                 return response.json();
             } else {
-                Promise.reject(Error('unable to fetch query'));
+                Promise.reject(Error('unable to update query'));
             }
         })
         .catch(e => {
-            Promise.reject(Error('failed to load resource'));
+            Promise.reject(e.message);
         });
 };
 
@@ -91,9 +89,7 @@ export const deleteQueryItem = id => {
             }
         })
         .catch(e => {
-            Promise.reject(
-                Error('An error occured while performing the action'),
-            );
+            Promise.reject(e.message);
         });
 };
 
@@ -121,11 +117,11 @@ export const getAppointment = id => {
             if (response.ok) {
                 return response.json();
             } else {
-                Promise.reject(Error('unable to load resources'));
+                Promise.reject(Error('unable to load appointment'));
             }
         })
         .catch(e => {
-            Promise.reject(Error('unable to load resources'));
+            Promise.reject(e.message);
         });
 };
 
@@ -141,7 +137,7 @@ export const pescribe = (form_data, id) => {
             }
         })
         .catch(e => {
-            console.log(e.message)
+            console.log(e.message);
         });
 };
 
@@ -178,7 +174,6 @@ export const deleteMedicine = (id, med_id) => {
         });
 };
 
-
 export const uploadFile = (id, form_data) => {
     return fetch(QueryUrls.FILES(id), {
         method: 'POST',
@@ -197,9 +192,9 @@ export const uploadFile = (id, form_data) => {
         .catch(e => {
             Promise.reject(Error(e.message));
         });
-}
+};
 
-export const getFile = (id) => {
+export const getFile = id => {
     return fetch(QueryUrls.FILES(id), apiConfig())
         .then(response => {
             if (response.ok) {
@@ -211,10 +206,9 @@ export const getFile = (id) => {
         .catch(e => {
             Promise.reject(Error(e.message));
         });
-}
+};
 
-
-export const resolveQuery = (id) => {
+export const resolveQuery = id => {
     return fetch(QueryUrls.RESOLVE(id), apiConfig('post'))
         .then(response => {
             if (response.ok) {
@@ -226,10 +220,9 @@ export const resolveQuery = (id) => {
         .catch(e => {
             Promise.reject(Error(e.message));
         });
-}
+};
 
-
-export const takeQuery = (id) => {
+export const takeQuery = id => {
     return fetch(QueryUrls.TAKE(id), apiConfig('post'))
         .then(response => {
             if (response.ok) {
@@ -241,4 +234,4 @@ export const takeQuery = (id) => {
         .catch(e => {
             Promise.reject(Error(e.message));
         });
-}
+};
