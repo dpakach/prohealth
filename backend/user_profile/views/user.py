@@ -38,9 +38,11 @@ class UserView(APIView):
             user.is_active = False
             user.save()
             user = get_object_or_404(User, email=request.data.get('email'))
-            code_object = ResetPasswordCode.objects.create(user=user)
+            code_object = UserActivationCode.objects.create(user=user)
             code = code_object.code
             current_site = get_current_site(request)
+            print(current_site)
+            print(current_site.domain)
             mail_subject = 'Welcome To ProHealth.'
             message = render_to_string('user_activation.html', {
                 'user': user.email,
@@ -54,7 +56,6 @@ class UserView(APIView):
             email.send()
             UserProfile(user=user).save()
             DoctorProfile(user=user).save()
-            UserActivationCode(user=user).save()
             return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
