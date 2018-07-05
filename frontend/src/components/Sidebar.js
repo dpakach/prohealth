@@ -65,10 +65,12 @@ class QuickLinks extends React.Component {
                                     </i>
                                 </Link>
 
-                                <span className="badge">
-                                    {this.state.notifications &&
-                                        this.state.notifications.length}
-                                </span>
+                                {this.state.notifications &&
+                                    this.state.notifications.length !== 0 && (
+                                        <span className="badge">
+                                            {this.state.notifications.length}
+                                        </span>
+                                    )}
                             </span>
                             <div className="window window--notification notification-window">
                                 <div className="window__head">
@@ -103,7 +105,9 @@ class QuickLinks extends React.Component {
                                                 <Link to={`/query/${n.query}`}>
                                                     view details
                                                 </Link>
-                                                <span style={{float:'right'}}>{n.created_at}</span>
+                                                <span style={{float: 'right'}}>
+                                                    {n.created_at}
+                                                </span>
                                             </div>
                                         ))}
                                 </div>
@@ -121,9 +125,7 @@ class QuickLinks extends React.Component {
                         <div className="sidebar__text">Ask A Question</div>
                     </Link>
                     <Link className="sidebar__link" to="/news">
-                        <i className="sidebar__icon material-icons">
-                            live_tv
-                        </i>
+                        <i className="sidebar__icon material-icons">live_tv</i>
                         <div className="sidebar__text">News</div>
                     </Link>
                     <div className="sidebar__link">

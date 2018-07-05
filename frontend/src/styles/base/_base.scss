@@ -7,19 +7,7 @@
 }
 
 html {
-    // font-size: 62.5%;
-    // background-color: #f6f6f6;
-
-    // @include respond(tab-land) {
-    //     font-size: 56.25%;
-    // }
-
-    // @include respond(tab-port) {
-    //     font-size: 50%;
-    // }
-    // @include respond(big-desktop) {
-    //     font-size: 75%;
-    // }
+    
 }
 
 body {
@@ -34,7 +22,7 @@ a {
 }
 
 ::selection {
-    background-color: rgba($color-tertiary-light, 0.6);
+    background-color: rgba($color-tertiary-dark, 0.6);
     color: $color-white;
 }
 

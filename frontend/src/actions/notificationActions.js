@@ -20,13 +20,11 @@ export const getNotifications = () => {
             if (response.ok) {
                 return response.json();
             } else {
-                Promise.reject(Error('Unable to Create Query'));
+                Promise.reject(Error('Unable to load notifications'));
             }
         })
         .catch(e => {
-            Promise.reject(
-                Error('An error occured while fetching the queries'),
-            );
+            Promise.reject(e.message);
         });
 };
 
@@ -42,9 +40,7 @@ export const readAllNotifications = () => {
             }
         })
         .catch(e => {
-            Promise.reject(
-                Error('An error occured while fetching the queries'),
-            );
+            Promise.reject(e.message);
         });
 }
 
@@ -58,8 +54,6 @@ export const readNotificationsByQuery = (id) => {
             }
         })
         .catch(e => {
-            Promise.reject(
-                Error('An error occured while fetching the queries'),
-            );
+            Promise.reject(e.message);
         });
 }

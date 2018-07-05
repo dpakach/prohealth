@@ -138,6 +138,7 @@ class SignupComponent extends Component {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(form_data),
         };
+        console.log(form_data)
 
         // We dispatch requestLogin to kickoff the call to the API
         return fetch(AuthUrls.USERS, config)
@@ -147,7 +148,7 @@ class SignupComponent extends Component {
                     message.success('signed up succesfully');
                     this.props.history.push('/user/login/');
                 } else {
-                    // console.log(data)
+                    console.log(data)
                     this.setState({formErrors: data});
                 }
             })
