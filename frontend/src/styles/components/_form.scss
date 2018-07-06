@@ -1,5 +1,5 @@
 .form {
-    transition: all .2s;
+    transition: all 0.2s;
     margin: 0 auto 2rem auto;
     padding: 0 1.5rem;
 
@@ -15,9 +15,7 @@
         width: 100%;
         margin: 0 auto 2rem auto;
         border: 2px solid $color-error-red;
-        background: rgba($color-error-red, .05);
-
-
+        background: rgba($color-error-red, 0.05);
 
         &--title {
             font-size: 2rem;
@@ -28,18 +26,17 @@
         }
 
         &--text {
-            font-size: 1rem ;
+            font-size: 1rem;
             color: $color-error-red;
         }
     }
-
 
     &__inputs {
         display: grid;
         grid-template-columns: repeat(auto-fit, 1fr);
     }
     &__group:not(:last-child) {
-        margin-bottom: .8rem;
+        margin-bottom: 0.8rem;
     }
     &__group {
         display: grid;
@@ -47,7 +44,7 @@
         align-items: start;
     }
     .errorlist {
-        font-size: .7rem;
+        font-size: 0.7rem;
         color: $color-secondary-dark;
     }
 
@@ -59,16 +56,14 @@
     input,
     select,
     textarea {
-        font-size: .9rem;
+        font-size: 0.9rem;
         font-weight: 300;
-        padding: .5rem 1rem;
+        padding: 0.5rem 1rem;
         font-family: inherit;
         border-radius: 2px;
         background-color: rgba($color-white, 1);
         border: none;
         border-bottom: 2px solid transparent;
-        display: grid;
-        justify-content: center;
         outline: none;
         align-items: center;
         transition: all 0.3s ease;
@@ -81,7 +76,7 @@
 
         &:focus:invalid {
             border-bottom: 2px solid rgba($color-error-red, 1);
-            background: rgba($color-error-red, .05);
+            background: rgba($color-error-red, 0.05);
         }
 
         &::-webkit-input-placeholder {
@@ -109,7 +104,7 @@
     &__label,
     label {
         font-weight: 300;
-        margin: .7rem 0 0.2rem 0;
+        margin: 0.7rem 0 0.2rem 0;
         display: block;
         transition: all 0.3s;
         color: $color-grey-dark;
@@ -124,10 +119,17 @@
         width: 80%;
         display: inline-block;
     }
+
 }
 
-
-
+.patient-stats {
+    margin-top: 2rem;
+    &__data {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 1rem;
+    }
+}
 
 // query Form
 
