@@ -20,7 +20,6 @@ class UploadProfilePic extends React.Component {
             ? this.props.user.user_profile.id
             : null;
         const url = AuthUrls.USER_PROFILE + user_id;
-        console.log(url);
 
         formData.append(
             'profile_photo',
@@ -35,24 +34,25 @@ class UploadProfilePic extends React.Component {
                 Authorization: `Token ${localStorage.getItem('token')}`,
             },
             data: formData,
-        }).then(response => {
-            console.log(response);
-            if (response.statusText === 'OK') {
-                message.success('upload successfully.');
-                this.props.updateUser();
-            }
-            this.setState({
-                uploading: false,
+        })
+            .then(response => {
+                if (response.statusText === 'OK') {
+                    message.success('upload successfully.');
+                    this.props.updateUser();
+                }
+                this.setState({
+                    uploading: false,
+                });
+            })
+            .then(() => {
+                this.props.tabChange('user');
+            })
+            .catch(e => {
+                message.error('upload failed.');
+                this.setState({
+                    uploading: false,
+                });
             });
-        });
-        then(() => {
-            this.props.tabChange('user');
-        }).catch(e => {
-            message.error('upload failed.');
-            this.setState({
-                uploading: false,
-            });
-        });
     };
 
     handleChange = e => {

@@ -5,22 +5,7 @@
     box-shadow: 0 0 .5rem rgba($color-black, .2);
     font-size: 1rem;
     margin-top: 2rem;
-    background: linear-gradient(
-        135deg,
-        rgba($color-teal, 0.2) 0%,
-        rgba($color-tertiary-light, .2) 10%,
-        rgba($color-tertiary-light, 0.18) 10%,
-        rgba($color-tertiary-dark, .2) 20%,
-        rgba($color-tertiary-dark, .2) 20%,
-        rgba($color-tertiary-light, .2) 20%,
-        rgba($color-tertiary-dark, 0.18) 40%,
-        rgba($color-tertiary-dark, .2) 40%,
-        rgba($color-tertiary-light, .2) 60%,
-        rgba($color-tertiary-dark, .2) 60%,
-        rgba($color-tertiary-light, .2) 80%,
-        rgba($color-tertiary-dark, 0.18) 80%,
-        rgba($color-teal, .2) 100%
-    );
+    background-color: $color-grey-light-4;
 
     &__content {
         padding: 0 2rem 2rem 2rem;

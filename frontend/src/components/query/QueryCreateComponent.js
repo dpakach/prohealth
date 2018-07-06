@@ -54,9 +54,8 @@ class QueryCreateComponent extends React.Component {
     // form submittion
     //
     handleSubmit = event => {
-
         event.preventDefault();
-        const form_data ={
+        const form_data = {
             title_problem: this.state.title_problem,
             description: this.state.description,
             name_of_patient: this.state.name_of_patient,
@@ -73,7 +72,6 @@ class QueryCreateComponent extends React.Component {
             .catch(e => {
                 message.error(e.message);
             });
-
     };
 
     componentDidMount() {
@@ -116,7 +114,6 @@ class QueryCreateComponent extends React.Component {
                         </div>
                         <div className="form__group">
                             <label>Related</label>
-                            <br />
                             <Select
                                 showSearch
                                 style={{width: 200}}
@@ -126,44 +123,50 @@ class QueryCreateComponent extends React.Component {
                                 <Option value="E">ent</Option>
                                 <Option value="P">Physician</Option>
                             </Select>
+                        </div>
+                        <div className="patient-stats">
                             <h3>Patient Stats</h3>
+
+                            <div className="form__group">
+                                <input
+                                    placeholder="Name of Patient"
+                                    name="name_of_patient"
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+
+                            <div className="patient-stats__data">
+                                <div className="form__group">
+                                    <input
+                                        placeholder="Age"
+                                        name="age_of_patient"
+                                        type="number"
+                                        onChange={this.handleChange}
+                                    />
+                                </div>
+                                <div className="form__group">
+                                    <input
+                                        placeholder="Weight"
+                                        name="weight_of_patient"
+                                        type="number"
+                                        onChange={this.handleChange}
+                                    />
+                                </div>
+                                <div className="form__group">
+                                    <input
+                                        placeholder="Height"
+                                        name="height_of_patient"
+                                        type="number"
+                                        onChange={this.handleChange}
+                                    />
+                                </div>
+                            </div>
                         </div>
-                        <div className="form__group">
-                            <label>Name of Patient</label>
-                            <input
-                                placeholder="Name of Patient"
-                                name="name_of_patient"
-                                onChange={this.handleChange}
-                            />
-                        </div>
-                        <div className="form__group">
-                            <label>Age Of Patient</label>
-                            <input
-                                placeholder="Age of Patient"
-                                name="age_of_patient"
-                                type="number"
-                                onChange={this.handleChange}
-                            />
-                        </div>
-                        <div className="form__group">
-                            <label>Weight of Patient</label>
-                            <input
-                                placeholder="Weight of Patient"
-                                name="weight_of_patient"
-                                type="number"
-                                onChange={this.handleChange}
-                            />
-                        </div>
-                        <div className="form__group">
-                            <label>Height of Patient</label>
-                            <input
-                                placeholder="Height of Patient"
-                                name="height_of_patient"
-                                type="number"
-                                onChange={this.handleChange}
-                            />
-                        </div>
-                        <button onClick={this.handleSubmit} type="primary" type="submit" className="btn">
+                        <button
+                            onClick={this.handleSubmit}
+                            type="primary"
+                            type="submit"
+                            className="btn">
                             Submit
                         </button>
                     </form>
