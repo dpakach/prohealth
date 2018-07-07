@@ -14,8 +14,9 @@ import './styles/main.scss';
 require('dotenv').config()
 
 const user = JSON.parse(localStorage.getItem('user'));
+const token = localStorage.getItem('token');
 
-if (user && user.token) {
+if (token) {
     store.dispatch(receiveLogin(user));
 }
 
