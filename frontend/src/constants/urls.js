@@ -7,7 +7,9 @@ export const AuthUrls = {
     UPDATE_PASSWORD: `${ROOT_URL}/api/update-password/`,
     USER_PROFILE: `${ROOT_URL}/api/user-profiles/`,
     DOCTOR_PROFILE: `${ROOT_URL}/api/doctor-profiles/`,
-    RESET_PASSWORD: `${ROOT_URL}/api/password-reset/`, 
+    RESET_PASSWORD: `${ROOT_URL}/api/reset-password/`, 
+    RESET_PASSWORD_UPDATE: (code) => `${ROOT_URL}/api/reset-password/${code}/`, 
+    ACTIVATE_ACCOUNT: (code) => `${ROOT_URL}/api/users/activate/${code}/`, 
 }
 
 export const QueryUrls = {

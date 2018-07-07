@@ -8,6 +8,8 @@ import SignupComponent from '../components/auth/SignupComponent';
 import UpdatePassword from '../components/auth/UpdatePassword';
 import ResetPassword from '../components/auth/ResetPassword';
 import Profile from '../components/auth/Profile';
+import ResetPasswordUpdate from '../components/auth/ResetPasswordUpdate';
+import ActivatingAccount from '../components/auth/ActivatingAccount';
 
 import QueryCreateComponent from '../components/query/QueryCreateComponent';
 import QueryUpdateComponent from '../components/query/QueryUpdateComponent';
@@ -51,7 +53,7 @@ class AppRouter extends React.Component {
                     <Header dispatch={dispatch} />
                     <div className="container">
                         <Sidebar dispatch={dispatch} />
-                        <div className="main-content">
+                        <div className="main-content" style={{position: "relative"}}>
                             <Switch>
                                 <Route
                                     path="/"
@@ -87,6 +89,20 @@ class AppRouter extends React.Component {
                                     path="/reset-password"
                                     auth={this.props.isAuthenticated}
                                     component={ResetPassword}
+                                    exact
+                                />
+
+                                <Route
+                                    path="/reset-password/:code"
+                                    auth={this.props.isAuthenticated}
+                                    component={ResetPasswordUpdate}
+                                />
+
+
+                                <Route
+                                    path="/users/activate/:code"
+                                    auth={this.props.isAuthenticated}
+                                    component={ActivatingAccount}
                                 />
 
                                 <PrivateRoute
