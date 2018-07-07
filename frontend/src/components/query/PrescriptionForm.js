@@ -42,6 +42,7 @@ class PrescriptionForm extends React.Component {
             'times_a_day',
             'remarks',
         ]);
+        this.setState({loading: true})
 
         pescribe(form_data, this.props.id)
             .then(data => {
@@ -51,10 +52,12 @@ class PrescriptionForm extends React.Component {
                     quantity: '',
                     times_a_day: null,
                     remarks: '',
+                    loading: false
                 });
             })
             .catch(e => {
                 message.error(e.message);
+                this.setState({loading: false})
             });
     };
 

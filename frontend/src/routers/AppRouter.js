@@ -18,6 +18,7 @@ import MyQueriesComponent from '../components/query/MyQueriesComponent';
 
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
+import Footer from '../components/Footer.js';
 import DashboardPage from '../components/DashboardPage';
 import FeaturePage from '../components/FeaturePage';
 import NotFoundPage from '../components/NotFoundPage';
@@ -162,6 +163,7 @@ class AppRouter extends React.Component {
                             </Switch>
                         </div>
                     </div>
+                    <Footer />
                 </div>
             </BrowserRouter>
         );

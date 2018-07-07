@@ -27,7 +27,7 @@ class QueryCta extends React.Component {
                 }
                 if (this.props.query.taken && this.props.query.taken_by) {
                     getUserById(this.props.query.taken_by).then(data => {
-                        this.setState({doctor: data, loading: false});
+                            this.setState({doctor: data, loading: false});
                     });
                 }
             })
@@ -45,11 +45,11 @@ class QueryCta extends React.Component {
         const user_id = parseInt(localStorage.getItem('user_id'));
         return (
             <div style={{height: '80vh', overflowY: 'scroll'}}>
-                <div style={{width: '100%', textAlign: 'center'}}>
+                <div className="loading-icon">
                     <GridLoader
                         style={{display: 'inline-block'}}
                         color={'#3772ff'}
-                        loading={this.props.loading}
+                        loading={this.state.loading}
                     />
                 </div>
                 {!this.props.loading && (
