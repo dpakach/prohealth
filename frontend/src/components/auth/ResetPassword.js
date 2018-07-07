@@ -62,9 +62,9 @@ class ResetPassword extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        const form_data = _.pick(this.state, ['new_password1']);
+        const form_data = _.pick(this.state, ['email']);
 
-        fetch(AuthUrls.SIGNUP, {
+        fetch(AuthUrls.RESET_PASSWORD, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ class ResetPassword extends React.Component {
                 this.setState({nonFieldErrors: '', success: true});
             })
             .catch(error => {
-                this.setState({nonFieldErrors: error.message});
+                this.setState({nonFieldErrors: error.message, success: false});
             });
     };
     render() {
@@ -144,13 +144,12 @@ class ResetPassword extends React.Component {
                             />
                         </FormItem>
 
-                        <Button
-                            type="primary"
+                        <button
                             htmlType="submit"
                             disabled={!this.state.formValid}
-                            className="login-form-button">
+                            className="login-form-button btn btn--default">
                             Submit
-                        </Button>
+                        </button>
                     </Form>
                 </div>{' '}
             </Card>

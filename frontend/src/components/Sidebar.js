@@ -47,7 +47,9 @@ class QuickLinks extends React.Component {
     };
 
     componentDidMount() {
-        this.listNotifications();
+        if(this.props.isAuthenticated){
+            this.listNotifications();
+        }
     }
 
     render() {
@@ -120,10 +122,12 @@ class QuickLinks extends React.Component {
                 )}
 
                 <div className="sidebar__links">
-                    <Link to="/query/create" className="sidebar__link">
-                        <i className="sidebar__icon icon ion-md-quote" />
-                        <div className="sidebar__text">Ask A Question</div>
-                    </Link>
+                    {this.props.isAuthenticated && (
+                        <Link to="/query/create" className="sidebar__link">
+                            <i className="sidebar__icon icon ion-md-quote" />
+                            <div className="sidebar__text">Ask A Question</div>
+                        </Link>
+                    )}
                     <Link className="sidebar__link" to="/news">
                         <i className="sidebar__icon material-icons">live_tv</i>
                         <div className="sidebar__text">News</div>
