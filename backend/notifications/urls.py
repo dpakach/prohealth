@@ -7,5 +7,6 @@ urlpatterns = [
     url(r'^notifications/read_all/$', NotificationsReadView),
     url(r'^notifications/read_all/(?P<query_id>[\d]+)/$', QueryNotificationsReadView),
     url(r'^notifications/(?P<notification_id>[\d]+)/$', NotificationDetailView.as_view()),
+    # url(r'^notifications/(?P<notification_id>[\d]+)/get_age/$', get_notification_age),
     url(r'^notifications/(?P<notification_id>[\d]+)/read/$', SingleNotificationsReadView),
 ]
