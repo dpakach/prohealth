@@ -65,6 +65,7 @@ const QueryListItemComponent = props => {
                             {moment(props.item.date_of_submission).fromNow()}
                         </small>
                     </h4>
+                    <span className="tag">Neurology</span>
                 </div>
 
                 {!props.header && (

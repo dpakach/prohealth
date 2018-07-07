@@ -35,7 +35,7 @@ class MyQueriesComponent extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={{position: 'realtive'}}>
                 <h1 className="heading heading-primary">Questions you Asked</h1>
                 <div className="loading-icon">
                     <GridLoader

@@ -48,8 +48,8 @@ class QueryDetailComponent extends React.Component {
 
     render() {
         return (
-            <div>
-                <div style={{width: '100%', textAlign: 'center'}}>
+            <div style={{position: 'realtive'}}>
+                <div className="loading-icon">
                     <GridLoader
                         style={{display: 'inline-block'}}
                         color={'#3772ff'}
@@ -65,7 +65,6 @@ class QueryDetailComponent extends React.Component {
                                     user={this.state.user}
                                     query={this.state.query}
                                     updateQuery={this.updateQuery}
-                                    loading={this.state.loading}
                                 />
                                 <Chat />
                             </div>
@@ -75,8 +74,8 @@ class QueryDetailComponent extends React.Component {
                                     query={this.state.query}
                                     updateQuery={this.updateQuery}
                                     user={this.state.user}
-                                    loading={this.state.loading}
                                     id={this.state.query.id}
+                                    loading={this.state.loading}
                                 />
                             </div>
                         </div>
