@@ -19,7 +19,7 @@ class UserManager(BaseUserManager):
         is_superuser = kwargs.pop('is_superuser', False)
         user = self.model(
             email=email,
-            is_active=True,
+            is_active=Frue,
             is_staff=is_staff,
             is_superuser=is_superuser,
             **kwargs
@@ -88,6 +88,8 @@ class UserProfile(models.Model):
         null=True, upload_to=upload_posts_media_to, default=None)
     photo_doc = models.ImageField(
         null=True, upload_to=upload_posts_media_to, default=None)
+    is_verified = models.BooleanField(default=False)
+    pending_verification = models.BooleanField(default=False)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -98,11 +100,15 @@ class DoctorProfile(models.Model):
         null=True, upload_to=upload_posts_media_to, default=None)
     photo_doc = models.ImageField(
         null=True, upload_to=upload_posts_media_to, default=None)
+    document1 = models.FileField(default=None)
     hospital = models.CharField(max_length=255)
     qualification = models.CharField(max_length=255)
     description = models.TextField(max_length=500)
     speciality = models.CharField(max_length=255)
     exp_pts = models.IntegerField(default=0)
+    nmc_code = models.CharField(max_length=20, blank=True)
+    is_verified = models.BooleanField(default=False)
+    pending_verification = models.BooleanField(default=False)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -115,6 +121,16 @@ class ResetPasswordCode(models.Model):
 
     class Meta:
         default_related_name = 'reset_password_codes'
+
+    def __str__(self):
+        return f'{self.user.email} - {self.code}'
+
+class UserActivationCode(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    code = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
+
+    class Meta:
+        default_related_name = 'activation_codes'
 
     def __str__(self):
         return f'{self.user.email} - {self.code}'
