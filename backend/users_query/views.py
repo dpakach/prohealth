@@ -10,7 +10,7 @@ from rest_framework.authentication import TokenAuthentication
 
 from . models import UserQuery, Medicine, Appointment, File
 from . serializer import UserQuerySerializer, AppointmentSerializer, MedicineSerializer, FileSerializer
-from . permissions import IsDoctorUser, UpdateOwnUserQuery, IsResolved
+from . permissions import IsDoctorUser, QueryPermission, PrescriptionPermission, AppointmentPermission, UserPermission
 from user_profile.models import User
 from notifications.models import Notification
 
@@ -20,7 +20,7 @@ class UserQueryView(APIView):
     serializer_class = UserQuerySerializer
 
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated, UpdateOwnUserQuery, )
+    permission_classes = (IsAuthenticated, UserPermission, )
     @staticmethod
     def get(request):
         user = request.user
@@ -52,7 +52,7 @@ class UserQueryView(APIView):
 
 class UserQueryDetailView(APIView):
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated, UpdateOwnUserQuery,)
+    permission_classes = (IsAuthenticated, QueryPermission,)
 
     @staticmethod
     def get(request, query_id):
@@ -79,6 +79,8 @@ class UserQueryDetailView(APIView):
 
 class AppointmentView(APIView):
     serializer_class = AppointmentSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, AppointmentPermission,)
 
     @staticmethod
     def get(request, query_id,**kwargs):
@@ -107,6 +109,8 @@ class AppointmentView(APIView):
 
 
 class AppointmentDetailView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, AppointmentPermission,)
     @staticmethod
     def get(request, query_id, **kwargs):
         query = get_object_or_404(UserQuery,pk=query_id)
@@ -135,6 +139,8 @@ class AppointmentDetailView(APIView):
 
 class PrescribeView(APIView):
     serializer_class = MedicineSerializer
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, PrescriptionPermission,)
 
     @staticmethod
     def get(request, query_id):
@@ -143,13 +149,14 @@ class PrescribeView(APIView):
         return Response(MedicineSerializer(prescribe, many=True).data)
 
     @staticmethod
-    @permission_classes((IsAuthenticated, IsDoctorUser, ))
     def post(request, query_id):
         user = request.user
-        query = get_object_or_404(UserQuery,pk=query_id)
+        query = get_object_or_404(UserQuery, pk=query_id)
         serializer = MedicineSerializer(data=request.data, context = {'request':request})
-        if serializer.is_valid() and user== user.is_doctor:
+        if serializer.is_valid() and user== query.taken_by:
             serializer.save(query=query)
+        else:
+            return Response(401)
 
             # for notification
             user = request.user
@@ -164,6 +171,8 @@ class PrescribeView(APIView):
 
 
 class PrescribeDetailView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, PrescriptionPermission,)
     @staticmethod
     def get(request, query_id, prescribe_id):
         prescribe =get_object_or_404(Medicine, pk=prescribe_id)
@@ -181,7 +190,8 @@ class PrescribeDetailView(APIView):
 
 class FileView(APIView):
     parser_classes = (MultiPartParser, FormParser)
-
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, QueryPermission,)
     @staticmethod
     def get(request,query_id):
         query = get_object_or_404(UserQuery, pk=query_id)
@@ -198,7 +208,8 @@ class FileView(APIView):
         return Response(serializer.errors, status=400)
 
 class FileDetailView(APIView):
-
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, QueryPermission,)
     @staticmethod
     def get(request, query_id, files_id):
         files = get_object_or_404(File, pk=files_id)
@@ -215,7 +226,8 @@ class FileDetailView(APIView):
 
 
 class TakenView(APIView):
-
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, IsDoctorUser, )
     @staticmethod
     def post(request, query_id):
         query = UserQuery.objects.get(pk=query_id)
@@ -229,7 +241,8 @@ class TakenView(APIView):
             return Response(status=401)
 
 class ResolveView(APIView):
-
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, QueryPermission)
     @staticmethod
     def post(request, query_id):
         query = UserQuery.objects.get(pk=query_id)
