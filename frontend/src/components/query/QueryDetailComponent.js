@@ -59,7 +59,7 @@ class QueryDetailComponent extends React.Component {
                 {!this.state.loading && (
                     <div>
                         <div className="query-layout">
-                            <div className="query-layout__header">
+                            <div className="query-layout__main">
                                 <QueryHeader
                                     {...this.props}
                                     user={this.state.user}
