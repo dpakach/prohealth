@@ -24,6 +24,9 @@ from django.contrib import admin
 from rest_framework.documentation import include_docs_urls
 from rest_framework import schemas
 
+from user_profile.views.user_activation import UserActivationView
+from user_profile.views.reset_password import ResetPasswordView
+
 urlpatterns = [
     # Include urls here.
     # url(r'api/auth/', include('rest_framework.urls', namespace='rest_framework')),
@@ -33,6 +36,8 @@ urlpatterns = [
     url(r'^api/', include('user_profile.urls', namespace='user_profile')),
     url(r'^api/', include('notifications.urls')),
     url(r'^api/', include('users_query.urls')),
+    url(r'^reset-password/(?P<code>[0-9A-Fa-f-]+)/$', ResetPasswordView.as_view(), name='reset_password'),
+    url(r'^users/activate/(?P<code>[0-9A-Fa-f-]+)/$', UserActivationView.as_view(), name='activate_user'),
     url(r'^docs/', include_docs_urls(title='API')),]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

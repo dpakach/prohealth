@@ -5,6 +5,8 @@ from django.template.loader import render_to_string
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view
+from rest_framework.authtoken.models import Token
 from user_profile.models import UserProfile, User, DoctorProfile, ResetPasswordCode, UserActivationCode
 from user_profile.serializers import (
     UserSerializer,
@@ -41,8 +43,6 @@ class UserView(APIView):
             code_object = UserActivationCode.objects.create(user=user)
             code = code_object.code
             current_site = get_current_site(request)
-            print(current_site)
-            print(current_site.domain)
             mail_subject = 'Welcome To ProHealth.'
             message = render_to_string('user_activation.html', {
                 'user': user.email,
@@ -96,3 +96,12 @@ class UserDetail(APIView):
         user = get_object_or_404(User, pk=user_id)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def verify_token(request):
+    current_token = request.META.get('HTTP_AUTHORIZATION')
+    print('hey {}'.format(current_token))
+    if current_token in Token.objects.all():
+        return Response('Yes')
+    return Response(status=status.HTTP_404_NOT_FOUND)
+
