@@ -2,9 +2,10 @@
     display: grid;
     grid-template-columns: auto 20rem;
     grid-gap: 1rem;
-    &__header {
+    &__main {
         padding-right: 1rem;
         border-right: 1px solid $color-grey-light-3;
+        height: calc(100vh - 8.5rem);
     }
 
     &__cta {
@@ -13,11 +14,33 @@
     }
 }
 
+.query-header-wrapper {
+    height: 35%;
+    overflow-y: scroll;
+    border: 1px solid $color-grey-dark-2;
+    padding-bottom: 0.5rem;
+    box-shadow: 0 -1rem 2rem -1rem rgba($color-black, .3) inset;
+}
+
+.shadow-layer {
+    position: relative;
+}
+.shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 35%;
+    width: 100%;
+    z-index: 2;
+}
+
+.chat-wrapper {
+}
 .query-header {
     display: grid;
     grid-template-columns: 2fr 1fr;
     justify-content: space-around;
-    align-items: center;
+    align-items: start;
     border-bottom: 1px solid $color-grey-light-3;
 
     &__main {
@@ -80,9 +103,9 @@
 
 .tag {
     text-align: center;
-    padding: .3rem .7rem .5rem 1rem;
+    padding: 0.3rem 0.7rem 0.5rem 1rem;
     display: inline-block;
-    font-size: .7rem;
+    font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
     box-shadow: 0 0 2rem rgba($color-black, 1);

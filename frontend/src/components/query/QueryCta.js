@@ -23,15 +23,17 @@ class QueryCta extends React.Component {
         getPescription(this.props.id)
             .then(data => {
                 if (data) {
-                    this.setState({prescription: data});
+                    this.setState({prescription: data, loading: false});
                 }
                 if (this.props.query.taken && this.props.query.taken_by) {
                     getUserById(this.props.query.taken_by).then(data => {
-                            this.setState({doctor: data, loading: false});
+                        this.setState({doctor: data});
                     });
                 }
             })
-            .catch(e => {});
+            .catch(e => {
+                this.setState({loading: false})
+            });
     };
 
     componentDidMount() {
@@ -44,7 +46,7 @@ class QueryCta extends React.Component {
         const is_doctor = localStorage.getItem('is_doctor') === 'true';
         const user_id = parseInt(localStorage.getItem('user_id'));
         return (
-            <div style={{height: '80vh', overflowY: 'scroll'}}>
+            <div style={{height: '80vh', overflowY: 'scroll', position: 'relative'}}>
                 <div className="loading-icon">
                     <GridLoader
                         style={{display: 'inline-block'}}
