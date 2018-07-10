@@ -103,5 +103,5 @@ def verify_token(request):
     print('hey {}'.format(current_token))
     if current_token in Token.objects.all():
         return Response('Yes')
-    return Response('No')
+    return Response(status=status.HTTP_404_NOT_FOUND)
 

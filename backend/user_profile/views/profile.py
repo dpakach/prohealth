@@ -39,7 +39,7 @@ class UserProfileDetail(APIView):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         serializer = UserProfileSerializerUpdate(profile, data=request.data, context={'request': request}, partial=True)
         if serializer.is_valid():
-            serializer.data['pending'] = True
+            serializer.validated_data['pending_verification'] = True
             profile = serializer.save()
             return Response(UserSerializerLogin(profile.user).data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -71,7 +71,7 @@ class DoctorProfileDetail(APIView):
             return Response(status=status.HTTP_401_UNAUTHORIZED)
         serializer = DoctorProfileSerializerUpdate(profile, data=request.data, context={'request': request}, partial=True)
         if serializer.is_valid():
-            serializer.data['pending'] = True
+            serializer.validated_data['pending_verification'] = "True"
             profile = serializer.save()
             return Response(UserSerializerLogin(profile.user).data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
