@@ -99,9 +99,15 @@ class UserDetail(APIView):
 
 @api_view(['GET'])
 def verify_token(request):
-    current_token = request.META.get('HTTP_AUTHORIZATION')
+    current_token = request.META.get('HTTP_AUTHORIZATION').split(' ')[1]
     print('hey {}'.format(current_token))
-    if current_token in Token.objects.all():
-        return Response('Yes')
+    tokens = []
+
+    for token in Token.objects.all():
+        tokens.append(token.__str__())
+    print(tokens)
+
+    if current_token in tokens:
+        return Response('found')
     return Response(status=status.HTTP_404_NOT_FOUND)
 

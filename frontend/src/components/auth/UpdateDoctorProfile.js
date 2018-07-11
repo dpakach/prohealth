@@ -125,7 +125,6 @@ class UpdateDoctorProfile extends Component {
     };
 
     render() {
-        console.log(this.state.user.doctor_profile);
 
         let {is_verified, pending_verification} =
             this.state.user.doctor_profile || {};
