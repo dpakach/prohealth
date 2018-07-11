@@ -10,7 +10,7 @@ from rest_framework.authentication import TokenAuthentication
 
 from . models import UserQuery, Medicine, Appointment, File
 from . serializer import UserQuerySerializer, AppointmentSerializer, MedicineSerializer, FileSerializer
-from . permissions import IsDoctorUser, QueryPermission, PrescriptionPermission, AppointmentPermission, UserPermission
+from . permissions import IsDoctorUser, QueryPermission, PrescriptionPermission, AppointmentPermission, QPermission
 from user_profile.models import User
 from notifications.models import Notification
 
@@ -20,15 +20,13 @@ class UserQueryView(APIView):
     serializer_class = UserQuerySerializer
 
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated, UserPermission, )
+    permission_classes = (IsAuthenticated, QPermission )
     @staticmethod
     def get(request):
         user = request.user
-        queries = UserQuery.objects.filter(user=user)
-        if type(queries) == Response:
-            return queries
-        return Response(UserQuerySerializer(queries, many=True).data)
-        
+        query = UserQuery.objects.filter(user=user)
+        return Response(UserQuerySerializer(query, many=True).data)
+
     @staticmethod
     def post(request):
         serializer = UserQuerySerializer(data=request.data, context = {'request':request})
@@ -49,6 +47,27 @@ class UserQueryView(APIView):
             return Response(UserQuerySerializer(serializer.instance).data, status=201)
         return Response(serializer.errors, status=400)
 
+
+class FindQueryView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsDoctorUser,)
+    
+    @staticmethod
+    def get(request):
+        query = UserQuery.objects.filter(taken=False)
+        return Response(UserQuerySerializer(query, many=True).data)
+
+
+class TakenQueryView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsDoctorUser,)
+    
+    @staticmethod
+    def get(request):
+        user=request.user
+        query = UserQuery.objects.filter(taken_by=user)
+        return Response(UserQuerySerializer(query, many=True).data)
+        
 
 class UserQueryDetailView(APIView):
     authentication_classes = (TokenAuthentication,)
@@ -153,10 +172,10 @@ class PrescribeView(APIView):
         user = request.user
         query = get_object_or_404(UserQuery, pk=query_id)
         serializer = MedicineSerializer(data=request.data, context = {'request':request})
-        if serializer.is_valid() and user== query.taken_by:
+        if serializer.is_valid(): #and user== query.taken_by:
             serializer.save(query=query)
-        else:
-            return Response(401)
+        # else:
+        #     return Response(401)
 
             # for notification
             user = request.user
