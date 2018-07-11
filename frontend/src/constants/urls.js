@@ -8,8 +8,8 @@ export const AuthUrls = {
     USER_PROFILE: `${ROOT_URL}/api/user-profiles/`,
     DOCTOR_PROFILE: `${ROOT_URL}/api/doctor-profiles/`,
     RESET_PASSWORD: `${ROOT_URL}/api/reset-password/`, 
-    RESET_PASSWORD_UPDATE: (code) => `${ROOT_URL}/api/reset-password/${code}/`, 
-    ACTIVATE_ACCOUNT: (code) => `${ROOT_URL}/api/users/activate/${code}/`, 
+    RESET_PASSWORD_UPDATE: (code) => `${ROOT_URL}/reset-password/${code}/`, 
+    ACTIVATE_ACCOUNT: (code) => `${ROOT_URL}/users/activate/${code}/`, 
 }
 
 export const QueryUrls = {
