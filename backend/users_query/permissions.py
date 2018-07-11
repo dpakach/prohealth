@@ -22,8 +22,8 @@ class PrescriptionPermission(permissions.BasePermission):
             return request.user == query.taken_by
         elif request.method == 'DELETE':
             return request.user == query.taken_by
-        else:
-            return False
+        # else:
+        #     return False
 
 
 class AppointmentPermission(permissions.BasePermission):
@@ -46,8 +46,9 @@ class QueryPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
         query = UserQuery.objects.get(pk=view.kwargs['query_id'])
+        user = request.user
         if request.method  == 'GET':
-            return request.user==query.user or request.user==query.taken_by or request.user == user.is_doctor
+            return request.user == query.user or request.user == query.taken_by
         elif request.method == 'POST':
             return request.user == query.user
         elif request.method == 'PATCH':
@@ -57,9 +58,13 @@ class QueryPermission(permissions.BasePermission):
         else:
             return False
 
-class UserPermission(permissions.BasePermission):
+class QPermission(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.method == 'POST':
-            return request.user == request.user
+            return not request.user.is_doctor
         elif request.method == 'GET':
-            return request.user
+            return not request.user.is_doctor
+    
+    # def has_object_permission(self, request, view, obj):
+    #     if request.method == 'GET':
+    #         return True
