@@ -5,6 +5,7 @@ import {Card} from 'antd';
 import UserProfile from './UserProfile';
 import UpdateProfile from './UpdateProfile';
 import UpdatePassword from './UpdatePassword';
+import UpdateDoctorProfile from './UpdateDoctorProfile';
 import NotFoundPage from '../NotFoundPage';
 
 import {getUser} from '../../actions/authActions';
@@ -22,9 +23,13 @@ const tabList = [
         key: 'updateprofile',
         tab: 'Update Profile',
     },
+    {
+        key: 'doctorprofile',
+        tab: 'Doctor',
+    },
 ];
 
-let key_list = ['user', 'updatepassword', 'updateprofile'];
+let key_list = ['user', 'updatepassword', 'updateprofile', 'doctorprofile'];
 
 class Profile extends React.Component {
     state = {
@@ -85,6 +90,15 @@ class Profile extends React.Component {
                             ),
                             updateprofile: (
                                 <UpdateProfile
+                                    {...this.props}
+                                    tabChange={this.tabChange}
+                                    user={this.state.user}
+                                    updateUser={this.updateUser}
+                                    loading={this.state.loading}
+                                />
+                            ),
+                            doctorprofile: (
+                                <UpdateDoctorProfile
                                     {...this.props}
                                     tabChange={this.tabChange}
                                     user={this.state.user}

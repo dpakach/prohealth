@@ -266,20 +266,12 @@ export const updateDoctorProfile = (id, form_data) => {
     return fetch(AuthUrls.DOCTOR_PROFILE + id, {
         method: 'PATCH',
         headers: {
-            'Content-Type': 'application/json',
             Authorization: `Token ${localStorage.getItem('token')}`,
         },
-        body: JSON.stringify(form_data),
+        body: form_data,
     })
         .then(response => response.json().then(data => ({data, response})))
-        .then(({data, response}) => {
-            if (response.ok) {
-                return data;
-            } else {
-                return Promise.reject('unable to update user');
-            }
-        })
         .catch(error => {
-            Promise.reject(error.message);
+            console.log(error)
         });
 };

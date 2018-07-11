@@ -10,6 +10,7 @@ import ResetPassword from '../components/auth/ResetPassword';
 import Profile from '../components/auth/Profile';
 import ResetPasswordUpdate from '../components/auth/ResetPasswordUpdate';
 import ActivatingAccount from '../components/auth/ActivatingAccount';
+import UpdateDoctorProfile from '../components/auth/UpdateDoctorProfile';
 
 import QueryCreateComponent from '../components/query/QueryCreateComponent';
 import QueryUpdateComponent from '../components/query/QueryUpdateComponent';
@@ -152,6 +153,12 @@ class AppRouter extends React.Component {
                                     path="/notifications"
                                     auth={this.props.isAuthenticated}
                                     component={NotificationsPage}
+                                />
+
+                                <PrivateRoute
+                                    path="/become-a-doctor"
+                                    auth={this.props.isAuthenticated}
+                                    component={UpdateDoctorProfile}
                                 />
 
                                 <Route
