@@ -10,6 +10,7 @@ export const AuthUrls = {
     RESET_PASSWORD: `${ROOT_URL}/api/reset-password/`, 
     RESET_PASSWORD_UPDATE: (code) => `${ROOT_URL}/reset-password/${code}/`, 
     ACTIVATE_ACCOUNT: (code) => `${ROOT_URL}/users/activate/${code}/`, 
+    CHECK_TOKEN: `${ROOT_URL}/api/users/verify-token/`, 
 }
 
 export const QueryUrls = {

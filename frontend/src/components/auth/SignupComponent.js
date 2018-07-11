@@ -5,12 +5,7 @@ import {AuthUrls} from '../../constants/urls';
 
 import Beer from 'react-icons/lib/fa/beer';
 
-
-import {
-    DatePicker,
-    Select,
-    message,
-} from 'antd';
+import {DatePicker, Select, message} from 'antd';
 
 const Option = Select.Option;
 
@@ -26,7 +21,6 @@ class SignupComponent extends Component {
             email: '',
             password: '',
             password2: '',
-            is_doctor: false,
             date_of_birth: null,
             gender: null,
 
@@ -51,11 +45,6 @@ class SignupComponent extends Component {
 
     // form fields validation
     //
-    handleCheckbox = e => {
-        // console.log(e);
-        this.setState({is_doctor: e.target.checked});
-    };
-
     handleSelectChange = value => {
         this.setState({gender: value});
     };
@@ -112,7 +101,9 @@ class SignupComponent extends Component {
     renderError = key => {
         if (this.state.formErrors[key]) {
             return this.state.formErrors[key].map(e => (
-                <li style={{color: 'orangered', listStyle: 'none'}} key={Math.random()}>
+                <li
+                    style={{color: 'orangered', listStyle: 'none'}}
+                    key={Math.random()}>
                     {e}
                 </li>
             ));
@@ -128,7 +119,6 @@ class SignupComponent extends Component {
             'last_name',
             'email',
             'password',
-            'is_doctor',
             'gender',
             'date_of_birth',
         ]);
@@ -138,7 +128,7 @@ class SignupComponent extends Component {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(form_data),
         };
-        console.log(form_data)
+        console.log(form_data);
 
         // We dispatch requestLogin to kickoff the call to the API
         return fetch(AuthUrls.USERS, config)
@@ -148,7 +138,7 @@ class SignupComponent extends Component {
                     message.success('signed up succesfully');
                     this.props.history.push('/user/login/');
                 } else {
-                    console.log(data)
+                    console.log(data);
                     this.setState({formErrors: data});
                 }
             })
@@ -234,15 +224,6 @@ class SignupComponent extends Component {
                                 <Option value="M">Male</Option>
                                 <Option value="F">Female</Option>
                             </Select>
-                        </div>
-                        <div className="form__group">
-                            <input
-                                onChange={this.handleCheckbox}
-                                type="checkbox"
-                                name="is_doctor"
-                            />
-                            <span>Signup as a Doctor</span>
-                            <p>Select this option if you are a Doctor.</p>
                         </div>
                     </form>
                     <button

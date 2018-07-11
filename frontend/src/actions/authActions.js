@@ -50,7 +50,7 @@ const requestLogout = creds => {
     };
 };
 
-const receiveLogout = user => {
+export const receiveLogout = user => {
     return {
         type: AuthTypes.LOGOUT_SUCCESS,
         isFetching: false,
@@ -272,6 +272,21 @@ export const updateDoctorProfile = (id, form_data) => {
     })
         .then(response => response.json().then(data => ({data, response})))
         .catch(error => {
-            console.log(error)
+            console.log(error);
+        });
+};
+
+export const checkToken = () => {
+    return fetch(AuthUrls.CHECK_TOKEN, {
+        methos: 'GET',
+        headers: {
+            Authorization: `Token ${localStorage.getItem('token')}`,
+        },
+    })
+        .then(response => {
+            return response.status;
+        })
+        .catch(error => {
+            console.log(error);
         });
 };
