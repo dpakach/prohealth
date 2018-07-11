@@ -16,5 +16,8 @@ urlpatterns = [
     url(r'^query/(?P<query_id>[\d]+)/files/(?P<files_id>[\d]+)$',views.FileDetailView.as_view()),
     url(r'^query/(?P<query_id>[\d]+)/take$',views.TakenView.as_view()),
     url(r'^query/(?P<query_id>[\d]+)/resolve$',views.ResolveView.as_view()),
+    url(r'^query-for-doc/$',views.FindQueryView.as_view()),
+    url(r'^taken-query/$',views.TakenQueryView.as_view()),
+    
 
 ]
