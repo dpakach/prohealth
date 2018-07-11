@@ -19,7 +19,7 @@ class UserManager(BaseUserManager):
         is_superuser = kwargs.pop('is_superuser', False)
         user = self.model(
             email=email,
-            is_active=Frue,
+            is_active=True,
             is_staff=is_staff,
             is_superuser=is_superuser,
             **kwargs
