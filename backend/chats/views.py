@@ -64,9 +64,9 @@ class QueryMessageView(APIView):
         return Response(MessageSerializer(messages, many=True).data)
 
     @staticmethod
-    def post(request):
+    def post(request, query_id):
         user = request.user
-        query = get_object_or_404(UserQuery, id=request.data.get('query'))
+        query = get_object_or_404(UserQuery, id=query_id)
         if user.is_doctor:
             receiver = query.user
         else:
