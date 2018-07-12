@@ -3,11 +3,11 @@ Hi {{ user }}, did you request for a password reset?
 If so, Please click on the link to confirm your registration,
 
 
-<button ><a href="{% if request.is_secure %}https{% else %}http{% endif %}://{{ domain}}{% url 'user_profile:reset_password' code=code %}">Reset Password</a></button>
+<button ><a href="{% if request.is_secure %}https{% else %}http{% endif %}://localhost:8000{% url 'reset_password' code=code %}">Reset Password</a></button>
 
 In case link doesn't work please copy and paste the below url in a new tab:
 
-{% if request.is_secure %}https{% else %}http{% endif %}://{{ domain}}{% url 'user_profile:reset_password' code=code %}
+{% if request.is_secure %}https{% else %}http{% endif %}://localhost:8000{% url 'reset_password' code=code %}
 
 If you didn't request for resetting a password, please ignore this email.
 {% endautoescape %}
