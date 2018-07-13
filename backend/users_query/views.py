@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import permission_classes
@@ -272,3 +273,20 @@ class ResolveView(APIView):
             return Response(status=200)
         else:
             return Response(status=401)
+
+class SearchApiView(APIView):
+    serializer_class = UserQuerySerializer
+    permission_classes = (IsAuthenticated,)
+
+    @staticmethod
+    def get(request):
+        if 'q' in request.GET:
+            querystring = request.GET.get('q').strip()
+            if len(querystring) == 0:
+                return Response('empty')
+            results = {'query': UserQuery.objects.none()}
+            queries = querystring.split()
+            for query in queries:
+                results['query'] = results['query'] | UserQuery.objects.filter(
+                    Q(title_problem__icontains=query) | Q(description__icontains=query) | Q(name_of_patient__icontains=query))
+        return Response(UserQuerySerializer(results['query'], many=True).data)
