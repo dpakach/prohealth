@@ -3,6 +3,8 @@ import {Upload, Button, Icon, message} from 'antd';
 import axios from 'axios';
 import {ROOT_URL} from '../../constants/urls';
 
+import Lightbox from 'react-image-lightbox';
+
 import {QueryUrls} from '../../constants/urls';
 
 class Photos extends Component {
@@ -10,6 +12,10 @@ class Photos extends Component {
         uploading: false,
         photo: null,
         uploaded_files: [],
+
+        // for lightbox
+        photoIndex: 0,
+        isOpen: false,
     };
 
     handleUpload = () => {
@@ -80,7 +86,7 @@ class Photos extends Component {
     }
 
     render() {
-        const {uploading} = this.state;
+        const {uploading, photoIndex, isOpen, uploaded_files} = this.state;
         const user_id = parseInt(localStorage.getItem('user_id'));
         const props = {
             beforeUpload: file => {
@@ -91,46 +97,92 @@ class Photos extends Component {
             },
         };
         return (
-            <div className="photos">
-                <div>
-                    {user_id === this.props.user.id && (
-                        <div>
-                            <div className="photos__input">
-                                <div className="upload-btn-wrapper">
-                                    <button className="btn btn--small">
-                                        browse a file
+            <div>
+                <p>Click the images to view them</p>
+                <div className="photos">
+                    <div>
+                        {user_id === this.props.user.id && (
+                            <div>
+                                <div className="photos__input">
+                                    <div className="upload-btn-wrapper">
+                                        <button className="btn btn--small">
+                                            browse a file
+                                        </button>
+                                        <input
+                                            type="file"
+                                            onChange={this.handleChange}
+                                            className="photos__input__field btn btn--default btn--small"
+                                        />
+                                    </div>
+                                    <button
+                                        className={this.getUploadClass()}
+                                        onClick={this.handleUpload}>
+                                        upload
                                     </button>
-                                    <input
-                                        type="file"
-                                        onChange={this.handleChange}
-                                        className="photos__input__field btn btn--default btn--small"
-                                    />
                                 </div>
-                                <button
-                                    className={this.getUploadClass()}
-                                    onClick={this.handleUpload}>
-                                    upload
-                                </button>
+                                {this.state.photo && (
+                                    <p style={{fontSize: '.7rem'}}>
+                                        {this.state.photo.name}
+                                    </p>
+                                )}
                             </div>
-                            {this.state.photo && (
-                                <p style={{fontSize: '.7rem'}}>
-                                    {this.state.photo.name}
-                                </p>
-                            )}
-                        </div>
-                    )}
-                </div>
+                        )}
+                    </div>
 
-                <div className="photos__list">
-                    {this.state.uploaded_files.map(f => (
-                        <img
-                            key={f.id}
-                            src={ROOT_URL + f.file_related}
-                            alt="user's file"
-                            className="photos__list__item"
-                            data-lightbox="user-photos"
-                        />
-                    ))}
+                    <div className="photos__list">
+                        {isOpen && (
+                            <Lightbox
+                                mainSrc={
+                                    uploaded_files[photoIndex].file_related
+                                }
+                                nextSrc={
+                                    uploaded_files[
+                                        (photoIndex + 1) % uploaded_files.length
+                                    ].file_related
+                                }
+                                prevSrc={
+                                    uploaded_files[
+                                        (photoIndex +
+                                            uploaded_files.length -
+                                            1) %
+                                            uploaded_files.length
+                                    ].file_related
+                                }
+                                onCloseRequest={() =>
+                                    this.setState({isOpen: false})
+                                }
+                                onMovePrevRequest={() =>
+                                    this.setState({
+                                        photoIndex:
+                                            (photoIndex +
+                                                uploaded_files.length -
+                                                1) %
+                                            uploaded_files.length,
+                                    })
+                                }
+                                onMoveNextRequest={() =>
+                                    this.setState({
+                                        photoIndex:
+                                            (photoIndex + 1) %
+                                            uploaded_files.length,
+                                    })
+                                }
+                            />
+                        )}
+
+                        {this.state.uploaded_files.map(f => (
+                            <img
+                                key={f.id}
+                                src={ROOT_URL + f.file_related}
+                                alt="user's file"
+                                className="photos__list__item"
+                                data-lightbox="user-photos"
+                                onClick={() =>
+                                    this.setState({isOpen: true, photoIndex: 0})
+                                }
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
         );
