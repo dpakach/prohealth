@@ -29,3 +29,6 @@ export const NotificationUrls = {
     READ_BY_QUERY: (id) =>  `${ROOT_URL}/api/notifications/read_all/${id}`,
 }
 
+export const ChatUrls = {
+    MESSAGE: (id) => `${ROOT_URL}/api/query/${id}/messages/`
+}
