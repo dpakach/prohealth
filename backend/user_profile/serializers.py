@@ -103,4 +103,4 @@ class DoctorProfileSerializerUpdate(serializers.ModelSerializer):
 
     class Meta:
         model = DoctorProfile
-        fields = ('profile_photo','photo_doc', 'qualification', 'speciality', 'hospital', 'description', 'nmc_code' )
+        fields = ('profile_photo','photo_doc', 'document1', 'nmc_code', 'qualification', 'speciality', 'hospital', 'description', 'exp_pts')
