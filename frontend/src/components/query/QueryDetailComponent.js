@@ -1,6 +1,6 @@
 import React from 'react';
 import QueryHeader from './QueryHeader';
-import Chat from './Chat';
+import Chat from '../chat/Chat';
 import QueryCta from './QueryCta';
 import {GridLoader} from 'react-spinners';
 
@@ -66,7 +66,9 @@ class QueryDetailComponent extends React.Component {
                                     query={this.state.query}
                                     updateQuery={this.updateQuery}
                                 />
-                                <Chat />
+                                <Chat 
+                                    id={this.state.query.id}
+                                />
                             </div>
                             <div className="query-layout__cta">
                                 <QueryCta
