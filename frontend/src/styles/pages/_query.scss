@@ -1,0 +1,119 @@
+.query-layout {
+    display: grid;
+    grid-template-columns: auto 20rem;
+    grid-gap: 1rem;
+    &__main {
+        padding-right: 1rem;
+        border-right: 1px solid $color-grey-light-3;
+        height: calc(100vh - 8.5rem);
+    }
+
+    &__cta {
+        padding-right: 1rem;
+        padding-top: 1rem;
+    }
+}
+
+.query-header-wrapper {
+    height: 35%;
+    overflow-y: scroll;
+    border: 1px solid $color-grey-dark-2;
+    padding-bottom: 0.5rem;
+    box-shadow: 0 -1rem 2rem -1rem rgba($color-black, .3) inset;
+}
+
+.shadow-layer {
+    position: relative;
+}
+.shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 35%;
+    width: 100%;
+    z-index: 2;
+}
+
+.chat-wrapper {
+}
+.query-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    justify-content: space-around;
+    align-items: start;
+    border-bottom: 1px solid $color-grey-light-3;
+
+    &__main {
+    }
+
+    &__stats {
+        margin: 0 0.5rem;
+
+        &--title {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.prescription {
+    border: 1px solid $color-grey-light-3;
+    border-radius: 3px;
+    margin-bottom: 1rem;
+
+    &__item {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        justify-content: space-between;
+        grid-gap: 1rem;
+        align-items: center;
+        &__button {
+        }
+        &__text {
+        }
+    }
+}
+
+.photos {
+    display: grid;
+    grid-gap: 0.5rem;
+    grid-template-columns: auto 1fr;
+    margin-bottom: 0.5rem;
+
+    &__input {
+        padding: 0.5rem;
+        border-right: 1px solid $color-grey-light-3;
+        display: grid;
+        grid-template-columns: auto auto;
+        justify-content: space-around;
+        align-items: center;
+
+        &__field {
+            width: 15rem;
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    &__list {
+        &__item {
+            margin: 0.5rem 0.2rem 0.5rem 0;
+            height: 5rem;
+        }
+    }
+}
+
+.tag {
+    text-align: center;
+    padding: 0.3rem 0.7rem 0.5rem 1rem;
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    box-shadow: 0 0 2rem rgba($color-black, 1);
+    background-image: linear-gradient(
+        to right bottom,
+        rgba($color-tertiary-dark, 1),
+        rgba($color-tertiary-light, 1)
+    );
+    color: $color-grey-light-2;
+    clip-path: polygon(10% 0, 100% 0, 100% 100%, 10% 100%, 0 50%);
+}

@@ -115,28 +115,6 @@
         }
 }
 
-.tag{
-        text-align: center;
-        padding: 1rem 3rem;
-        display: inline-block;
-        font-size: 3rem;
-        font-weight: 400;
-        text-transform: uppercase;
-        box-shadow:0 0 2rem rgba($color-black, 1);
-        background-image: linear-gradient(to right bottom, 
-                                rgba($color-tertiary-dark, 1), 
-                                rgba($color-tertiary-light, 1));
-        color: $color-tertiary-lightest;
-        clip-path: polygon(10% 0, 100% 0, 100% 100%, 10% 100%, 0 50%);
-        @include respond(tab-port){
-                font-size: 2rem;
-        }
-        @include respond(phone){
-                font-size: 1.8rem;
-                font-weight: 500;
-        }
-}
-
 .options{
         margin-bottom: 5rem;
         display: grid;

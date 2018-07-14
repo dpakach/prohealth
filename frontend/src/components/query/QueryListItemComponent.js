@@ -1,48 +1,81 @@
 import React from 'react';
-import {List, Avatar, Button} from 'antd';
+import moment from 'moment';
 import {Link, withRouter} from 'react-router-dom';
 
 import {deleteQueryItem} from '../../actions/queryActions';
 
 const QueryListItemComponent = props => {
     const deleteButton = (
-        <Button
-            type="danger"
+        <div
+            className="list-item__action--icon"
             onClick={e => {
                 deleteQueryItem(props.item.id).then(data => {
                     props.updateQueries();
                 });
             }}>
-            delete
-        </Button>
+            <i className=" material-icons">delete</i>
+        </div>
     );
 
     const editButton = (
-        <Button
-            type="primary"
+        <div
+            className="list-item__action--icon"
             onClick={e => {
                 props.history.push(`/query/${props.item.id}/update`);
             }}>
-            edit
-        </Button>
+            <i className=" material-icons">edit</i>
+        </div>
     );
+
+    const detailsButton = (
+        <div className="list-item__action--icon">
+            <Link to={`/query/${props.item.id}`}>
+                <i className=" material-icons">more</i>
+            </Link>
+        </div>
+    );
+
     return (
         <div>
-            <List.Item actions={[deleteButton, editButton]}>
-                <List.Item.Meta
-                    avatar={<Avatar src="#" />}
-                    title={
-                        <Link to={`/query/${props.item.id}`}>
-                            {props.item.title_problem}
-                        </Link>
-                    }
-                    description={props.item.description}
-                />
-                <div>
-                    <h4>Created Date</h4>
-                    <p>{props.item.date_of_submission}</p>
+            <div className="list-item query-list__item">
+                <div className="list-item__title">
+                    <Link to={`/query/${props.item.id}`}>
+                        {props.item.title_problem}
+                    </Link>
                 </div>
-            </List.Item>
+
+                <div className="list-item__content">
+                    {props.item.description}
+                    {props.header && (
+                        <div style={{marginTop: '1rem'}}>
+                            <h4 style={{margin: 0}}>
+                                Posted by
+                                {'  '}
+                                <small>
+                                    {props.user.first_name +
+                                        ' ' +
+                                        props.user.last_name}
+                                </small>
+                            </h4>
+                        </div>
+                    )}
+                    <h4>
+                        Created{'   '}
+                        <small>
+                            {moment(props.item.date_of_submission).fromNow()}
+                        </small>
+                    </h4>
+                    <span className="tag">Neurology</span>
+                </div>
+
+                {!props.header && (
+                    <div className="list-item__action">
+                        {detailsButton}
+                        {editButton}
+                        {deleteButton}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

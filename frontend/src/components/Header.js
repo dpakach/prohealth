@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {NavLink} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {Menu, Icon} from 'antd';
-import {logoutUser} from '../actions/authActions';
 import {withRouter} from 'react-router';
 
 class Header extends React.Component {
@@ -11,86 +9,78 @@ class Header extends React.Component {
         super(props);
         this.state = {
             authenticated: localStorage.getItem('authenticated'),
-            logoutError: '',
         };
     }
 
-    logout = () => {
-        this.props.dispatch(logoutUser(this.props.history));
+    renderLinkItem = (to, name, icon, onClick = null) => {
+        return (
+            <NavLink
+                key={name}
+                className={`nav__item ${
+                    window.location.pathname.split('/')[1] ===
+                    name.toLowerCase()
+                        ? 'nav__item--active'
+                        : ''
+                }`}
+                to={to}
+                onClick={onClick}>
+                <div>
+                    <div className="nav__item--text">{name}</div>
+                </div>
+            </NavLink>
+        );
     };
 
     renderLinks = auth => {
-        // if (this.state.authenticated) {
-        // if(this.state.authenticated){
-        if(this.props.isAuthenticated){
+        if (this.props.isAuthenticated) {
             return [
-                <Menu.Item key="feature">
-                    <NavLink to="/feature">
-                        <Icon type="mail" />Feature
-                    </NavLink>
-                </Menu.Item>,
-                <Menu.Item key="queries">
-                    <NavLink to="/query">
-                        <Icon type="message" />Query
-                    </NavLink>
-                </Menu.Item>,
-                <Menu.Item key="profile">
-                    <NavLink to="/profile/user">
-                        <Icon type="profile" />Profile
-                    </NavLink>
-                </Menu.Item>,
-                <Menu.Item key="logout">
-                    <NavLink onClick={this.logout} to="/">
-                        <Icon type="logout" />Logout
-                    </NavLink>
-                </Menu.Item>,
+                this.renderLinkItem('/feature', 'Feature', 'mail'),
+                this.renderLinkItem('/query', 'Query', 'message'),
+                this.renderLinkItem('/profile/user', 'Profile', 'profile'),
             ];
         } else {
             return [
-                <Menu.Item key="login">
-                    <NavLink to="/user/login">
-                        <Icon type="user" />Login
-                    </NavLink>
-                </Menu.Item>,
-
-                <Menu.Item key="signup">
-                    <NavLink to="/user/signup">
-                        <Icon type="user" />Signup
-                    </NavLink>
-                </Menu.Item>,
+                this.renderLinkItem('/user/login', 'Login', 'user'),
+                this.renderLinkItem('/user/signup', 'Signup', 'user'),
             ];
         }
     };
 
     render() {
         return (
-            <header>
-                <Menu mode="horizontal" theme="dark">
-                    <Menu.Item>
-                        <NavLink to="/" exact={true}>
-                            ProHealth
-                        </NavLink>
-                    </Menu.Item>
-                    {this.renderLinks()}
-                </Menu>
-            </header>
+            <nav className="nav">
+                <div className="nav__logo-box">
+                    <NavLink to="/" exact={true}>
+                        <h1 className="nav__brand">ProHealth</h1>
+                    </NavLink>
+                </div>
+
+                <div className="nav__search">
+                    <input
+                        type="text"
+                        placeholder="Search"
+                        className="nav__search-bar"
+                    />
+                </div>
+
+                <div className="nav__nav-links">{this.renderLinks()}</div>
+            </nav>
         );
     }
 }
-
 
 Header.propTypes = {
     dispatch: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state) => {
-    const {auth} = state
-    const {isAuthenticated, errorMessage} = auth
+const mapStateToProps = state => {
+    const {auth} = state;
+    const {isAuthenticated, errorMessage} = auth;
     return {
         isAuthenticated,
-        errorMessage
-    }
-}
+        errorMessage,
+    };
+};
 
 export default withRouter(connect(mapStateToProps)(Header));

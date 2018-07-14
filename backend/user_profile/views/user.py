@@ -107,4 +107,3 @@ def verify_token(request):
             return Response('Token does not exist.', status=status.HTTP_404_NOT_FOUND)
     except:
         return Response("No Token.", status=status.HTTP_404_NOT_FOUND)
-

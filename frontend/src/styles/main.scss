@@ -10,6 +10,10 @@
 @import 'components/buttons';
 @import 'components/card';
 @import 'components/chat';
+@import 'components/nav';
+@import 'components/form';
+@import 'components/floating';
+@import 'components/list';
 
 @import 'layout/footer';
 @import 'layout/grid';
@@ -20,9 +24,11 @@
 @import 'pages/extras';
 @import 'pages/home';
 @import 'pages/profile';
+@import 'pages/query';
+@import 'pages/main';
 
 
 .action__button {
     width: 100%;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }

@@ -7,19 +7,6 @@
 }
 
 html {
-    font-size: 62.5%;
-    background-color: #f6f6f6;
-
-    @include respond(tab-land) {
-        font-size: 56.25%;
-    }
-
-    @include respond(tab-port) {
-        font-size: 50%;
-    }
-    @include respond(big-desktop) {
-        font-size: 75%;
-    }
 }
 
 body {
@@ -27,29 +14,54 @@ body {
     background-color: #f6f6f6;
 }
 
-.container {
-    padding: 2rem;
-    margin-top: 8.4rem;
-    position: relative;
-    min-height: 55vh;
-    max-width: 160rem;
-    margin-right: auto;
-    margin-left: auto;
-    @include respond(tab-port) {
-        margin-top: 20rem;
-    }
-    @include respond(phone) {
-        margin-top: 4rem;
-    }
-}
-
 a {
-    color: $color-tertiary-light;
+    // color: $color-tertiary-light;
     text-decoration: none;
     outline: none;
 }
 
 ::selection {
-    background-color: rgba($color-tertiary-light, 0.6);
+    background-color: rgba($color-tertiary-dark, 0.6);
     color: $color-white;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    display: none;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background: rgba($color-tertiary-light, 0.3);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba($color-tertiary-light, 0.5);
+}
+
+.loading-icon {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loading-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.6rem;
+}
+
+.container {
+}
+
+
