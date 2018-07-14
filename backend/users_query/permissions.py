@@ -49,7 +49,7 @@ class QueryPermission(permissions.BasePermission):
         
         user = request.user
         if request.method  == 'GET':
-            return request.user == query.user or request.user == query.taken_by
+            return request.user == query.user or request.user == query.taken_by or (request.user.is_doctor and not query.taken)
         elif request.method == 'POST':
             return request.user == query.user
         elif request.method == 'PATCH':
@@ -62,9 +62,9 @@ class QueryPermission(permissions.BasePermission):
 class QPermission(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.method == 'POST':
-            return not request.user.is_doctor
+            return True # not request.user.is_doctor
         elif request.method == 'GET':
-            return not request.user.is_doctor
+            return True # not request.user.is_doctor
     
     # def has_object_permission(self, request, view, obj):
     #     if request.method == 'GET':

@@ -26,3 +26,7 @@ export const AuthTypes = {
 
     FETCH_USERS: 'FETCH_USERS',
 };
+
+export const NotificationsTypes = {
+    
+}

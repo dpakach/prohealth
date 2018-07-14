@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Modal, message, Form, Input, Button} from 'antd';
+import {Modal, message, Form, Input, Button} from 'antd';
 import {pescribe} from '../../actions/queryActions';
 import Prescription from './Prescription';
 
@@ -43,6 +43,8 @@ class PrescriptionForm extends React.Component {
             'remarks',
         ]);
 
+        this.setState({loading: true})
+
         pescribe(form_data, this.props.id)
             .then(data => {
                 this.props.updatePescription();
@@ -51,10 +53,12 @@ class PrescriptionForm extends React.Component {
                     quantity: '',
                     times_a_day: null,
                     remarks: '',
+                    loading: false
                 });
             })
             .catch(e => {
                 message.error(e.message);
+                this.setState({loading: false})
             });
     };
 
@@ -67,19 +71,20 @@ class PrescriptionForm extends React.Component {
             <div>
                 <div>
                     <div>
-                        <Button
-                            type="primary"
-                            className="action__button"
+                        <button
+                            className="action__button btn btn--small"
                             onClick={this.showModal}>
                             Add Prescription
-                        </Button>
+                        </button>
                         <Modal
                             visible={this.state.visible}
                             title="Give Prescription"
                             onOk={this.handleOk}
                             onCancel={this.handleCancel}
                             footer={[
-                                <Button key="back" onClick={this.handleCancel}>
+                                <Button
+                                    key="back"
+                                    onClick={this.handleCancel}>
                                     Return
                                 </Button>,
                             ]}>
@@ -124,13 +129,14 @@ class PrescriptionForm extends React.Component {
                                     />
                                 </Form>
                                 <br />
-                                <Button
+                                <button
                                     key="submit"
                                     type="primary"
-                                    loading={this.state.loading}
+                                    className="btn btn--small"
+                                    style={{margin: 0}}
                                     onClick={this.handleAdd}>
                                     Add
-                                </Button>,
+                                </button>
                             </div>
                         </Modal>
                     </div>

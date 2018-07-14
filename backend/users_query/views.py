@@ -292,11 +292,11 @@ class SearchApiView(APIView):
         return Response(UserQuerySerializer(results['query'], many=True).data)
 
 
-class FindQueryDetailView(APIView):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated, IsDoctorUser,)
+# class FindQueryDetailView(APIView):
+#     authentication_classes = (TokenAuthentication,)
+#     permission_classes = (IsAuthenticated, IsDoctorUser,)
 
-    @staticmethod
-    def get(request, query_id):
-        queri = get_object_or_404(UserQuery, pk=query_id)
-        return Response(UserQuerySerializer(queri).data)
+#     @staticmethod
+#     def get(request, query_id):
+#         queri = get_object_or_404(UserQuery, pk=query_id)
+#         return Response(UserQuerySerializer(queri).data)

@@ -170,7 +170,6 @@ module.exports = {
                   importLoaders: 1,
                 },
               },
-              'sass-loader',
               {
                 loader: require.resolve('postcss-loader'),
                 options: {
@@ -191,6 +190,7 @@ module.exports = {
                   ],
                 },
               },
+              'sass-loader',
             ],
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.

@@ -5,8 +5,10 @@
 .chat__main {
     display: flex;
     flex-direction: column;
-    height: 50vh;
+    height: 65%;
     width: 100%;
+    border: 2px solid $color-grey-light-3;
+    margin-top: .5rem;
 }
 
 .chat__messages {
@@ -21,6 +23,10 @@
     padding: 10px;
     /*height: 60px;*/
     flex-shrink: 0;
+
+    form {
+        margin-bottom: 0;
+    }
 }
 
 .chat__footer form {
@@ -43,23 +49,47 @@
     padding: 10px;
 }
 
-.message {
-    padding: 10px;
+.clear{
+    clear: both;
 }
 
-.message__title {
-    display: flex;
-    margin-bottom: 5px;
+
+.chat-message {
+    padding: .3rem;
+    background-color: rgba($color-tertiary-light, 1);
+    color: white;
+    margin: .5rem auto;
+    padding: .4rem 1rem .3rem 1rem;
+    border-radius: 1.5rem;
+    float: right;
+    position: relative;
+    display: inline-block;
+    max-inline-size: 70%;
+
+    &__time {
+        // background-color: orangered;
+        position: absolute;
+        left: -3rem;
+        color: $color-grey-light-3;
+        font-weight: 700;
+
+
+        &--self {
+            
+            left: 0;
+            text-align: right;
+            right: -3rem;
+        }
+    }
+
+    &--self {
+        background-color: rgba($color-grey-light-3, .5);
+        color: $color-grey-dark-3;
+        float: left
+    }
+
 }
 
-.message__title h4 {
-    font-weight: 600;
-    margin-right: 10px;
-}
-
-.message__title span {
-    color: #999;
-}
 
 @media (max-width: 600px) {
     * {

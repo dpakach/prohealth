@@ -1,53 +1,58 @@
 import React from 'react';
-import {Card, Icon, Row, Col} from 'antd';
+
+import QueryListItemComponent from './QueryListItemComponent';
+import Photos from './Photos';
 
 const QueryHeader = props => {
-    // console.log(props);
+    const user_stats = [
+        {title: 'Name', value: props.query.name_of_patient},
+        {title: 'Age', value: props.query.age_of_patient},
+        {title: 'Height', value: props.query.height_of_patient},
+        {title: 'Weight', value: props.query.weight_of_patient},
+    ];
     return (
-        <div>
-            <Card
-                bordered={false}
-                style={{
-                    width: '100%',
-                    height: '30vh',
-                    overflowY: 'scroll',
-                    marginBottom: 20,
-                }}>
-                {props.loading && (
-                    <div style={{width: "100%", textAlign: 'center'}}>
-                        <Icon
-                            style={{fontSize: '5rem' }}
-                            type="loading"
+        <div className="query-header-wrapper">
+            <div className="shadow-layer">
+                <div className="shadow">
+                </div>
+                <div className="query-header">
+                    <div className="query-header__main">
+                        <QueryListItemComponent
+                            updateQueries={props.updateQueries}
+                            key={props.query.id}
+                            item={props.query}
+                            loading={props.loading}
+                            header={true}
+                            user={props.user}
                         />
                     </div>
-                )}
-                {!props.loading && (
-                    <Row>
-                        <Col span={18}>
-                            <h2>{props.query.title_problem}</h2>
-                            <p>{props.query.description}</p>
 
-                            <h4>
-                                created by: {props.user.first_name}{' '}
-                                {props.user.last_name}
-                                <br />
-                                <small>({props.user.email})</small>
-                                <br />
-                                <br />
-                                Created At: {props.query.date_of_submission}
-                            </h4>
-                        </Col>
-
-                        <Col span={6}>
-                            <h2>User Stats</h2>
-                            <p>Name: {props.query.name_of_patient}</p>
-                            <p>Age: {props.query.age_of_patient}</p>
-                            <p>Height:{props.query.height_of_patient}</p>
-                            <p>Weight:{props.query.weight_of_patient}</p>
-                        </Col>
-                    </Row>
+                    <div className="query-header__stats">
+                        <h2 className="query-header__stats--title">
+                            User Stats
+                        </h2>
+                        <div className="user-stats-list">
+                            {user_stats.map(s => {
+                                return (
+                                    <div
+                                        key={s.title}
+                                        className="list-item user-stats-list__item">
+                                        <div className="user-stats-list__item__title">
+                                            {s.title}
+                                        </div>
+                                        <div className="user-stats-list__item__content">
+                                            {s.value}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+                {props.query.id && (
+                    <Photos user={props.user} id={props.query.id} />
                 )}
-            </Card>
+            </div>
         </div>
     );
 };

@@ -18,7 +18,6 @@ export const apiConfig = (type = 'get', data = null) => {
 export const createQuery = form_data => {
     return fetch(QueryUrls.USER_QUERY, apiConfig('post', form_data))
         .then(response => {
-            console.log(response)
             if (response.ok) {
                 return response.json();
             } else {
@@ -26,7 +25,7 @@ export const createQuery = form_data => {
             }
         })
         .catch(e => {
-            Promise.reject(Error('An error occured while creating the query'));
+            Promise.reject(e.message);
         });
 };
 
@@ -35,17 +34,14 @@ export const createQuery = form_data => {
 export const getQueries = () => {
     return fetch(QueryUrls.USER_QUERY, apiConfig())
         .then(response => {
-            console.log(response)
             if (response.ok) {
                 return response.json();
             } else {
-                Promise.reject(Error('Unable to Create Query'));
+                Promise.reject(Error('Unable to get Queries'));
             }
         })
         .catch(e => {
-            Promise.reject(
-                Error('An error occured while fetching the queries'),
-            );
+            Promise.reject(e.message);
         });
 };
 
@@ -61,11 +57,9 @@ export const getQueryItem = id => {
             }
         })
         .catch(e => {
-            Promise.reject(Error('failed to load resource'));
+            Promise.reject(e.message);
         });
 };
-
-
 
 // API request for updating one query item
 //
@@ -75,11 +69,11 @@ export const updateQueryItem = (form_data, id) => {
             if (response.ok) {
                 return response.json();
             } else {
-                Promise.reject(Error('unable to fetch query'));
+                Promise.reject(Error('unable to update query'));
             }
         })
         .catch(e => {
-            Promise.reject(Error('failed to load resource'));
+            Promise.reject(e.message);
         });
 };
 
@@ -95,17 +89,13 @@ export const deleteQueryItem = id => {
             }
         })
         .catch(e => {
-            console.log(e);
-            Promise.reject(
-                Error('An error occured while performing the action'),
-            );
+            Promise.reject(e.message);
         });
 };
 
 // Api request for creating new appointment item for a query
 //
 export const setAppointment = (form_data, id) => {
-    console.log(form_data);
     return fetch(QueryUrls.APPOINTMENT(id), apiConfig('post', form_data))
         .then(response => {
             if (response.ok) {
@@ -127,32 +117,31 @@ export const getAppointment = id => {
             if (response.ok) {
                 return response.json();
             } else {
-                Promise.reject(Error('unable to load resources'));
+                Promise.reject(Error('unable to load appointment'));
             }
         })
         .catch(e => {
-            Promise.reject(Error('unable to load resources'));
+            Promise.reject(e.message);
         });
 };
 
 // API request for creating pescription for a query item
 //
 export const pescribe = (form_data, id) => {
-    console.log(form_data);
     return fetch(QueryUrls.PESCRIPTION(id), apiConfig('post', form_data))
         .then(response => {
-            console.log(response);
+            console.log(response)
             if (response.ok) {
                 return response.json();
             } else {
-                Promise.reject(Error('unable to post data'));
+                console.log(response.json())
+                return Promise.reject('unable to post data');
             }
         })
         .catch(e => {
-            Promise.reject(Error('failed to post resources'));
+            console.log(e);
         });
 };
-
 
 // API request for fetching prescription of a query
 //
@@ -163,11 +152,11 @@ export const getPescription = id => {
             if (response.ok) {
                 return response.json();
             } else {
-                Promise.reject(Error('unable to load resources'));
+                return Promise.reject('unable to load resources');
             }
         })
         .catch(e => {
-            Promise.reject(Error(e.message));
+            Promise.reject(e.message);
         });
 };
 
@@ -179,10 +168,72 @@ export const deleteMedicine = (id, med_id) => {
             if (response.ok) {
                 return;
             } else {
-                Promise.reject(Error('unable to delete resources'));
+                return Promise.reject('unable to delete resources');
+            }
+        })
+        .catch(e => {
+            Promise.reject(e.message);
+        });
+};
+
+export const uploadFile = (id, form_data) => {
+    return fetch(QueryUrls.FILES(id), {
+        method: 'POST',
+        headers: {
+            Authorization: `Token ${localStorage.getItem('token')}`,
+        },
+        body: form_data,
+    })
+        .then(response => {
+            if (response.ok) {
+                return;
+            } else {
+                Promise.reject(Error('unable to upload file'));
             }
         })
         .catch(e => {
             Promise.reject(Error(e.message));
         });
-}
+};
+
+export const getFile = id => {
+    return fetch(QueryUrls.FILES(id), apiConfig())
+        .then(response => {
+            if (response.ok) {
+                return;
+            } else {
+                Promise.reject(Error('unable to upload file'));
+            }
+        })
+        .catch(e => {
+            Promise.reject(Error(e.message));
+        });
+};
+
+export const resolveQuery = id => {
+    return fetch(QueryUrls.RESOLVE(id), apiConfig('post'))
+        .then(response => {
+            if (response.ok) {
+                return;
+            } else {
+                Promise.reject(Error('unable to resolve query'));
+            }
+        })
+        .catch(e => {
+            Promise.reject(Error(e.message));
+        });
+};
+
+export const takeQuery = id => {
+    return fetch(QueryUrls.TAKE(id), apiConfig('post'))
+        .then(response => {
+            if (response.ok) {
+                return;
+            } else {
+                Promise.reject(Error('unable to take query'));
+            }
+        })
+        .catch(e => {
+            Promise.reject(Error(e.message));
+        });
+};

@@ -50,7 +50,7 @@ const requestLogout = creds => {
     };
 };
 
-const receiveLogout = user => {
+export const receiveLogout = user => {
     return {
         type: AuthTypes.LOGOUT_SUCCESS,
         isFetching: false,
@@ -91,7 +91,6 @@ export function loginUser(creds, history) {
                 if (!response.ok) {
                     // If there was a problem, we want to
                     // dispatch the error condition
-                    console.log(response);
                     switch (response.status) {
                         case 404:
                             dispatch(
@@ -167,6 +166,34 @@ export function getUserProfile() {
     };
 }
 
+export function getUser() {
+    const token = getUserToken(store.getState());
+    const user_id = localStorage.getItem('user_id');
+    let config = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${token}`,
+        },
+    };
+
+    return fetch(AuthUrls.USERS + user_id, config)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                Promise.reject('Cannot get User information');
+            }
+        })
+        .then(data => {
+            // dispatch(setUserProfile(data));
+            return data;
+        })
+        .catch(e => {
+            Promise.reject(e.message);
+        });
+}
+
 export function logoutUser(history) {
     let config = {
         method: 'GET',
@@ -178,7 +205,6 @@ export function logoutUser(history) {
     return dispatch => {
         dispatch(requestLogout());
         return fetch(AuthUrls.LOGOUT, config).then(response => {
-            console.log(response);
             if (response.ok) {
                 localStorage.removeItem('token');
                 localStorage.removeItem('user');
@@ -192,3 +218,75 @@ export function logoutUser(history) {
         });
     };
 }
+
+export const getUserById = id => {
+    return fetch(AuthUrls.USERS + id, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${localStorage.getItem('token')}`,
+        },
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                Promise.reject('Cannot get User with id ' + id);
+            }
+        })
+        .catch(e => {
+            Promise.reject(e.message);
+        });
+};
+
+export const updateUserProfile = (id, form_data) => {
+    return fetch(AuthUrls.USERS + id, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify(form_data),
+    })
+        .then(response => response.json().then(data => ({data, response})))
+        .then(({data, response}) => {
+            if (response.ok) {
+                localStorage.setItem('user', JSON.stringify(data));
+            } else {
+                return Promise.reject('unable to update user');
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            Promise.reject(error.message);
+        });
+};
+
+export const updateDoctorProfile = (id, form_data) => {
+    return fetch(AuthUrls.DOCTOR_PROFILE + id, {
+        method: 'PATCH',
+        headers: {
+            Authorization: `Token ${localStorage.getItem('token')}`,
+        },
+        body: form_data,
+    })
+        .then(response => response.json().then(data => ({data, response})))
+        .catch(error => {
+            console.log(error);
+        });
+};
+
+export const checkToken = () => {
+    return fetch(AuthUrls.CHECK_TOKEN, {
+        methos: 'GET',
+        headers: {
+            Authorization: `Token ${localStorage.getItem('token')}`,
+        },
+    })
+        .then(response => {
+            return response.status;
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
