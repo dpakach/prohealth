@@ -86,7 +86,7 @@ const UserProfile = props => {
                                 <p />
                             </div>
 
-                            {is_doctor && (
+                            {props.user.is_doctor && (
                                 <div className="profile__doctor">
                                     <DoctorProfile user={user} />
                                 </div>

@@ -54,7 +54,7 @@ class QueryDetailComponent extends React.Component {
                 <div className="loading-icon">
                     <GridLoader
                         style={{display: 'inline-block'}}
-                        color={'#3772ff'}
+                        color={'#f0386b'}
                         loading={this.state.loading}
                     />
                 </div>
@@ -68,9 +68,7 @@ class QueryDetailComponent extends React.Component {
                                     query={this.state.query}
                                     updateQuery={this.updateQuery}
                                 />
-                                <Chat 
-                                    id={this.state.query.id}
-                                />
+                                <Chat id={this.state.query.id} />
                             </div>
                             <div className="query-layout__cta">
                                 <QueryCta
