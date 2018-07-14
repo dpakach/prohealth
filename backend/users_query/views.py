@@ -151,7 +151,7 @@ class AppointmentDetailView(APIView):
     def delete(request, query_id, **kwargs):
         query = get_object_or_404(UserQuery, pk=query_id)
         appoint = get_object_or_404(Appointment, query=query)
-        if query.user != request.user:
+        if query.taken_by != request.user:
             return Response(status=401)#unauthorized
         appoint.delete()
         return Response(status=204)#no content
