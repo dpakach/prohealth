@@ -1,19 +1,21 @@
 import React from 'react';
 import QueryHeader from './QueryHeader';
-import Chat from './Chat';
+import Chat from '../chat/Chat';
 import QueryCta from './QueryCta';
+import {GridLoader} from 'react-spinners';
 
 import {getUserInfo} from '../../utils/authUtils';
 import {getQueryItem} from '../../actions/queryActions';
+import {readNotificationsByQuery} from '../../actions/notificationActions';
+import {readMessageByQuery} from '../../actions/messageActions';
 
-import {Row, Col, Card, message} from 'antd';
+import {message} from 'antd';
 
 class QueryDetailComponent extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            id: this.props.match.params.id,
             loading: false,
             query: {},
             user: {},
@@ -24,17 +26,15 @@ class QueryDetailComponent extends React.Component {
 
     updateQuery() {
         this.setState({loading: true});
-        getQueryItem(this.state.id)
+        getQueryItem(this.props.match.params.id)
             .then(data => {
                 getUserInfo(data.user).then(user => {
                     this.setState({
                         user,
                         nonFieldErrors: '',
                         query: data,
+                        loading: false,
                     });
-                    setTimeout(() => {
-                        this.setState({loading: false});
-                    }, 1000);
                 });
             })
             .catch(e => {
@@ -44,44 +44,48 @@ class QueryDetailComponent extends React.Component {
 
     componentDidMount() {
         this.updateQuery();
+        readNotificationsByQuery(this.props.match.params.id);
+        readMessageByQuery(this.props.match.params.id);
     }
 
     render() {
         return (
-            <Card
-                style={{
-                    width: '100%',
-                    height: '90vh',
-                    overflowY: 'scroll',
-                    background: '#ECECEC',
-                }}
-                className="u-box-shadow-small">
-                <Row gutter={16}>
-                    <Col span={18}>
-                        <Row gutter={16}>
-                            <Col span={24}>
+            <div style={{position: 'realtive'}}>
+                <div className="loading-icon">
+                    <GridLoader
+                        style={{display: 'inline-block'}}
+                        color={'#3772ff'}
+                        loading={this.state.loading}
+                    />
+                </div>
+                {!this.state.loading && (
+                    <div>
+                        <div className="query-layout">
+                            <div className="query-layout__main">
                                 <QueryHeader
+                                    {...this.props}
                                     user={this.state.user}
                                     query={this.state.query}
+                                    updateQuery={this.updateQuery}
+                                />
+                                <Chat 
+                                    id={this.state.query.id}
+                                />
+                            </div>
+                            <div className="query-layout__cta">
+                                <QueryCta
+                                    {...this.props}
+                                    query={this.state.query}
+                                    updateQuery={this.updateQuery}
+                                    user={this.state.user}
+                                    id={this.state.query.id}
                                     loading={this.state.loading}
                                 />
-                            </Col>
-                            <Col span={24}>
-                                <Chat />
-                            </Col>
-                        </Row>
-                    </Col>
-
-                    <Col span={6}>
-                        <QueryCta
-                            {...this.props}
-                            query={this.state.query}
-                            updateQuery={this.updateQuery}
-                            id={this.state.id}
-                        />
-                    </Col>
-                </Row>
-            </Card>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
         );
     }
 }

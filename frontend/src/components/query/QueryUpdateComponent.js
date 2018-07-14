@@ -3,23 +3,11 @@ import _ from 'lodash';
 
 import {updateQueryItem, getQueryItem} from '../../actions/queryActions';
 
-import {
-    Form,
-    message,
-    Icon,
-    Input,
-    Button,
-    Select,
-    Upload,
-    Modal,
-    Alert,
-} from 'antd';
+import {message, Select} from 'antd';
 
 // import validate from '../../utils/validate';
 
-const FormItem = Form.Item;
 const Option = Select.Option;
-const {TextArea} = Input;
 
 class QueryCreateComponent extends React.Component {
     // constructor and state initialization
@@ -50,27 +38,11 @@ class QueryCreateComponent extends React.Component {
     }
 
     // state change and management
-    //
-    //
-    handleCancel = () => this.setState({previewVisible: false});
-
-    handlePreview = file => {
-        this.setState({
-            previewImage: file.url || file.thumbUrl,
-            previewVisible: true,
-        });
-    };
 
     handleChange = e => {
         let name = e.target.name;
         let value = e.target.value;
         this.setState({[name]: value});
-    };
-
-    handleFileChange = ({fileList}) => this.setState({fileList});
-
-    handleCheckbox = e => {
-        this.setState({is_doctor: e.target.checked});
     };
 
     handleSelectChange = value => {
@@ -100,70 +72,78 @@ class QueryCreateComponent extends React.Component {
             });
     };
 
+    resizeIt = () => {
+        var txt = document.getElementById('description-text');
+        var str = txt.value;
+        var cols = txt.cols;
+
+        var linecount = 0;
+        _(str.split('\n')).forEach(l => {
+            linecount += Math.ceil(l.length / cols); // Take into account long lines
+        });
+
+        linecount = str.split('\n').length
+        txt.rows = linecount + 1;
+    };
+
     componentDidMount() {
+        // You could attach to keyUp, etc. if keydown doesn't work
+        var txt = document.getElementById('description-text');
+        txt.rows = 5;
+        //txt.addEventListener('keydown', this.resizeIt);
+
+        // this.resizeIt();
+
         getQueryItem(this.props.match.params.id)
             .then(data => {
-                this.setState({...data})
+                this.setState({...data});
             })
             .catch(e => {
                 message.error('unable to load resources');
-            }
-            )
+            });
     }
 
     render() {
-        const {previewVisible, previewImage, fileList} = this.state;
-        const uploadButton = (
-            <div>
-                <Icon type="plus" />
-                <div className="ant-upload-text">Upload</div>
-            </div>
-        );
         return (
-            <div className="section section--form u-margin-top-small">
-                    <h1>Edit your Question</h1>
-                {/*
-                <h1 className="heading-secondary u-margin-top-small">
-                    {this.props.type == 'create' && <p>Ask A Question</p>}
-                    {this.props.type == 'edit' && <p>Update your question</p>}
-                </h1>
-                        * */}
-                <div>
-                    {this.state.nonFieldErrors && (
-                        <div className="u-margin-bottom-small">
-                            <Alert
-                                message="error"
-                                type="error"
-                                showIcon
-                                description={this.state.nonFieldErrors}
-                            />
-                        </div>
-                    )}
+            <div className="section section--form section--form--wide">
+                <div className="card">
+                    <h1 className="heading-primary u-margin-top-small">
+                        Ask A Question
+                    </h1>
+                    <form className="form" onSubmit={this.handleSubmit}>
+                        {this.state.nonFieldErrors && (
+                            <div className="form__error">
+                                <h3 className="form__error--title">Error</h3>
+                                <p className="form__error--text">
+                                    {this.props.errorMessage}
+                                </p>
+                            </div>
+                        )}
 
-                    <Form onSubmit={this.handleSubmit}>
-                        <FormItem>
+                        <div className="form__group">
                             <label>Title</label>
-                            <Input
+                            <input
                                 placeholder="Title"
                                 type="text"
                                 name="title_problem"
                                 value={this.state.title_problem}
                                 onChange={this.handleChange}
                             />
-                        </FormItem>
+                        </div>
 
-                        <FormItem>
+                        <div className="form__group">
                             <label>Description</label>
-                            <TextArea
+                            <textarea
+                                id="description-text"
                                 placeholder="Description"
                                 name="description"
                                 value={this.state.description}
                                 autosize
                                 onChange={this.handleChange}
                             />
-                        </FormItem>
+                        </div>
 
-                        <FormItem>
+                        <div className="form__group">
                             <label>Related</label>
                             <br />
                             <Select
@@ -176,80 +156,63 @@ class QueryCreateComponent extends React.Component {
                                 <Option value="E">ent</Option>
                                 <Option value="P">Physician</Option>
                             </Select>
-                        </FormItem>
-                        <h3>Patient Stats</h3>
+                        </div>
 
-                        <FormItem>
-                            <label>Name of Patient</label>
-                            <Input
-                                placeholder="Name of Patient"
-                                name="name_of_patient"
-                                value={this.state.name_of_patient}
-                                onChange={this.handleChange}
-                            />
-                        </FormItem>
+                        <div className="patient-stats">
+                            <h3>Patient Stats</h3>
 
-                        <FormItem>
-                            <label>Age Of Patient</label>
-                            <Input
-                                placeholder="Age of Patient"
-                                name="age_of_patient"
-                                type="number"
-                                value={this.state.age_of_patient}
-                                onChange={this.handleChange}
-                            />
-                        </FormItem>
-                        <FormItem>
-                            <label>Weight of Patient</label>
-                            <Input
-                                placeholder="Weight of Patient"
-                                name="weight_of_patient"
-                                value={this.state.weight_of_patient}
-                                type="number"
-                                onChange={this.handleChange}
-                            />
-                        </FormItem>
-                        <FormItem>
-                            <label>Height of Patient</label>
-                            <Input
-                                placeholder="Height of Patient"
-                                name="height_of_patient"
-                                value={this.state.height_of_patient}
-                                type="number"
-                                onChange={this.handleChange}
-                            />
-                        </FormItem>
-                        <FormItem>
-                            <label>Attach a photo</label>
-                            <div className="clearfix">
-                                <Upload
-                                    action="//jsonplaceholder.typicode.com/posts/"
-                                    listType="picture-card"
-                                    fileList={fileList}
-                                    onPreview={this.handlePreview}
-                                    onChange={this.handleFileChange}>
-                                    {fileList.length >= 3 ? null : uploadButton}
-                                </Upload>
-                                <Modal
-                                    visible={previewVisible}
-                                    footer={null}
-                                    onCancel={this.handleCancel}>
-                                    <img
-                                        alt="example"
-                                        style={{width: '100%'}}
-                                        src={previewImage}
+                            <div className="form__group">
+                                <label>Name of Patient</label>
+                                <input
+                                    placeholder="Name of Patient"
+                                    name="name_of_patient"
+                                    value={this.state.name_of_patient}
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+
+                            <div className="patient-stats__data">
+                                <div className="form__group">
+                                    <label>Age Of Patient</label>
+                                    <input
+                                        placeholder="Age of Patient"
+                                        name="age_of_patient"
+                                        type="number"
+                                        value={this.state.age_of_patient}
+                                        onChange={this.handleChange}
                                     />
-                                </Modal>
-                            </div>{' '}
-                        </FormItem>
+                                </div>
+                                <div className="form__group">
+                                    <label>Weight of Patient</label>
+                                    <input
+                                        placeholder="Weight of Patient"
+                                        name="weight_of_patient"
+                                        value={this.state.weight_of_patient}
+                                        type="number"
+                                        onChange={this.handleChange}
+                                    />
+                                </div>
+                                <div className="form__group">
+                                    <label>Height of Patient</label>
+                                    <input
+                                        placeholder="Height of Patient"
+                                        name="height_of_patient"
+                                        value={this.state.height_of_patient}
+                                        type="number"
+                                        onChange={this.handleChange}
+                                    />
+                                </div>
+                            </div>
+                        </div>
 
-                        <Button
+                        <button
+
                             type="primary"
                             htmlType="submit"
-                            className="login-form-button">
+                            className="login-form-button btn btn--default">
                             Submit
-                        </Button>
-                    </Form>
+                        </button>
+                    </form>
                 </div>
             </div>
         );

@@ -1,6 +1,7 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {browserHistory} from 'react-router';
+import browserHistory from './../utils/historyUtils';
 
 export default function(ComposedComponent) {
     class Authentication extends Component {
@@ -24,7 +25,7 @@ export default function(ComposedComponent) {
     Authentication.propTypes = {authenticated: PropTypes.bool};
 
     function mapStateToProps(state) {
-        return {authenticated: state.auth.authenticated};
+        return {authenticated: state.auth.isAuthenticated};
     }
 
     return connect(mapStateToProps)(Authentication);
