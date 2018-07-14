@@ -47,6 +47,13 @@ class QuickLinks extends React.Component {
 
     componentDidMount() {
         this.listNotifications();
+        try {
+            setInterval(async () => {
+                await this.listNotifications();
+            }, 3000);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     render() {
@@ -91,11 +98,7 @@ class QuickLinks extends React.Component {
                             </div>
 
                             <div className="window__footer">
-                                <Link
-                                    to="/notifications"
-                                    >
-                                    see all
-                                </Link>
+                                <Link to="/notifications">see all</Link>
                             </div>
                         </div>
                     </div>
