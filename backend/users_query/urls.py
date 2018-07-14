@@ -19,6 +19,8 @@ urlpatterns = [
     url(r'^query-for-doc/$',views.FindQueryView.as_view()),
     url(r'^search/$',views.SearchApiView.as_view()),
     url(r'^taken-query/$',views.TakenQueryView.as_view()),
-    
+    # url(r'^query-for-doc/(?P<query_id>[\d]+)/$',views.FindQueryDetailView.as_view()),
+    # url(r'^query-for-doc/(?P<query_id>[\d]+)/take$',views.TakenView.as_view()),
+
 
 ]

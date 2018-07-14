@@ -46,6 +46,7 @@ class QueryPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
         query = UserQuery.objects.get(pk=view.kwargs['query_id'])
+        
         user = request.user
         if request.method  == 'GET':
             return request.user == query.user or request.user == query.taken_by or (request.user.is_doctor and not query.taken)

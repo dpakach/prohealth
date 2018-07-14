@@ -15,6 +15,7 @@ class UserQuerySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = UserQuery
+        #fields = ('id','name_of_patient','age_of_patient','height_of_patient','weight_of_patient','title_problem','description','tag','date_of_submission',)
         fields = '__all__'
         read_only_fields = ('user', )
     
