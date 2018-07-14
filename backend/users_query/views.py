@@ -290,3 +290,13 @@ class SearchApiView(APIView):
                 results['query'] = results['query'] | UserQuery.objects.filter(
                     Q(title_problem__icontains=query) | Q(description__icontains=query) | Q(name_of_patient__icontains=query))
         return Response(UserQuerySerializer(results['query'], many=True).data)
+
+
+class FindQueryDetailView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated, IsDoctorUser,)
+
+    @staticmethod
+    def get(request, query_id):
+        queri = get_object_or_404(UserQuery, pk=query_id)
+        return Response(UserQuerySerializer(queri).data)
