@@ -4,9 +4,9 @@ Thank you for signing up at ProHealth.
 Please click on the link to confirm your registration,
 
 
-<button ><a href="{% if request.is_secure %}https{% else %}http{% endif %}://{{ domain}}{% url 'user_profile:activate_user' code=code %}">Activate</a></button>
+<button ><a href="{% if request.is_secure %}https{% else %}http{% endif %}://localhost:8000{% url 'activate_user' code=code %}">Activate</a></button>
 
 In case link doesn't work please copy and paste the below url in a new tab:
 
-{% if request.is_secure %}https{% else %}http{% endif %}://{{ domain}}{% url 'user_profile:activate_user' code=code %}
+{% if request.is_secure %}https{% else %}http{% endif %}://localhost:8000{% url 'activate_user' code=code %}
 {% endautoescape %}
