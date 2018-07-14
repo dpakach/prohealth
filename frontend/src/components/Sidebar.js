@@ -24,6 +24,10 @@ class QuickLinks extends React.Component {
         };
     }
 
+    logout = () => {
+        this.props.dispatch(logoutUser(this.props.history));
+    }
+
     render() {
         return (
             <div className="sidebar">
@@ -95,87 +99,3 @@ const mapStateToProps = state => {
 };
 
 export default withRouter(connect(mapStateToProps)(QuickLinks));
-
-
-/*
- *
-                        <div className="sidebar__head--icon sidebar__head--icon--notification">
-                            <span className="icon--badge">
-                                <Link to="/notifications">
-                                    <i className=" material-icons">
-                                        notifications
-                                    </i>
-                                </Link>
-
-                                {this.state.notifications &&
-                                    this.state.notifications.length !== 0 && (
-                                        <span className="badge">
-                                            {this.state.notifications.length}
-                                        </span>
-                                    )}
-                            </span>
-                            <div className="window window--notification notification-window">
-                                <div className="window__head">
-                                    <div className="window__head--icon">
-                                        <i className=" material-icons">
-                                            notifications
-                                        </i>
-                                    </div>
-                                    <div className="window__head--text">
-                                        Notifications
-                                    </div>
-                                    <div className="window__head--button">
-                                        <a onClick={this.clearNotifications}>
-                                            Clear all
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div className="window__content">
-                                    <div className="shadow-layer">
-                                        <div className="shadow" />
-                                        <div className="window__list">
-                                            {this.state.notifications &&
-                                                this.state.notifications.map(
-                                                    n => (
-                                                        <div
-                                                            className={this.getClassName(
-                                                                n,
-                                                            )}
-                                                            key={n.id}>
-                                                            <div className="list-item__title">
-                                                                {n.title}
-                                                            </div>
-
-                                                            <div className="list-item__content">
-                                                                {n.message}
-                                                            </div>
-                                                            <Link
-                                                                to={`/query/${
-                                                                    n.query
-                                                                }`}>
-                                                                view details
-                                                            </Link>
-                                                            <span
-                                                                style={{
-                                                                    float:
-                                                                        'right',
-                                                                }}>
-                                                                {n.created_at}
-                                                            </span>
-                                                        </div>
-                                                    ),
-                                                )}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="window__footer">
-                                    <Link
-                                        to="/notifications"
-                                        className="btn btn--default btn--small">
-                                        see all
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
- * */

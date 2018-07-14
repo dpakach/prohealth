@@ -42,6 +42,7 @@ class PrescriptionForm extends React.Component {
             'times_a_day',
             'remarks',
         ]);
+
         this.setState({loading: true})
 
         pescribe(form_data, this.props.id)
@@ -133,10 +134,9 @@ class PrescriptionForm extends React.Component {
                                     type="primary"
                                     className="btn btn--small"
                                     style={{margin: 0}}
-                                    loading={this.state.loading}
                                     onClick={this.handleAdd}>
                                     Add
-                                </button>,
+                                </button>
                             </div>
                         </Modal>
                     </div>

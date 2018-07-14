@@ -1,16 +1,21 @@
 import React from 'react';
-
+import moment from 'moment';
 import {Link} from 'react-router-dom';
 
 const MessagesList = props => {
 
-    const {notifications} = props;
+    let {notifications} = props;
 
     const getClassName = notifications => {
-        return notifications.viewed
+
+        return notifications.read
             ? 'list-item list-item--notification'
             : 'list-item list-item--notification list-item--selected';
     };
+
+    notifications = notifications.sort((a, b) => {
+        return  moment(b.created).format('X') - moment(a.created).format('X');
+    });
     return (
         <div className="window__list">
             {notifications &&
@@ -24,7 +29,7 @@ const MessagesList = props => {
                             style={{
                                 float: 'right',
                             }}>
-                            {n.created_at}
+                            {moment(n.created).fromNow()}
                         </span>
                     </div>
                 ))}

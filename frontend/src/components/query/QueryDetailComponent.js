@@ -7,6 +7,7 @@ import {GridLoader} from 'react-spinners';
 import {getUserInfo} from '../../utils/authUtils';
 import {getQueryItem} from '../../actions/queryActions';
 import {readNotificationsByQuery} from '../../actions/notificationActions';
+import {readMessageByQuery} from '../../actions/messageActions';
 
 import {message} from 'antd';
 
@@ -44,6 +45,7 @@ class QueryDetailComponent extends React.Component {
     componentDidMount() {
         this.updateQuery();
         readNotificationsByQuery(this.props.match.params.id);
+        readMessageByQuery(this.props.match.params.id);
     }
 
     render() {
