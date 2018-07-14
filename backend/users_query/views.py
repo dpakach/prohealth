@@ -71,7 +71,7 @@ class TakenQueryView(APIView):
 
 class UserQueryDetailView(APIView):
     authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated, QueryPermission,)
+    permission_classes = (IsAuthenticated,QueryPermission,)
 
     @staticmethod
     def get(request, query_id):

@@ -16,9 +16,21 @@ class UserQuery(models.Model):
     """ class used to create users health related queries"""
 
     TAG_CHOICES = [
-        ('S','skin'),
-        ('E', 'ent'),
-        ('P','Physician'),
+        ('S','General Surgery'),#for surgery
+        ('G', 'Obesterics and Gynecology'),#women disease related
+        ('P','General Physician'),#
+        ('Or','Orthopedic'),#bone related
+        ('D','Dermatology & Venerology'),#skin and sex disease related
+        ('A','Anesthesiology'),# anesthesia related
+        ('N','Nephrology'),#physiology and kidney related
+        ('Ps','Psychiatry'),#psychology
+        ('M','General Medicine'),
+        ('On','Oncology'),#tumours related
+        ('Pd','Paediatrics'),#child and disease
+        ('E','Ear Nose Throat'),#ent
+        ('O','Opthalmology'),#eye related
+        ('De','Dental Surgeon'),
+        ('T','Physiotherapy')
     ]
 
     name_of_patient = models.CharField(max_length=255, blank = False)
@@ -28,7 +40,7 @@ class UserQuery(models.Model):
     title_problem = models.CharField(max_length = 510)
     description  = models.TextField()
     # file_related = models.FileField(blank=True, upload_to=get_file_path, null=True)
-    tag = models.CharField(max_length = 1, choices = TAG_CHOICES)
+    tag = models.CharField(max_length = 2, choices = TAG_CHOICES)
     date_of_submission = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     taken = models.BooleanField(default=False)
@@ -58,7 +70,7 @@ class Appointment(models.Model):
 
 class Medicine(models.Model):
     name_of_medicine = models.CharField(max_length=100)
-    quantity = models.IntegerField()
+    quantity = models.CharField(max_length=350)
     times_a_day = models.IntegerField()
     remarks = models.TextField(blank=True, null=True)
     date_issued = models.DateTimeField(auto_now_add=True)
