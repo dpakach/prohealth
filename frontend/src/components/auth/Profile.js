@@ -5,7 +5,10 @@ import {Card} from 'antd';
 import UserProfile from './UserProfile';
 import UpdateProfile from './UpdateProfile';
 import UpdatePassword from './UpdatePassword';
+import UpdateDoctorProfile from './UpdateDoctorProfile';
 import NotFoundPage from '../NotFoundPage';
+
+import {getUser} from '../../actions/authActions';
 
 const tabList = [
     {
@@ -20,9 +23,13 @@ const tabList = [
         key: 'updateprofile',
         tab: 'Update Profile',
     },
+    {
+        key: 'doctorprofile',
+        tab: 'Doctor',
+    },
 ];
 
-let key_list = ['user', 'updatepassword', 'updateprofile'];
+let key_list = ['user', 'updatepassword', 'updateprofile', 'doctorprofile'];
 
 class Profile extends React.Component {
     state = {
@@ -30,14 +37,27 @@ class Profile extends React.Component {
         valid:
             this.props.match.params.action &&
             key_list.includes(this.props.match.params.action),
+        user: null,
+        loading: false
     };
 
     tabChange = key => {
         this.setState({key});
     };
 
+    updateUser = () => {
+        this.setState({loading: true})
+        return getUser().then(data => {
+            this.setState({user: data, loading: false});
+            return data;
+        });
+    }
+
+    componentDidMount() {
+        this.updateUser();
+    }
+
     render() {
-        // console.log(this.props.match.params.action);
         if (!this.state.valid) {
             return <NotFoundPage />;
         }
@@ -48,18 +68,42 @@ class Profile extends React.Component {
                     style={{width: '100%', height: '80vh', overflowY: 'scroll'}}
                     tabList={tabList}
                     activeTabKey={this.state.key}
-                    className="u-box-shadow-small"
+                    className="card"
                     onTabChange={key => {
                         this.tabChange(key);
                     }}>
                     {
                         {
-                            user: <UserProfile />,
-                            updatepassword: <UpdatePassword />,
+                            user: (
+                                <UserProfile
+                                    user={this.state.user}
+                                    updateUser={this.updateUser}
+                                    loading={this.state.loading}
+                                />
+                            ),
+                            updatepassword: (
+                                <UpdatePassword
+                                    user={this.state.user}
+                                    updateUser={this.updateUser}
+                                    loading={this.state.loading}
+                                />
+                            ),
                             updateprofile: (
                                 <UpdateProfile
                                     {...this.props}
                                     tabChange={this.tabChange}
+                                    user={this.state.user}
+                                    updateUser={this.updateUser}
+                                    loading={this.state.loading}
+                                />
+                            ),
+                            doctorprofile: (
+                                <UpdateDoctorProfile
+                                    {...this.props}
+                                    tabChange={this.tabChange}
+                                    user={this.state.user}
+                                    updateUser={this.updateUser}
+                                    loading={this.state.loading}
                                 />
                             ),
                         }[this.state.key]

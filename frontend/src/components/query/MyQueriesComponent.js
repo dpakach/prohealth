@@ -1,11 +1,10 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 
 import QueryListItemComponent from './QueryListItemComponent';
 
-import {List, Icon} from 'antd';
-
 import {getQueries} from '../../actions/queryActions';
+
+import {GridLoader} from 'react-spinners';
 
 class MyQueriesComponent extends React.Component {
     constructor(props) {
@@ -21,18 +20,7 @@ class MyQueriesComponent extends React.Component {
         this.setState({loading: true});
         getQueries()
             .then(data => {
-                const queries = data.map(d => {
-                    const query = d;
-                    query.date_of_submission = d.date_of_submission.substr(
-                        0,
-                        10,
-                    );
-                    return query;
-                });
-                setTimeout(() => {
-                    this.setState({nonFieldErrors: '', loading: false});
-                    this.setState({query_list: queries});
-                }, 1000);
+                    this.setState({nonFieldErrors: '', loading: false, query_list: data});
             })
             .catch(error => {
                 this.setState({nonFieldErrors: error.message});
@@ -45,31 +33,26 @@ class MyQueriesComponent extends React.Component {
 
     render() {
         return (
-            <div className="section section--profile">
-                <h1 className="heading heading--primary">
-                    Questions you Asked
-                </h1>
-                <p>
-                    <Link to="query/create"> Ask New Question</Link>
-                </p>
-                {this.state.loading && (
-                    <div style={{width: '100%', textAlign: 'center'}} className="u-margin-top-small">
-                        <Icon style={{fontSize: '10rem'}} type="loading" />
-                    </div>
-                )}
+            <div style={{position: 'realtive'}}>
+                <h1 className="heading heading-primary">Questions you Asked</h1>
+                <div className="loading-icon">
+                    <GridLoader
+                        color={'#3772ff'}
+                        loading={this.state.loading}
+                    />
+                </div>
                 {!this.state.loading && (
-                    <List
-                        itemLayout="horizontal"
-                        dataSource={this.state.query_list}
-                        renderItem={item => (
+                    <div className="query-list">
+                        {this.state.query_list.map(item => (
                             <QueryListItemComponent
                                 updateQueries={this.updateQueries}
                                 key={item.id}
                                 item={item}
+                                header={false}
                                 loading={this.state.loading}
                             />
-                        )}
-                    />
+                        ))}
+                    </div>
                 )}
             </div>
         );

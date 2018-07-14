@@ -37,7 +37,7 @@ class UserQuery(models.Model):
     age_of_patient = models.SmallIntegerField()
     height_of_patient = models.CharField(max_length=8, blank = True)
     weight_of_patient = models.SmallIntegerField(blank = True, null=True)
-    title_problem = models.CharField(max_length = 510)
+    title_problem = models.CharField(max_length = 511)
     description  = models.TextField()
     # file_related = models.FileField(blank=True, upload_to=get_file_path, null=True)
     tag = models.CharField(max_length = 2, choices = TAG_CHOICES)
@@ -57,11 +57,11 @@ class UserQuery(models.Model):
 
 
 class Appointment(models.Model):
-    appointed_doc = models.CharField(max_length=25)
+    appointed_doc = models.CharField(max_length=64)
     appointed_date = models.DateField(default=None)
     appoint_time = models.TimeField(default=None)
-    hospital = models.CharField(max_length=25)
-    venue = models.CharField(max_length=100)
+    hospital = models.CharField(max_length=128)
+    venue = models.CharField(max_length=128)
     query = models.OneToOneField(UserQuery, on_delete=models.CASCADE)
     
     def __str__(self):
@@ -69,9 +69,9 @@ class Appointment(models.Model):
 
 
 class Medicine(models.Model):
-    name_of_medicine = models.CharField(max_length=100)
-    quantity = models.CharField(max_length=350)
+    name_of_medicine = models.CharField(max_length=128)
     times_a_day = models.IntegerField()
+    quantity = models.CharField(max_length=128)
     remarks = models.TextField(blank=True, null=True)
     date_issued = models.DateTimeField(auto_now_add=True)
     query = models.ForeignKey(UserQuery, on_delete=models.CASCADE)

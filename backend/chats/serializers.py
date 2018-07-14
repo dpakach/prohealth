@@ -6,4 +6,3 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ('id', 'sender', 'receiver', 'message', 'read', 'query', 'created')
-        

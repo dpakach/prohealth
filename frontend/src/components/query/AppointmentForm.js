@@ -85,12 +85,11 @@ class AppointmentForm extends React.Component {
             <div>
                 <div>
                     <div>
-                        <Button
-                            type="primary"
-                            className="action__button"
+                        <button
+                            className="action__button btn btn--small"
                             onClick={this.showModal}>
                             Set Appointment
-                        </Button>
+                        </button>
                         <Modal
                             visible={this.state.visible}
                             title="Give Prescription"

@@ -3,19 +3,10 @@ import {withRouter} from 'react-router';
 import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
 
-import {
-    Form,
-    Icon,
-    Input,
-    Button,
-    DatePicker,
-    Select,
-    Alert,
-    Checkbox,
-    message,
-} from 'antd';
+import Beer from 'react-icons/lib/fa/beer';
 
-const FormItem = Form.Item;
+import {DatePicker, Select, message} from 'antd';
+
 const Option = Select.Option;
 
 class SignupComponent extends Component {
@@ -30,7 +21,6 @@ class SignupComponent extends Component {
             email: '',
             password: '',
             password2: '',
-            is_doctor: false,
             date_of_birth: null,
             gender: null,
 
@@ -55,11 +45,6 @@ class SignupComponent extends Component {
 
     // form fields validation
     //
-    handleCheckbox = e => {
-        // console.log(e);
-        this.setState({is_doctor: e.target.checked});
-    };
-
     handleSelectChange = value => {
         this.setState({gender: value});
     };
@@ -116,7 +101,11 @@ class SignupComponent extends Component {
     renderError = key => {
         if (this.state.formErrors[key]) {
             return this.state.formErrors[key].map(e => (
-                <li style={{color:'orangered'}} key={Math.random()}>{e}</li>
+                <li
+                    style={{color: 'orangered', listStyle: 'none'}}
+                    key={Math.random()}>
+                    {e}
+                </li>
             ));
         }
     };
@@ -130,7 +119,6 @@ class SignupComponent extends Component {
             'last_name',
             'email',
             'password',
-            'is_doctor',
             'gender',
             'date_of_birth',
         ]);
@@ -140,6 +128,7 @@ class SignupComponent extends Component {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(form_data),
         };
+        console.log(form_data);
 
         // We dispatch requestLogin to kickoff the call to the API
         return fetch(AuthUrls.USERS, config)
@@ -149,7 +138,7 @@ class SignupComponent extends Component {
                     message.success('signed up succesfully');
                     this.props.history.push('/user/login/');
                 } else {
-                    // console.log(data)
+                    console.log(data);
                     this.setState({formErrors: data});
                 }
             })
@@ -158,104 +147,72 @@ class SignupComponent extends Component {
 
     render() {
         return (
-            <div className="section section--profile">
-                <h1 className="heading-primary u-margin-top-small">Signup</h1>
-                {this.state.nonFieldErrors && (
-                    <div className="u-margin-bottom-small">
-                        <Alert
-                            message="error"
-                            type="error"
-                            showIcon
-                            description={this.state.nonFieldErrors}
-                        />
-                    </div>
-                )}
-                <div>
-                    <Form className="login-form" onSubmit={this.handleSubmit}>
-                        <FormItem>
-                            <label>First Name</label>
-
-                            <Input
-                                prefix={<Icon type="user" />}
+            <div className="section section--form section--form--signup">
+                <div className="card">
+                    <h1 className="heading-primary u-margin-top-small">
+                        Signup
+                        <Beer />
+                    </h1>
+                    <form className="form" onSubmit={this.handleSubmit}>
+                        {this.state.nonFieldErrors && (
+                            <div className="form__error">
+                                <h3 className="form__error--title">Error</h3>
+                                <p className="form__error--text">
+                                    {this.props.errorMessage}
+                                </p>
+                            </div>
+                        )}
+                        <div className="form__group">
+                            {this.renderError('first_name')}
+                            <input
                                 placeholder="First Name"
                                 type="text"
                                 name="first_name"
                                 onChange={this.handleChange}
                             />
-                        </FormItem>
-                        <FormItem>
-                            <label>Last Name</label>
-                            <Input
-                                prefix={<Icon type="user" />}
+                        </div>
+                        <div className="form__group">
+                            {this.renderError('last_name')}
+                            <input
                                 placeholder="Last Name"
                                 type="text"
                                 name="last_name"
                                 onChange={this.handleChange}
                             />
-                        </FormItem>
-
-
-                        <FormItem
-                            validateStatus={
-                                !this.state.formErrors.email
-                                    ? 'success'
-                                    : 'error'
-                            }>
-                            <label>email</label>
+                        </div>
+                        <div className="form__group">
                             {this.renderError('email')}
-                            <Input
-                                prefix={<Icon type="user" />}
+                            <input
                                 placeholder="email"
                                 type="email"
                                 name="email"
                                 onChange={this.handleChange}
                             />
-                        </FormItem>
-
-
-
-                        <FormItem
-                            validateStatus={
-                                !this.state.formErrors.password
-                                    ? 'success'
-                                    : 'error'
-                            }>
-                            <label>password</label>
+                        </div>
+                        <div className="form__group">
                             {this.renderError('password')}
-                            <Input
-                                prefix={<Icon type="lock" />}
+                            <input
                                 placeholder="password"
                                 type="password"
                                 name="password"
                                 onChange={this.handleChange}
                             />
-                        </FormItem>
-                        <FormItem
-                            validateStatus={
-                                !this.state.formErrors.password
-                                    ? 'success'
-                                    : 'error'
-                            }>
-                            <label>Confirm password</label>
+                        </div>
+                        <div className="form__group">
                             {this.renderError('password2')}
-                            <Input
-                                prefix={<Icon type="lock" />}
+                            <input
                                 placeholder="Confirm password"
                                 type="password"
                                 name="password2"
                                 onChange={this.handleChange}
                             />
-                        </FormItem>
-
-                        <FormItem>
-                            <label>Date Of Birth</label>
+                        </div>
+                        <div className="form__group">
                             <br />
                             {this.renderError('date_of_birth')}
                             <DatePicker onChange={this.onDateChange} />
-                        </FormItem>
-
-                        <FormItem>
-                            <label>Gender</label>
+                        </div>
+                        <div className="form__group">
                             {this.renderError('gender')}
                             <br />
                             <Select
@@ -267,24 +224,15 @@ class SignupComponent extends Component {
                                 <Option value="M">Male</Option>
                                 <Option value="F">Female</Option>
                             </Select>
-                        </FormItem>
-
-                        <FormItem>
-                            <Checkbox
-                                onChange={this.handleCheckbox}
-                                name="is_doctor"
-                            />
-                            <span>Signup as a Doctor</span>
-                            <p>Select this option if you are a Doctor.</p>
-                        </FormItem>
-                        <Button
-                            type="primary"
-                            htmlType="submit"
-                            disabled={!this.state.formValid}
-                            className="login-form-button">
-                            Signup
-                        </Button>
-                    </Form>
+                        </div>
+                    </form>
+                    <button
+                        type="primary"
+                        disabled={!this.state.formValid}
+                        onClick={this.handleSubmit}
+                        className="btn">
+                        Signup
+                    </button>
                 </div>
             </div>
         );
