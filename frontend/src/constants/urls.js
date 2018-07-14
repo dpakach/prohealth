@@ -30,5 +30,9 @@ export const NotificationUrls = {
 }
 
 export const ChatUrls = {
-    MESSAGE: (id) => `${ROOT_URL}/api/query/${id}/messages/`
+    MESSAGE: (id) => `${ROOT_URL}/api/query/${id}/messages/`,
+    SENT: `${ROOT_URL}/api/messages/sent/`,
+    RECEIVED: `${ROOT_URL}/api/messages/received/`,
+    READ_ALL: `${ROOT_URL}/api/messages/read_all/`,
+    READ_BY_QUERY: (id) => `${ROOT_URL}/api/query/${id}/messages/read_all/`,
 }

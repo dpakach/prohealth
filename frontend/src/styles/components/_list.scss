@@ -90,19 +90,22 @@
 
 .icon{
     &--badge{
+        color: $color-tertiary-light;
+        position: relative;
     }
 }
 
 .badge {
     display: inline;
-    position: relative;
+    position: absolute;
     background: orangered;
     color: white;
     font-weight: 700;
     padding: .1rem .3rem .2rem .3rem;
+    line-height: 1;
     border-radius: 5rem;
-    top: 0;
-    right: 0;
+    top: -1rem;
+    right: -1rem;
 }
 
 
