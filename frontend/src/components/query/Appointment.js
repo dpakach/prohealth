@@ -1,6 +1,5 @@
 import React from 'react';
 
-import {Icon} from 'antd';
 import {getAppointment} from '../../actions/queryActions';
 import AppointmentForm from './AppointmentForm';
 
@@ -33,7 +32,7 @@ class Appointment extends React.Component {
 
     render() {
         const is_doctor = localStorage.getItem('is_doctor') === 'true';
-        const user_id = parseInt(localStorage.getItem('user_id'));
+        const user_id = parseInt(localStorage.getItem('user_id'), 10);
 
         return (
             <div>

@@ -17,7 +17,7 @@ export default class App extends React.Component {
         if (token) {
         this.setState({loading: true});
         checkToken().then(status => {
-            if (status == 200) {
+            if (status === 200) {
                 this.setState({loading: false});
                 store.dispatch(receiveLogin(user));
             } else {

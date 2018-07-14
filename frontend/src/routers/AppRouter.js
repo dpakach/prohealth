@@ -31,7 +31,6 @@ import MessagesPage from '../components/messages/MessagesPage';
 import News from '../components/News';
 
 import {connect} from 'react-redux';
-import proptypes from 'prop-types';
 
 import RequireAuth from './RequireAuth';
 import RequireNoAuth from './RequireNoAuth';

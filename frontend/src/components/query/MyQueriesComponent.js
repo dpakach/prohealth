@@ -2,8 +2,6 @@ import React from 'react';
 
 import QueryListItemComponent from './QueryListItemComponent';
 
-import {Icon} from 'antd';
-
 import {getQueries} from '../../actions/queryActions';
 
 import {GridLoader} from 'react-spinners';

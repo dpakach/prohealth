@@ -8,12 +8,7 @@ import {withRouter} from 'react-router';
 import Notifications from './notifications/Notifications';
 import Messages from './messages/Messages';
 
-import {
-    getNotifications,
-    readAllNotifications,
-} from './../actions/notificationActions';
 import {logoutUser} from '../actions/authActions';
-import history from '../utils/historyUtils';
 
 class QuickLinks extends React.Component {
     constructor(props) {

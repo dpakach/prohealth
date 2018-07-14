@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'react';
 
 import {createQuery} from '../../actions/queryActions';
 
@@ -164,7 +163,6 @@ class QueryCreateComponent extends React.Component {
                         </div>
                         <button
                             onClick={this.handleSubmit}
-                            type="primary"
                             type="submit"
                             className="btn">
                             Submit

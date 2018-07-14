@@ -1,6 +1,5 @@
 import React from 'react';
 import {Icon} from 'antd';
-import {Link} from 'react-router-dom';
 import moment from 'moment';
 
 require('dotenv').config();
@@ -56,7 +55,7 @@ class News extends React.Component {
                                     <img
                                         className="news__header__image"
                                         src={item.urlToImage}
-                                        alt="photo"
+                                        alt="news-header"
                                     />
                                 </div>
                                 <div className="news__body">

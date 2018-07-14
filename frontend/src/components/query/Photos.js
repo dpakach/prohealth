@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Upload, Button, Icon, message} from 'antd';
+import {message} from 'antd';
 import axios from 'axios';
 import {ROOT_URL} from '../../constants/urls';
 
@@ -86,16 +86,8 @@ class Photos extends Component {
     }
 
     render() {
-        const {uploading, photoIndex, isOpen, uploaded_files} = this.state;
-        const user_id = parseInt(localStorage.getItem('user_id'));
-        const props = {
-            beforeUpload: file => {
-                this.setState(() => ({
-                    photo: file,
-                }));
-                return false;
-            },
-        };
+        const {photoIndex, isOpen, uploaded_files} = this.state;
+        const user_id = parseInt(localStorage.getItem('user_id'), 10);
         return (
             <div>
                 {this.state.uploaded_files.length !== 0 && (

@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
-import {AuthUrls} from '../../constants/urls';
-import {Card, message, Form, Icon, Input, Button, Select, Alert} from 'antd';
+import {message, Icon, Input, Select, Alert} from 'antd';
 import {updateDoctorProfile} from '../../actions/authActions';
 
-const FormItem = Form.Item;
 const Option = Select.Option;
 const {TextArea} = Input;
 
@@ -84,8 +82,8 @@ class UpdateDoctorProfile extends Component {
 
         // submit
         //
-        for (var key in form_data) {
-            console.log(key, form_data[key]);
+        for (var k in form_data) {
+            console.log(k, form_data[k]);
         }
         updateDoctorProfile(this.state.user.doctor_profile.id, form_data)
             .then(({data, response}) => {

@@ -1,8 +1,6 @@
 import React from 'react';
 
-import {Icon} from 'antd';
 import {deleteMedicine} from '../../actions/queryActions';
-import {GridLoader} from 'react-spinners';
 
 const Prescription = props => {
     const deleteButton = id => {
@@ -23,7 +21,7 @@ const Prescription = props => {
         }
     };
 
-    const user_id = parseInt(localStorage.getItem('user_id'));
+    const user_id = parseInt(localStorage.getItem('user_id'), 10);
     return (
         <div>
             {props.prescription &&

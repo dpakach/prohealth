@@ -37,22 +37,6 @@ const DoctorProfile = props => {
                 </div>
                 <div className="profile__item--text">{doctor_profile.hospital}</div>
             </div>
-            <div>
-                Dolor mollitia ullam perspiciatis ullam itaque Doloremque
-                repellendus possimus nisi et quae. Natus necessitatibus
-                recusandae odio optio illo nobis dolor? Ea a itaque a quos
-                blanditiis Rerum recusandae at aut Dolor mollitia ullam
-                perspiciatis ullam itaque Doloremque repellendus possimus nisi
-                et quae. Natus necessitatibus recusandae odio optio illo nobis
-                dolor? Ea a itaque a quos blanditiis Rerum recusandae at aut
-                Dolor mollitia ullam perspiciatis ullam itaque Doloremque
-                repellendus possimus nisi et quae. Natus necessitatibus
-                recusandae odio optio illo nobis dolor? Ea a itaque a quos
-                blanditiis Rerum recusandae at aut Dolor mollitia ullam
-                perspiciatis ullam itaque Doloremque repellendus possimus nisi
-                et quae. Natus necessitatibus recusandae odio optio illo nobis
-                dolor? Ea a itaque a quos blanditiis Rerum recusandae at aut
-            </div>
 
             {doctor_profile.description}
         </div>

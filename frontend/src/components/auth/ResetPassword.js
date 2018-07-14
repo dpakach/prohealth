@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import {AuthUrls} from '../../constants/urls';
 
-import {Alert, Card, Form, Icon, Input, Button} from 'antd';
+import {Alert, Card, Form, Icon, Input} from 'antd';
 const FormItem = Form.Item;
 
 class ResetPassword extends React.Component {

@@ -27,12 +27,6 @@ class QuickLinks extends React.Component {
     };
 
     getMessageCount = () => {
-        let count = 0;
-        if (this.state.messages) {
-            Object.keys(this.state.messages).map((key, index) => {
-                count += this.state.messages[index].length;
-            });
-        }
         return this.state.messages.filter(message => !message.read).length;
     };
 
