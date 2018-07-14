@@ -41,19 +41,6 @@ class Appointment extends React.Component {
                     <div>
                         <h3>Appointment</h3>
                         <div className="prescription">
-                            {this.state.loading && (
-                                <div
-                                    style={{
-                                        width: '100%',
-                                        textAlign: 'center',
-                                    }}>
-                                    <Icon
-                                        style={{fontSize: '3rem'}}
-                                        type="loading"
-                                    />
-                                </div>
-                            )}
-
                             {!this.state.loading && (
                                 <div>
                                     <div className="list-item user-stats-list__item">

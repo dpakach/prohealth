@@ -51,7 +51,7 @@ class QueryCta extends React.Component {
                     <GridLoader
                         style={{display: 'inline-block'}}
                         color={'#3772ff'}
-                        loading={this.state.loading}
+                        loading={this.props.query.taken && this.state.loading}
                     />
                 </div>
                 {!this.props.loading && (

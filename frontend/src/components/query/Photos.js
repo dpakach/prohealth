@@ -98,7 +98,11 @@ class Photos extends Component {
         };
         return (
             <div>
-                <p>Click the images to view them</p>
+                {this.state.uploaded_files.length !== 0 && (
+                    <p style={{textAlign: 'center'}}>
+                        Click the images to view them
+                    </p>
+                )}
                 <div className="photos">
                     <div>
                         {user_id === this.props.user.id && (

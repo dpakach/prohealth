@@ -130,14 +130,16 @@ export const getAppointment = id => {
 export const pescribe = (form_data, id) => {
     return fetch(QueryUrls.PESCRIPTION(id), apiConfig('post', form_data))
         .then(response => {
+            console.log(response)
             if (response.ok) {
                 return response.json();
             } else {
+                console.log(response.json())
                 return Promise.reject('unable to post data');
             }
         })
         .catch(e => {
-            console.log(e.message);
+            console.log(e);
         });
 };
 

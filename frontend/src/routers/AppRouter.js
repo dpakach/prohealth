@@ -26,6 +26,7 @@ import FeaturePage from '../components/FeaturePage';
 import NotFoundPage from '../components/NotFoundPage';
 
 import NotificationsPage from '../components/notifications/NotificationsPage';
+import MessagesPage from '../components/messages/MessagesPage';
 
 import News from '../components/News';
 
@@ -67,6 +68,7 @@ class AppRouter extends React.Component {
                         </span>
                     </div>
                 )}
+
 
                 {!this.props.loading && (
                     <BrowserRouter>
@@ -134,11 +136,11 @@ class AppRouter extends React.Component {
                                         />
                                         <PrivateRoute
                                             path="/query"
+                                            exact
                                             auth={this.props.isAuthenticated}
                                             component={RequireAuth(
                                                 MyQueriesComponent,
                                             )}
-                                            exact={true}
                                         />
                                         <PrivateRoute
                                             path="/query/create"
@@ -152,9 +154,9 @@ class AppRouter extends React.Component {
                                         />
                                         <PrivateRoute
                                             path="/query/:id"
+                                            exact
                                             auth={this.props.isAuthenticated}
                                             component={QueryDetailComponent}
-                                            exact={true}
                                         />
 
                                         <PrivateRoute
@@ -175,6 +177,12 @@ class AppRouter extends React.Component {
                                             path="/notifications"
                                             auth={this.props.isAuthenticated}
                                             component={NotificationsPage}
+                                        />
+
+                                        <PrivateRoute
+                                            path="/messages"
+                                            auth={this.props.isAuthenticated}
+                                            component={MessagesPage}
                                         />
 
                                         <PrivateRoute

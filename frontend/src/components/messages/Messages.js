@@ -6,17 +6,16 @@ import {connect} from 'react-redux';
 
 import MessagesList from './MessagesList';
 
-import {
-    getMessages,
-    readAllMessages,
-} from '../../actions/messageActions';
+import _ from 'lodash';
+
+import {getMessages, readAllMessages} from '../../actions/messageActions';
 
 class QuickLinks extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            messages: [],
+            messages: null,
         };
     }
 
@@ -28,21 +27,28 @@ class QuickLinks extends React.Component {
     };
 
     getMessageCount = () => {
-        return this.state.messages.length;
+        let count = 0;
+        if (this.state.messages) {
+            Object.keys(this.state.messages).map((key, index) => {
+                count += this.state.messages[index].length;
+            });
+        }
+        return this.state.messages.filter(message => !message.read).length;
     };
 
     listMessages = () => {
         getMessages().then(data => {
+            console.log(data);
+
+            var grouped = _.mapValues(_.groupBy(data, 'query'), clist =>
+                clist.map(list => _.omit(list, 'query')),
+            );
+
             this.setState({
                 messages: data,
+                grouped,
             });
         });
-    };
-
-    getClassName = notifications => {
-        return notifications.read
-            ? 'list-item list-item--notification'
-            : 'list-item list-item--notification list-item--selected';
     };
 
     componentDidMount() {
@@ -50,6 +56,8 @@ class QuickLinks extends React.Component {
     }
 
     render() {
+        // console.log(this.getMessageCount());
+        console.log(this.state.messages);
         return (
             <div>
                 {this.props.window && (
@@ -59,18 +67,16 @@ class QuickLinks extends React.Component {
                                 <i className=" material-icons">message</i>
                             </Link>
                             {this.state.messages &&
-                                this.state.messages.length !== 0 && (
+                                this.getMessageCount() !== 0 && (
                                     <span className="badge">
-                                        {this.state.messages.length}
+                                        {this.getMessageCount()}
                                     </span>
                                 )}
                         </span>
                         <div className="window window--notification notification-window">
                             <div className="window__head">
                                 <div className="window__head--icon">
-                                    <i className=" material-icons">
-                                        message
-                                    </i>
+                                    <i className=" material-icons">message</i>
                                 </div>
                                 <div className="window__head--text">
                                     Messages
@@ -84,19 +90,16 @@ class QuickLinks extends React.Component {
 
                             <div className="window__content">
                                 <div className="shadow-layer">
-                                    <div className="shadow" />
-                                    <MessagesList
-                                        notifications={this.state.messages}
-                                    />
+                                    {this.state.messages && (
+                                        <MessagesList
+                                            notifications={this.state.messages}
+                                        />
+                                    )}
                                 </div>
                             </div>
 
                             <div className="window__footer">
-                                <Link
-                                    to="/notifications"
-                                    className="btn btn--default btn--small">
-                                    see all
-                                </Link>
+                                <Link to="/notifications">see all</Link>
                             </div>
                         </div>
                     </div>
@@ -107,9 +110,9 @@ class QuickLinks extends React.Component {
                         <h1 className="heading-primary">Messages</h1>
                         <a onClick={this.clearMessages}>Clear all</a>
 
-                        <MessagesList
-                            notifications={this.state.messages}
-                        />
+                        {this.state.messages && (
+                            <MessagesList notifications={this.state.messages} />
+                        )}
                     </div>
                 )}
             </div>

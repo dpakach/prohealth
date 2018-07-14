@@ -26,13 +26,6 @@ const Prescription = props => {
     const user_id = parseInt(localStorage.getItem('user_id'));
     return (
         <div>
-            <div className="loading-icon">
-                <GridLoader
-                    style={{display: 'inline-block'}}
-                    color={'#3772ff'}
-                    loading={props.loading}
-                />
-            </div>
             {props.prescription &&
                 props.prescription.length !== 0 && (
                     <div>
