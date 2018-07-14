@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
+import NotificationsList from './NotificationsList';
+
 import {
     getNotifications,
     readAllNotifications,
@@ -50,25 +52,66 @@ class QuickLinks extends React.Component {
     render() {
         return (
             <div>
-                <h1 className="heading-primary">Notifications</h1>
-                <a onClick={this.clearNotifications}>Clear all</a>
-                <div className="window__list">
-                    {this.state.notifications &&
-                        this.state.notifications.map(n => (
-                            <div className={this.getClassName(n)} key={n.id}>
-                                <div className="list-item__title">
-                                    {n.title}
+                {this.props.window && (
+                    <div className="sidebar__head--icon sidebar__head--icon--notification">
+                        <span className="icon--badge">
+                            <Link to="/notifications">
+                                <i className=" material-icons">notifications</i>
+                            </Link>
+                            {this.state.notifications &&
+                                this.state.notifications.length !== 0 && (
+                                    <span className="badge">
+                                        {this.state.notifications.length}
+                                    </span>
+                                )}
+                        </span>
+                        <div className="window window--notification notification-window">
+                            <div className="window__head">
+                                <div className="window__head--icon">
+                                    <i className=" material-icons">
+                                        notifications
+                                    </i>
                                 </div>
+                                <div className="window__head--text">
+                                    Notifications
+                                </div>
+                                <div className="window__head--button">
+                                    <a onClick={this.clearNotifications}>
+                                        Clear all
+                                    </a>
+                                </div>
+                            </div>
 
-                                <div className="list-item__content">
-                                    {n.message}
+                            <div className="window__content">
+                                <div className="shadow-layer">
+                                    <div className="shadow" />
+                                    <NotificationsList
+                                        notifications={this.state.notifications}
+                                    />
                                 </div>
-                                <Link to={`/query/${n.query}`}>
-                                    view details
+                            </div>
+
+                            <div className="window__footer">
+                                <Link
+                                    to="/notifications"
+                                    className="btn btn--default btn--small">
+                                    see all
                                 </Link>
                             </div>
-                        ))}
-                </div>
+                        </div>
+                    </div>
+                )}
+
+                {!this.props.window && (
+                    <div>
+                        <h1 className="heading-primary">Notifications</h1>
+                        <a onClick={this.clearNotifications}>Clear all</a>
+
+                        <NotificationsList
+                            notifications={this.state.notifications}
+                        />
+                    </div>
+                )}
             </div>
         );
     }
@@ -89,3 +132,61 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(QuickLinks);
+
+/*
+            <div>
+                {this.props.window && (
+                    <div className="sidebar__head--icon sidebar__head--icon--notification">
+                        <span className="icon--badge">
+                            <Link to="/notifications">
+                                <i className=" material-icons">notifications</i>
+                            </Link>
+                            {this.state.notifications &&
+                                this.state.notifications.length !== 0 && (
+                                    <span className="badge">
+                                        {this.state.notifications.length}
+                                    </span>
+                                )}
+                        </span>
+                        <div className="window window--notification notification-window">
+                            <div className="window__head">
+                                <div className="window__head--icon">
+                                    <i className=" material-icons">
+                                        notifications
+                                    </i>
+                                </div>
+                                <div className="window__head--text">
+                                    Notifications
+                                </div>
+                                <div className="window__head--button">
+                                    <a onClick={this.clearNotifications}>
+                                        Clear all
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+                {!this.props.window && (
+                    <div>
+                        <h1 className="heading-primary">Notifications</h1>
+                        <a onClick={this.clearNotifications}>Clear all</a>
+                    </div>
+                )}
+                {this.props.window && (
+                    <div className="window__content">
+                        <div className="shadow-layer">
+                            <div className="shadow" />
+                            <NotificationsList 
+                                notifications={this.state.notifications}
+                            />
+                        <div/>
+                    <div/>
+                )}
+                {!this.props.header && (
+                    <NotificationsList 
+                        notifications={this.state.notifications}
+                    />
+                )}
+            </div>
+ * */
