@@ -47,6 +47,13 @@ class QuickLinks extends React.Component {
 
     componentDidMount() {
         this.listMessages();
+        try {
+            setInterval(async () => {
+                await this.listMessages();
+            }, 3000);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     render() {
