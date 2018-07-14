@@ -177,7 +177,7 @@ export function getUser() {
         },
     };
 
-    return fetch(AuthUrls.USERS + user_id)
+    return fetch(AuthUrls.USERS + user_id, config)
         .then(response => {
             if (response.ok) {
                 return response.json();

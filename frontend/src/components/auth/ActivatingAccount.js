@@ -1,6 +1,6 @@
 import React from 'react';
 import {AuthUrls} from '../../constants/urls';
-import {Alert, Icon, message} from 'antd';
+import { message} from 'antd';
 import {GridLoader} from 'react-spinners';
 import {Link} from 'react-router-dom';
 

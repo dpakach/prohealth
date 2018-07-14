@@ -44,7 +44,7 @@ class QueryCta extends React.Component {
 
     render() {
         const is_doctor = localStorage.getItem('is_doctor') === 'true';
-        const user_id = parseInt(localStorage.getItem('user_id'));
+        const user_id = parseInt(localStorage.getItem('user_id'), 10);
         return (
             <div style={{height: '80vh', overflowY: 'scroll', position: 'relative'}}>
                 <div className="loading-icon">

@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import _ from 'lodash';
-import {AuthUrls} from '../../constants/urls';
 import {updateUserProfile} from '../../actions/authActions';
-import {message, Icon, Input, Button, DatePicker} from 'antd';
+import {Icon, DatePicker} from 'antd';
 
 //import store from '../../store/configureStore';
 // import validate from '../../utils/validate';
@@ -174,7 +173,6 @@ class UpdateUserProfile extends Component {
 
                             <div className="form__group">
                                 <button
-                                    type="primary"
                                     type="submit"
                                     disabled={!this.state.formValid}
                                     className="btn">

@@ -4,13 +4,12 @@ import {
     deleteQueryItem,
     resolveQuery as resolve,
     takeQuery as take,
-    takeQuery,
 } from '../../actions/queryActions';
 import {withRouter} from 'react-router-dom';
 
 const Actions = props => {
     const is_doctor = localStorage.getItem('is_doctor') === 'true';
-    const user_id = parseInt(localStorage.getItem('user_id'));
+    const user_id = parseInt(localStorage.getItem('user_id'), 10);
 
     const deleteQuery = () => {
         deleteQueryItem(props.query.id).then(() => {
