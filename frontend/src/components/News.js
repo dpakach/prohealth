@@ -1,5 +1,4 @@
 import React from 'react';
-import {Icon} from 'antd';
 import moment from 'moment';
 import {GridLoader} from 'react-spinners';
 
