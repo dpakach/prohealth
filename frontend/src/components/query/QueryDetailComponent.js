@@ -58,6 +58,7 @@ class QueryDetailComponent extends React.Component {
                         loading={this.state.loading}
                     />
                 </div>
+
                 {!this.state.loading && (
                     <div>
                         <div className="query-layout">

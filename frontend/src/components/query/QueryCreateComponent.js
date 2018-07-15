@@ -119,7 +119,7 @@ class QueryCreateComponent extends React.Component {
                                 placeholder="Related"
                                 onChange={this.handleSelectChange}>
                                 <Option value='S' >General Surgery</Option>
-                                <Option value='G' >'Obesterics and Gynecology</Option>
+                                <Option value='G' >Obesterics and Gynecology</Option>
                                 <Option value='P' >General Physician</Option>
                                 <Option value='Or'>Orthopedic</Option>
                                 <Option value='D' >Dermatology & Venerology</Option>

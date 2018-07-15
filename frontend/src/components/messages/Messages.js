@@ -60,7 +60,7 @@ class QuickLinks extends React.Component {
                 {this.props.window && (
                     <div className="sidebar__head--icon sidebar__head--icon--notification">
                         <span className="icon--badge">
-                            <Link to="/notifications">
+                            <Link to="/messages">
                                 <i className=" material-icons">message</i>
                             </Link>
                             {this.state.messages &&
