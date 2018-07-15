@@ -7,12 +7,8 @@ import {GridLoader} from 'react-spinners';
 
 const UserProfile = props => {
     let loading = true;
-    let is_doctor = false;
     loading = props.loading;
     const {user} = props;
-    if (user) {
-        is_doctor = user;
-    }
 
     return (
         <div>
