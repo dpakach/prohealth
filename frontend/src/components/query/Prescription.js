@@ -42,7 +42,7 @@ const Prescription = props => {
                                                 <div className="prescription__item__text">
                                                     {`take ${item.quantity}, ${
                                                         item.times_a_day
-                                                    } times a day`}
+                                                    } times a day.${item.remarks}`}
                                                 </div>
                                             </div>
                                         </div>

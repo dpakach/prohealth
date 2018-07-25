@@ -96,7 +96,7 @@ class QuickLinks extends React.Component {
                             </div>
 
                             <div className="window__footer">
-                                <Link to="/notifications">see all</Link>
+                                <Link to="/messages">see all</Link>
                             </div>
                         </div>
                     </div>
