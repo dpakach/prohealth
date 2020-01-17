@@ -10,7 +10,7 @@ django-webpack-loader==0.6.0
 # Python-PostgreSQL Database Adapter
 psycopg2==2.7.3.2
 
-requests==2.18.4
+requests==2.20.0
     certifi==2018.4.16
     chardet==3.0.4
     idna==2.6
