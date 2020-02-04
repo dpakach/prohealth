@@ -31,8 +31,8 @@ urlpatterns = [
     # Include urls here.
     # url(r'api/auth/', include('rest_framework.urls', namespace='rest_framework')),
     # url(r'api/core/', include('core.endpoints')),
-    url(r'api/$', schemas.get_schema_view()),
     url(settings.ADMIN_URL, admin.site.urls),
+    url(r'api/$', schemas.get_schema_view()),
     url(r'^api/', include('user_profile.urls', namespace='user_profile')),
     url(r'^api/', include('notifications.urls')),
     url(r'^api/', include('users_query.urls')),
