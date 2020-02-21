@@ -28,16 +28,6 @@ env:
 before_install:
   - sudo pip3 install --upgrade pip
   - docker run -d -p 4444:4444 -p 5900:5900 -v /dev/shm:/dev/shm --name selenium selenium/standalone-chrome-debug
-#  - sudo apt-get update
-#  - sudo apt-get install -y xvfb libappindicator1 fonts-liberation
-#  - wget http://security.ubuntu.com/ubuntu/pool/universe/c/chromium-browser/chromium-browser_79.0.3945.79-0ubuntu0.19.10.2_amd64.deb
-#  - wget https://chromedriver.storage.googleapis.com/79.0.3945.36/chromedriver_linux64.zip
-#  - wget https://bit.ly/2TlkRyu
-#  - unzip chromedriver_linux64.zip
-#  - sudo dpkg -i chromium-browser*.deb
-#  - ls -la
-#  - mv 2TlkRyu 2TlkRyu.jar
-#  - java -jar 2TlkRyu.jar -port 4444
 
 install:
   - pip3 install -r backend/requirements/local.txt
