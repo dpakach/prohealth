@@ -8,7 +8,7 @@ Given('user has browsed to the homepage', () => {
 
 Given('user has browsed to the login page', async () => {
     await client.page.homePage().browseToLogin()
-        return client.page.loginPage().isLoginFormVisible();
+    return client.page.loginPage().isLoginFormVisible();
 
 });
 

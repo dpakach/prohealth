@@ -5,8 +5,8 @@ const assert = require('assert');
 const askAQuestionButton = '//div[.="Ask A Question"]';
 
 When('the user selects Ask A Question', function () {
-  return client.useXpath().waitForElementVisible(askAQuestionButton)
-      .click(askAQuestionButton);
+    return client.useXpath().waitForElementVisible(askAQuestionButton)
+        .click(askAQuestionButton);
 });
 
 When('user asks a question by filling the following details in the question form:', function (dataTable) {
@@ -18,5 +18,3 @@ Then('the user should be redirected to the query page with title {string}', asyn
     const pageTitle = await client.page.queryPage().getTitleText()
     return assert.equals(pageTitle, title, `Could not load page titled "${pageTitle}"`)
 });
-
-

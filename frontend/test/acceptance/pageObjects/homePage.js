@@ -3,7 +3,7 @@ module.exports = {
         return this.api.launch_url + '/user/signup'
     },
     commands: {
-        browseToLogin: function(){
+        browseToLogin: function () {
             return this.useXpath()
                 .waitForElementVisible('@loginButton')
                 .click('@loginButton')
@@ -14,11 +14,11 @@ module.exports = {
         }
     },
     elements: {
-        loginButton:{
+        loginButton: {
             selector: '//div/a[@href="/user/login"]',
             locateStrategy: 'xpath'
         },
-        signButton:{
+        signButton: {
             selector: '//div[contains(text(),"Signup")]',
             locateStrategy: 'xpath'
         }

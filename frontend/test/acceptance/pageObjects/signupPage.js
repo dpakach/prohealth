@@ -1,6 +1,6 @@
 module.exports = {
     url() {
-        return this.api.launch_url +'/user/signup'
+        return this.api.launch_url + '/user/signup'
     },
     commands: {
         isSignupFormVisibile: function () {
@@ -8,10 +8,9 @@ module.exports = {
         }
     },
     elements: {
-        signupForm:{
+        signupForm: {
             selector: '//div[@class="card"]/form[@class="form"]',
             locateStrategy: 'xpath'
         }
     }
-
 }

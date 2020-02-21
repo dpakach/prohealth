@@ -20,9 +20,8 @@ Given('user has browsed to the signup page', function () {
 });
 
 Given('user has created an account with email {string} and password {string}', function (email, password) {
-    console.log(`Basic ` + `${client.globals.admin_username}:${client.globals.admin_password}`)
     const header = {}
-    header['Authorization'] = `Basic ` +   Buffer.from(`${client.globals.admin_username}:${client.globals.admin_password}`).toString('base64')
+    header['Authorization'] = `Basic ` + Buffer.from(`${client.globals.admin_username}:${client.globals.admin_password}`).toString('base64')
     header['Content-Type'] = 'application/json'
     return fetch(client.globals.backend_url + '/api/users/', {
         method: 'POST',
@@ -32,21 +31,18 @@ Given('user has created an account with email {string} and password {string}', f
         headers: header
     })
         .then(res => {
-            console.log(res.status)
             if (res.status <200 || res.status>=400){
                 throw new Error("Failed to create user: "+ res.statusText)
             }
             return res.text()
         })
         .then(res => {
-            console.log(JSON.parse(res)['id'])
             createdUser[email] =  JSON.parse(res)['id'];
         })
 });
 
 When('user tries to signup using the webUI by entering the following details in the signup form:', function (dataTable) {
     var elementsToEnter = dataTable.rowsHash()
-    // console.log();
     var fname = elementsToEnter['First Name']
     var lname = elementsToEnter['Last Name']
     var email = elementsToEnter['email']
@@ -72,12 +68,6 @@ When('user tries to signup using the webUI by entering the following details in 
 Then('a success message {string} should be visible', function (message) {
     return client.useXpath().waitForElementVisible(successMsg)
         .useCss();
-    // return client.element('xpath', successMsg, (result) => {
-    //     // console.log(result.value['ELEMENT'])
-    //     client.elementIdText(result.value['ELEMENT'], (result) => {
-    //        assert.strictEqual(result.value, message, `Expected ${message} but got ${result.value}`)
-    //     })
-    // })
 });
 
 Then('the user should be redirected to login page', function () {
@@ -133,21 +123,20 @@ When('user tries to signup entering email as {string}', function (mail) {
 });
 
 
-
 Then('signup button should be disabled', function () {
     return client.useXpath().waitForElementVisible('//div/button[@disabled][.= "Signup"]')
         .useCss()
 });
 When('user enters email as {string}', function (mail) {
-     return client.useXpath().waitForElementVisible(emailField)
-         .setValue(emailField, mail);
+    return client.useXpath().waitForElementVisible(emailField)
+        .setValue(emailField, mail);
 });
 
 
 When('user tries to signup entering email {string} password {string} and confirm password {string}', function (mail, password, confirmPassword) {
     return client.useXpath().setValue(emailField, mail)
         .setValue(passwordField, password)
-        .setValue(confirmPasswordField,confirmPassword)
+        .setValue(confirmPasswordField, confirmPassword)
         .waitForElementVisible(signupButton).click(signupButton)
         .useCss()
 });
@@ -164,7 +153,6 @@ After(async () => {
             headers: header
         })
             .then(res => {
-                console.log(res.status)
                 if (res.status < 200 || res.status >= 400) {
                     throw new Error("Failed to create user: " + res.statusText)
                 }

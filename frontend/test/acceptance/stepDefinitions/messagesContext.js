@@ -7,7 +7,7 @@ const seeAllMessages = '//span/a[@href="/messages"]/../following-sibling::div//a
 When('the user hovers to the message icon on the webUI', function () {
     return client.useXpath().waitForElementVisible(messageBell)
         .moveToElement(messageBell, 10, 10)
-        .useCss();;
+        .useCss();
 });
 
 Then('new messages should be shown in the message window', function () {

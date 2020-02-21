@@ -1,9 +1,9 @@
-module.exports ={
-    url(){
+module.exports = {
+    url() {
         return this.api.launch_url
     },
-    commands:{
-        selectLogoutButton:function () {
+    commands: {
+        selectLogoutButton: function () {
             return this.useXpath().waitForElementVisible('@logoutButton')
                 .click('@logoutButton')
                 .useCss()
@@ -18,15 +18,14 @@ module.exports ={
             return this.navigate('/news')
         }
     },
-    elements:{
-        logoutButton:{
+    elements: {
+        logoutButton: {
             selector: '//div/a/div[contains(text(),"Logout")]',
-            locateStrategy:'xpath'
+            locateStrategy: 'xpath'
         },
-        newsButton:{
+        newsButton: {
             selector: '//div[.="News"]',
             locateStrategy: 'xpath'
         }
-
     }
 }

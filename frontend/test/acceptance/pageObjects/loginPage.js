@@ -1,14 +1,14 @@
 const assert = require('assert');
 
 module.exports = {
-    url(){
+    url() {
         return this.api.launch_url + '/user/login'
     },
-    commands:{
+    commands: {
         isLoginFormVisible: function () {
-        return this.useXpath().waitForElementVisible('@loginForm').useCss()
+            return this.useXpath().waitForElementVisible('@loginForm').useCss()
         },
-        registerNow: function (){
+        registerNow: function () {
             return this.useXpath()
                 .waitForElementVisible('@registerNowLink')
                 .click('@registerNowLink')
@@ -31,11 +31,9 @@ module.exports = {
         loginErrorMessag: function (errorMsg) {
             return this.waitForElementVisible('@loginErrorMsg')
                 .api.element(this.elements.loginErrorMsg.locateStrategy, this.elements.loginErrorMsg.selector, (result) => {
-                    // console.log(result)
                     this.api.elementIdText(result.value['ELEMENT'], (result) => {
                         this.assert.strictEqual(result.value, errorMsg, "Error! text do not match")
                     })
-
                 });
         },
         loginButtonDisabled: function () {
@@ -43,7 +41,7 @@ module.exports = {
                 .useCss();
         }
     },
-    elements:{
+    elements: {
         loginForm: {
             selector: '//div/h1[contains(text(),"Login")]',
             locateStrategy: 'xpath'
@@ -68,10 +66,10 @@ module.exports = {
             selector: '//div/a/div[contains(text(),"Logout")]',
             locateStrategy: 'xpath'
         },
-        loginErrorMsg:{
+        loginErrorMsg: {
             selector: '.form__error--text',
         },
-        disabledLoginButton:{
+        disabledLoginButton: {
             selector: '//div//button[@disabled][.= "Log In"]',
             locateStrategy: 'xpath'
         }

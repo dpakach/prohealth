@@ -3,7 +3,6 @@ Feature: Create new user
   I want to create a new user account
   so that i can use ProHealth services
 
-  @signup
   Scenario: User tries to create a valid user account
     Given user has browsed to the signup page
     When user tries to signup using the webUI by entering the following details in the signup form:
@@ -81,8 +80,8 @@ Feature: Create new user
     When user tries to signup entering email "william@xyz.com" password "<Password>" and confirm password "<Confirm password>"
     Then an error message "<validation>" should be shown above "password" field
     Examples:
-      | Password   | Confirm password | validation                                                        |
-      | 9815123456 | 9815123456       | This password is entirely numeric.                                |
-      | 123456789  | 123456789        | This password is too common.                                      |
-      | 12345      | 12345            | This password is too short. It must contain at least 8 characters |
-      | hello      | hello            | This password is too common.                                      |
+      | Password   | Confirm password | validation                                                          |
+      | 9815123456 | 9815123456       | This password is entirely numeric.                                  |
+      | 123456789  | 123456789        | This password is too common.                                        |
+      | 12345      | 12345            | This password is too short. It must contain at least 8 characters. |
+      | hello      | hello            | This password is too short. It must contain at least 8 characters.  |

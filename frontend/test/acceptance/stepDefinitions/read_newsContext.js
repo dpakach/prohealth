@@ -11,7 +11,7 @@ When('user selects News', function () {
 });
 
 Then('a list of news headlines and little description should be shown', function () {
-   return client.page.sidebarPage().getNews();
+    return client.page.sidebarPage().getNews();
 });
 
 Given('user has entered email {string} and password {string} in the login form', function (email, password) {

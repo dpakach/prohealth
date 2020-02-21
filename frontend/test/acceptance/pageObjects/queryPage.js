@@ -1,14 +1,13 @@
 module.exports = {
-    url(){
-        return this.api.launch_url +'/query/{queryId}'
+    url() {
+        return this.api.launch_url + '/query/{queryId}'
     },
     commands: {
         getTitleText: function () {
             return new Promise((resolve) => {
                 this.waitForElementVisible('@titleElement')
                     .api.getText('@titleElement', text => {
-                        console.log(text)
-                        resolve(text)
+                    resolve(text)
                 })
             })
         }

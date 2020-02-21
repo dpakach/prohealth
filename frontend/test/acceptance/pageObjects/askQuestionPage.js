@@ -1,22 +1,22 @@
 module.exports = {
-    url(){
-        return this.api.launch_url +'/query/create'
+    url() {
+        return this.api.launch_url + '/query/create'
     },
     commands: {
-        getInputXpath: function(input) {
-            return this.elements.inputSelector.selector.replace("%s",input)
+        getInputXpath: function (input) {
+            return this.elements.inputSelector.selector.replace("%s", input)
         },
-        inputField: function(inputName, inputValue){
+        inputField: function (inputName, inputValue) {
             return this.useXpath().setValue(this.getInputXpath(inputName), inputValue)
         },
-        askQuestion: async function(elementsToEnter){
+        askQuestion: async function (elementsToEnter) {
             await this.inputField('Title', elementsToEnter['Title']);
-            await this.inputField('Description',elementsToEnter['Description']);
+            await this.inputField('Description', elementsToEnter['Description']);
             await this.enterRelated(elementsToEnter['Related']);
-            await this.inputField('Name of Patient',elementsToEnter['Name of Patient']);
-            await this.inputField('Age',elementsToEnter['Age']);
-            await this.inputField('Weight',elementsToEnter['Weight']);
-            await this.inputField('Height',elementsToEnter['Height']);
+            await this.inputField('Name of Patient', elementsToEnter['Name of Patient']);
+            await this.inputField('Age', elementsToEnter['Age']);
+            await this.inputField('Weight', elementsToEnter['Weight']);
+            await this.inputField('Height', elementsToEnter['Height']);
             await this.click('@submitButton');
 
             return this.pause(30000)
@@ -28,7 +28,6 @@ module.exports = {
                 .waitForElementVisible(selector)
                 .click(selector)
         },
-
     },
     elements: {
         inputSelector: {
