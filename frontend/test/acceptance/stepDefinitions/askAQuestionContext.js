@@ -16,5 +16,6 @@ When('user asks a question by filling the following details in the question form
 
 Then('the user should be redirected to the query page with title {string}', async function (title) {
     const pageTitle = await client.page.queryPage().getTitleText()
-    return assert.equals(pageTitle, title, `Could not load page titled "${pageTitle}"`)
+    console.log(pageTitle)
+    return assert.equal(pageTitle, title, `Could not load page titled "${pageTitle}"`)
 });

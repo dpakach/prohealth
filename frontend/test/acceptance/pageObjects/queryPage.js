@@ -6,8 +6,8 @@ module.exports = {
         getTitleText: function () {
             return new Promise((resolve) => {
                 this.waitForElementVisible('@titleElement')
-                    .api.getText('@titleElement', text => {
-                    resolve(text)
+                    .api.getText('xpath', this.elements.titleElement.selector, text => {
+                    resolve(text.value)
                 })
             })
         }

@@ -1,4 +1,4 @@
-const {After, Given, When, Then} = require('cucumber');
+const {After, Before, Given, When, Then} = require('cucumber');
 const {client} = require('nightwatch-api');
 const assert = require('assert');
 const fetch = require('node-fetch');
@@ -9,11 +9,13 @@ const emailField = '//div/input[@name="email"]';
 const passwordField = '//div/input[@name="password"]';
 const confirmPasswordField = '//div/input[@name="password2"]';
 const selectDateField = '//div/input[@placeholder="Select date"]';
+
 const genderField = '//div[@class="ant-select-selection__rendered"]';
 const signupButton = '//div/button[.= "Signup"]';
 const successMsg = '//div//span[.="signed up succesfully"]'
 
 const createdUser = {};
+let initialUser = {};
 
 Given('user has browsed to the signup page', function () {
     return client.url(client.launch_url + '/user/signup')
@@ -141,21 +143,52 @@ When('user tries to signup entering email {string} password {string} and confirm
         .useCss()
 });
 
+const getUsers = () => {
+    const header = {}
+    header['Authorization'] = `Basic ` + Buffer.from(`${client.globals.admin_username}:${client.globals.admin_password}`).toString('base64')
+    header['Content-Type'] = 'application/json'
+    return fetch(client.globals.backend_url + '/api/users/', {
+        method: 'GET',
+        headers: header
+    })
+        .then(res => res.json() )
+        .then((res) => {
+            const result = {}
+            for (const user of res) {
+                result[user.id] = user.email
+            }
+            return result
+        })
+}
+Before(async() => {
+    initialUser = await getUsers();
+})
 
 After(async () => {
-    for (const email in createdUser) {
+    const header = {}
+    header['Authorization'] = `Basic ` + Buffer.from(`${client.globals.admin_username}:${client.globals.admin_password}`).toString('base64')
+    header['Content-Type'] = 'application/json'
+    const finalUsers = await getUsers();
 
-        const header = {}
-        header['Authorization'] = `Basic ` + Buffer.from(`${client.globals.admin_username}:${client.globals.admin_password}`).toString('base64')
-        header['Content-Type'] = 'application/json'
-        await fetch(client.globals.backend_url + '/api/users/' + createdUser[email], {
-            method: 'DELETE',
-            headers: header
-        })
-            .then(res => {
-                if (res.status < 200 || res.status >= 400) {
-                    throw new Error("Failed to create user: " + res.statusText)
-                }
+    let found
+    for (const user in finalUsers) {
+        for (const iuser in initialUser) {
+            found = false;
+            if (iuser === user) {
+                found = true
+                break
+            }
+        }
+        if (!found) {
+            await fetch(client.globals.backend_url + '/api/users/' + user, {
+                method: 'DELETE',
+                headers: header
             })
+                .then(res => {
+                    if (res.status < 200 || res.status >= 400) {
+                        throw new Error("Failed to create user: " + res.statusText)
+                    }
+                })
+        }
     }
 })
