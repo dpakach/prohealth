@@ -2,12 +2,9 @@ const {Given, When, Then} = require('cucumber');
 const {client} = require('nightwatch-api');
 
 
-When('user enters email {string} and password {string} in the login form', function (email, password) {
+When('user logs in with email {string} and password {string}', function (email, password) {
     return client.page.loginPage().setUsernamePassword(email, password)
-});
-
-When('user tries to login', function () {
-    return client.page.loginPage().triesLogin()
+        .triesLogin()
 });
 
 Then('the user should be logged in', function () {

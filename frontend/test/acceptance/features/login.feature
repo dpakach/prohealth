@@ -9,13 +9,11 @@ Feature: login
     And user has browsed to the login page
 
   Scenario: login with correct email and correct password
-    When user enters email "test@test.com" and password "pass12345" in the login form
-    And user tries to login
+    When user logs in with email "test@test.com" and password "pass12345"
     Then the user should be logged in
 
   Scenario Outline: login with wrong credentials
-    When user enters email "<email>" and password "<password>" in the login form
-    And user tries to login
+    When user logs in with email "<email>" and password "<password>"
     Then an error message "<message>" should be shown in the same page
     Examples:
       | email           | password      | message                                                                                          |
@@ -25,8 +23,7 @@ Feature: login
       | test@test.co    | password12345 | User with that email doesnot exists!                                                             |
 
   Scenario Outline: visibility of login button
-    When user enters email "<email>" and password "<password>" in the login form
-    And user tries to login
+    When user logs in with email "<email>" and password "<password>"
     Then login button should be disabled
     Examples:
       | email         | password |
