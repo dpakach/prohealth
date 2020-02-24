@@ -37,7 +37,7 @@ class UserView(APIView):
         if serializer.is_valid():
             user = serializer.save()
             user.set_password(serializer.validated_data['password'])
-            user.is_active = False
+            user.is_active = True
             user.save()
             user = get_object_or_404(User, email=request.data.get('email'))
             code_object = UserActivationCode.objects.create(user=user)
