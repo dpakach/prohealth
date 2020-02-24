@@ -16,5 +16,5 @@ Then('an error message {string} should be shown in the same page', function (err
 });
 
 Then('login button should be disabled', function () {
-    return client.page.loginPage().loginButtonDisabled
+    return client.page.loginPage().loginButtonDisabled()
 });

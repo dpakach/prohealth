@@ -148,8 +148,7 @@ const getUsers = () => {
     header['Authorization'] = `Basic ` + Buffer.from(`${client.globals.admin_username}:${client.globals.admin_password}`).toString('base64')
     header['Content-Type'] = 'application/json'
     return fetch(client.globals.backend_url + '/api/users/', {
-        method: 'GET',
-        headers: header
+        method: 'GET',        headers: header
     })
         .then(res => res.json() )
         .then((res) => {
